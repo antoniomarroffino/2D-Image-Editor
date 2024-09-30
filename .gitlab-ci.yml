@@ -1,0 +1,65 @@
+# Build JAVA applications using Apache Maven (http://maven.apache.org)
+# For docker image tags see https://hub.docker.com/_/maven/
+#
+# For general lifecycle information see https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+
+variables:
+  MAVEN_OPTS: >-
+    -Dhttps.protocols=TLSv1.2
+    -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+    -Dorg.slf4j.simpleLogger.showDateTime=true
+    -Djava.awt.headless=true
+
+  MAVEN_CLI_OPTS: >-
+    --batch-mode
+    --errors
+    --fail-at-end
+    --show-version
+    --no-transfer-progress
+    --no-snapshot-updates
+  #   -DinstallAtEnd=true
+  #   -DdeployAtEnd=true
+
+stages:
+  - structure
+  - install_package
+
+image: gitlab-edu.supsi.ch:5050/dti-isin/labingsw/common:maven3java17
+
+# Cache downloaded dependencies and plugins between builds.
+# To keep cache across branches add 'key: "$CI_JOB_NAME"'
+# Be aware that `mvn deploy` will install the built jar into this repository. If cache size keeps
+# increasing, consider adding `-Dmaven.install.skip=true` to `MAVEN_OPTS` or in `.mvn/maven.config`
+cache:
+  paths:
+    - .m2/repository
+
+structure:
+  stage: structure
+
+  script:
+    - '[ -d backend ] || exit 1'
+    - '[ -d frontend ] || exit 1'
+
+install-package:
+  stage: install_package
+
+  before_script:
+    - Xvfb :99 -screen 0 1920x1080x16 &
+
+  script:
+    - cd backend
+    - 'mvn $MAVEN_CLI_OPTS clean'
+    - 'mvn $MAVEN_CLI_OPTS install'
+    - cd ..
+    - cd frontend
+    - 'mvn $MAVEN_CLI_OPTS clean'
+    - 'DISPLAY=:99 mvn $MAVEN_CLI_OPTS -Dheadless=true package'
+    - cd ..
+    
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+
+  artifacts:
+    paths:
+      - fsciapp/client/target/*.jar
