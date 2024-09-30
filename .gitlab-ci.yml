@@ -62,4 +62,5 @@ install-package:
 
   artifacts:
     paths:
-      - fsciapp/client/target/*.jar
+      - frontend/target/*.jar
+
