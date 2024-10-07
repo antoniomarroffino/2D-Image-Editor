@@ -41,6 +41,9 @@ structure:
     - '[ -d backend ] || exit 1'
     - '[ -d frontend ] || exit 1'
 
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+
 install-package:
   stage: install_package
 
