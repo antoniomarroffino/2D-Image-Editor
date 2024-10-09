@@ -1,27 +1,31 @@
-package ch.supsi.ImageEditor.frontend.view;
+package ch.supsi.imageEditor.frontend.view;
 
-import ch.supsi.ImageEditor.frontend.controller.EventHandler;
-import ch.supsi.ImageEditor.frontend.model.AbstractModel;
+import ch.supsi.imageEditor.frontend.controller.EventHandler;
+import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.MenuBar;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class MenuBarViewFXML implements ControlledFxView {
-    private static MenuBarViewFXML instance = null;
-    private static final String PathResourceFXML = "/menubar.fxml";
+public class PipelineViewFXML implements ControlledFxView {
+    private static PipelineViewFXML instance = null;
+    private static final String PathResourceFXML = "/pipeline.fxml";
 
     @FXML
-    private MenuBar menuBar;
+    private ScrollPane pipelineScrollPane;
 
-    private MenuBarViewFXML() {}
+    @FXML
+    private VBox pipelineVBox;
 
-    public static MenuBarViewFXML getInstance() {
+    private PipelineViewFXML() {}
+
+    public static PipelineViewFXML getInstance() {
         if (instance == null)
-            instance = new MenuBarViewFXML();
+            instance = new PipelineViewFXML();
 
         try{
             URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
@@ -35,9 +39,10 @@ public class MenuBarViewFXML implements ControlledFxView {
         }
         return instance;
     }
+
     @Override
     public Node getNode() {
-        return this.menuBar;
+        return this.pipelineScrollPane;
     }
 
     @Override

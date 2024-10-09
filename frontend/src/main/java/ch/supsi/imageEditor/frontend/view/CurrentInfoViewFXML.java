@@ -1,26 +1,26 @@
-package ch.supsi.ImageEditor.frontend.view;
+package ch.supsi.imageEditor.frontend.view;
 
-import ch.supsi.ImageEditor.frontend.model.AbstractModel;
+import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class InfobarViewFXML implements UncontrolledFxView {
-    private static InfobarViewFXML instance = null;
-    private static final String PathResourceFXML = "/infobar.fxml";
+public class CurrentInfoViewFXML implements UncontrolledFxView {
+    private static CurrentInfoViewFXML instance = null;
+    private static final String PathResourceFXML = "/currentinfo.fxml";
 
     @FXML
-    private ScrollPane infobarScrollPane;
+    private Pane currentInfoPane;
 
-    private InfobarViewFXML() {}
+    private CurrentInfoViewFXML() {}
 
-    public static InfobarViewFXML getInstance() {
+    public static CurrentInfoViewFXML getInstance() {
         if (instance == null)
-            instance = new InfobarViewFXML();
+            instance = new CurrentInfoViewFXML();
 
         try{
             URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
@@ -37,7 +37,7 @@ public class InfobarViewFXML implements UncontrolledFxView {
 
     @Override
     public Node getNode() {
-        return this.infobarScrollPane;
+        return this.currentInfoPane;
     }
 
     @Override

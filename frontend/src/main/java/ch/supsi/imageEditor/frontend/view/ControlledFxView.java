@@ -1,4 +1,4 @@
-package ch.supsi.ImageEditor.frontend.view;
+package ch.supsi.imageEditor.frontend.view;
 
 import javafx.scene.Node;
 

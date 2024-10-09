@@ -1,10 +1,10 @@
-package ch.supsi.ImageEditor.frontend;
+package ch.supsi.imageEditor.frontend;
 
-import ch.supsi.ImageEditor.frontend.controller.AppController;
-import ch.supsi.ImageEditor.frontend.controller.AppEventHandler;
-import ch.supsi.ImageEditor.frontend.model.AbstractModel;
-import ch.supsi.ImageEditor.frontend.model.AppModel;
-import ch.supsi.ImageEditor.frontend.view.*;
+import ch.supsi.imageEditor.frontend.controller.AppController;
+import ch.supsi.imageEditor.frontend.controller.AppEventHandler;
+import ch.supsi.imageEditor.frontend.model.AbstractModel;
+import ch.supsi.imageEditor.frontend.model.AppModel;
+import ch.supsi.imageEditor.frontend.view.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;

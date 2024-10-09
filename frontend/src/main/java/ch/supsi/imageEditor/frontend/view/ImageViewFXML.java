@@ -1,6 +1,6 @@
-package ch.supsi.ImageEditor.frontend.view;
+package ch.supsi.imageEditor.frontend.view;
 
-import ch.supsi.ImageEditor.frontend.model.AbstractModel;
+import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

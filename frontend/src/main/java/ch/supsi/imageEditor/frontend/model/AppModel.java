@@ -1,4 +1,4 @@
-package ch.supsi.ImageEditor.frontend.model;
+package ch.supsi.imageEditor.frontend.model;
 
 public class AppModel extends AbstractModel {
     private static AppModel instance = null;

@@ -1,4 +1,4 @@
-package ch.supsi.ImageEditor.frontend;
+package ch.supsi.imageEditor.frontend;
 
 public class Main {
     public static void main(String[] args) {

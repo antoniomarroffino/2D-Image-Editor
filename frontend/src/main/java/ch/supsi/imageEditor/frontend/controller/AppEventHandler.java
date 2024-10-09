@@ -1,4 +1,4 @@
-package ch.supsi.ImageEditor.frontend.controller;
+package ch.supsi.imageEditor.frontend.controller;
 
 public interface AppEventHandler extends EventHandler {
 }

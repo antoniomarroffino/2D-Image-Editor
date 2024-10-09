@@ -1,6 +1,6 @@
-package ch.supsi.ImageEditor.frontend.controller;
+package ch.supsi.imageEditor.frontend.controller;
 
-import ch.supsi.ImageEditor.frontend.model.AppModel;
+import ch.supsi.imageEditor.frontend.model.AppModel;
 
 public class AppController implements AppEventHandler{
     private static AppController instance = null;
