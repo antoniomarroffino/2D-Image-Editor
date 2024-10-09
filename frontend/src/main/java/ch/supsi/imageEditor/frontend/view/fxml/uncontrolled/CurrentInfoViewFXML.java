@@ -1,27 +1,27 @@
-package ch.supsi.imageEditor.frontend.view;
+package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
 
-import ch.supsi.imageEditor.frontend.controller.EventHandler;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.MenuBar;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class MenuBarViewFXML implements ControlledFxView {
-    private static MenuBarViewFXML instance = null;
-    private static final String PathResourceFXML = "/menubar.fxml";
+public class CurrentInfoViewFXML implements UncontrolledFxView {
+    private static CurrentInfoViewFXML instance = null;
+    private static final String PathResourceFXML = "/currentinfo.fxml";
 
     @FXML
-    private MenuBar menuBar;
+    private Pane currentInfoPane;
 
-    private MenuBarViewFXML() {}
+    private CurrentInfoViewFXML() {}
 
-    public static MenuBarViewFXML getInstance() {
+    public static CurrentInfoViewFXML getInstance() {
         if (instance == null)
-            instance = new MenuBarViewFXML();
+            instance = new CurrentInfoViewFXML();
 
         try{
             URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
@@ -35,13 +35,14 @@ public class MenuBarViewFXML implements ControlledFxView {
         }
         return instance;
     }
+
     @Override
     public Node getNode() {
-        return this.menuBar;
+        return this.currentInfoPane;
     }
 
     @Override
-    public void initialize(EventHandler eventHandler, AbstractModel model) {
+    public void initialize(AbstractModel model) {
 
     }
 }

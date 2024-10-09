@@ -1,26 +1,31 @@
-package ch.supsi.imageEditor.frontend.view;
+package ch.supsi.imageEditor.frontend.view.fxml.controlled;
 
+import ch.supsi.imageEditor.frontend.controller.EventHandler;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class CurrentInfoViewFXML implements UncontrolledFxView {
-    private static CurrentInfoViewFXML instance = null;
-    private static final String PathResourceFXML = "/currentinfo.fxml";
+public class PipelineViewFXML implements ControlledFxView {
+    private static PipelineViewFXML instance = null;
+    private static final String PathResourceFXML = "/pipeline.fxml";
 
     @FXML
-    private Pane currentInfoPane;
+    private ScrollPane pipelineScrollPane;
 
-    private CurrentInfoViewFXML() {}
+    @FXML
+    private VBox pipelineVBox;
 
-    public static CurrentInfoViewFXML getInstance() {
+    private PipelineViewFXML() {}
+
+    public static PipelineViewFXML getInstance() {
         if (instance == null)
-            instance = new CurrentInfoViewFXML();
+            instance = new PipelineViewFXML();
 
         try{
             URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
@@ -37,11 +42,11 @@ public class CurrentInfoViewFXML implements UncontrolledFxView {
 
     @Override
     public Node getNode() {
-        return this.currentInfoPane;
+        return this.pipelineScrollPane;
     }
 
     @Override
-    public void initialize(AbstractModel model) {
+    public void initialize(EventHandler eventHandler, AbstractModel model) {
 
     }
 }
