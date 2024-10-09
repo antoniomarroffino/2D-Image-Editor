@@ -44,6 +44,8 @@ public class MainFX extends Application {
         this.pipelineView = PipelineViewFXML.getInstance();
         this.infoBarView = InfobarViewFXML.getInstance();
 
+        //SCAFFOLDING of M-V-C
+        this.menuBarView.initialize(this.appEventHandler, this.appModel);
     }
 
     @Override

@@ -6,20 +6,20 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 
 <MenuBar fx:id="menuBar" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-   <Menu mnemonicParsing="false" text="File">
-      <MenuItem mnemonicParsing="false" text="Open…"/>
-      <Menu mnemonicParsing="false" text="Open Recent"/>
+   <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
+      <MenuItem fx:id="openMenuItem" mnemonicParsing="false" text="Open…"/>
+      <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Open Recent"/>
+      <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" disable="true" text="Save"/>
+      <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" disable="true" text="Save As…"/>
       <SeparatorMenuItem mnemonicParsing="false"/>
-      <MenuItem mnemonicParsing="false" text="Close"/>
-      <MenuItem mnemonicParsing="false" text="Save"/>
-      <MenuItem mnemonicParsing="false" text="Save As…"/>
+      <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" disable="true" text="Close"/>
       <SeparatorMenuItem mnemonicParsing="false"/>
-      <MenuItem mnemonicParsing="false" text="Quit"/>
+      <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" text="Quit"/>
    </Menu>
-   <Menu mnemonicParsing="false" text="Edit">
-      <MenuItem mnemonicParsing="false" text="Language"/>
+   <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit">
+      <Menu fx:id="languageMenu" mnemonicParsing="false" text="Language"/>
    </Menu>
-   <Menu mnemonicParsing="false" text="Help">
-      <MenuItem mnemonicParsing="false" text="About"/>
+   <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
+      <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About"/>
    </Menu>
 </MenuBar>
