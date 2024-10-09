@@ -42,7 +42,7 @@ public class AboutViewPopUp implements AboutViewInterface{
     private Alert getAlertOfInfo(){
         Alert infoView = new Alert(Alert.AlertType.INFORMATION);
         infoView.setTitle("2D Image Editor - About");
-        infoView.setHeaderText("Info about 2D Image Editor");
+        infoView.setHeaderText("Version and ArtifactID of: \n" + "2D Image Editor");
         infoView.setContentText(getVersion() + "\n" + getProjectName() + "\n" + getBuiltDate() + "\n" + getDevelopersName());
         return infoView;
     }
