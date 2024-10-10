@@ -14,11 +14,15 @@ import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.InfobarViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.UncontrolledFxView;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class MainFX extends Application {
     public static final String APP_TITLE = "2D Image Editor";
+    private static final String PATH_LOGO_APP_IMAGE = "/images/logoApp.png";
 
     private final AbstractModel appModel;
     private final ControlledFxView menuBarView;
@@ -86,10 +90,12 @@ public class MainFX extends Application {
 
         // PRIMARY STAGE
         primaryStage.setTitle(MainFX.APP_TITLE);
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream(PATH_LOGO_APP_IMAGE))));
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.toFront();
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {
