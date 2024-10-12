@@ -17,6 +17,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class MainFX extends Application {
     public static final String APP_TITLE = "2D Image Editor";
 
@@ -83,6 +85,10 @@ public class MainFX extends Application {
 
         // SCENE
         Scene scene = new Scene(mainBorderPane);
+
+        // STYLE
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/dark-theme.css")).toExternalForm());
+
 
         // PRIMARY STAGE
         primaryStage.setTitle(MainFX.APP_TITLE);

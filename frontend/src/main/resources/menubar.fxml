@@ -5,21 +5,21 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 
-<MenuBar fx:id="menuBar" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<MenuBar fx:id="menuBar" stylesheets="@dark-theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
-      <MenuItem fx:id="openMenuItem" mnemonicParsing="false" text="Open…"/>
-      <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Open Recent"/>
-      <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" disable="true" text="Save"/>
-      <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" disable="true" text="Save As…"/>
-      <SeparatorMenuItem mnemonicParsing="false"/>
-      <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" disable="true" text="Close"/>
-      <SeparatorMenuItem mnemonicParsing="false"/>
-      <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" text="Quit"/>
+      <MenuItem fx:id="openMenuItem" mnemonicParsing="false" text="Open…" />
+      <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Open Recent" />
+      <MenuItem fx:id="saveMenuItem" disable="true" mnemonicParsing="false" text="Save" />
+      <MenuItem fx:id="saveAsMenuItem" disable="true" mnemonicParsing="false" text="Save As…" />
+      <SeparatorMenuItem mnemonicParsing="false" />
+      <MenuItem fx:id="closeMenuItem" disable="true" mnemonicParsing="false" text="Close" />
+      <SeparatorMenuItem mnemonicParsing="false" />
+      <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" text="Quit" />
    </Menu>
    <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit">
-      <Menu fx:id="languageMenu" mnemonicParsing="false" text="Language"/>
+      <Menu fx:id="languageMenu" mnemonicParsing="false" text="Language" />
    </Menu>
    <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
-      <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About"/>
+      <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About" />
    </Menu>
 </MenuBar>
