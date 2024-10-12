@@ -20,19 +20,20 @@ public class InfobarViewFXML implements UncontrolledFxView {
     private InfobarViewFXML() {}
 
     public static InfobarViewFXML getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new InfobarViewFXML();
-
-        try{
-            URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
-            if(fxmlUrl != null){
-                FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
-                fxmlLoader.setController(instance);
-                fxmlLoader.load();
+            try{
+                URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
+                if(fxmlUrl != null){
+                    FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+                    fxmlLoader.setController(instance);
+                    fxmlLoader.load();
+                }
+            } catch (IOException e){
+                throw new RuntimeException(e);
             }
-        } catch (IOException e){
-            throw new RuntimeException(e);
         }
+
         return instance;
     }
 

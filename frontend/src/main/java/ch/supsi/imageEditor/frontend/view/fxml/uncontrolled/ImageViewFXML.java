@@ -20,19 +20,20 @@ public class ImageViewFXML implements UncontrolledFxView {
     private ImageViewFXML() {}
 
     public static ImageViewFXML getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new ImageViewFXML();
-
-        try{
-            URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
-            if(fxmlUrl != null){
-                FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
-                fxmlLoader.setController(instance);
-                fxmlLoader.load();
+            try{
+                URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
+                if(fxmlUrl != null){
+                    FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+                    fxmlLoader.setController(instance);
+                    fxmlLoader.load();
+                }
+            } catch (IOException e){
+                throw new RuntimeException(e);
             }
-        } catch (IOException e){
-            throw new RuntimeException(e);
         }
+
         return instance;
     }
     @Override
