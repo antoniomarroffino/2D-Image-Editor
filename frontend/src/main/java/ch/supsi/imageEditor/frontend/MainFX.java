@@ -4,14 +4,13 @@ import ch.supsi.imageEditor.frontend.controller.AppController;
 import ch.supsi.imageEditor.frontend.controller.AppEventHandler;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.AppModel;
+import ch.supsi.imageEditor.frontend.model.about.AboutModel;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.ControlledFxView;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.MenuBarViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.PipelineViewFXML;
-import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.CurrentInfoViewFXML;
-import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.ImageViewFXML;
-import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.InfobarViewFXML;
-import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.UncontrolledFxView;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.*;
+import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewPopUp;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -25,17 +24,20 @@ public class MainFX extends Application {
     private static final String PATH_LOGO_APP_IMAGE = "/images/logoApp.png";
 
     private final AbstractModel appModel;
+    private final AbstractModel aboutModel;
     private final ControlledFxView menuBarView;
     private final UncontrolledFxView imageView;
     private final ControlledFxView operationView;
     private final UncontrolledFxView currentInfoView;
     private final ControlledFxView pipelineView;
     private final UncontrolledFxView infoBarView;
+    private final UncontrolledView aboutView;
     private final AppEventHandler appEventHandler;
 
     public MainFX() {
         //APP MODEL
         this.appModel = AppModel.getInstance();
+        this.aboutModel = AboutModel.getInstance();
 
         //CONTROLLERS
         this.appEventHandler = AppController.getInstance();
@@ -47,14 +49,16 @@ public class MainFX extends Application {
         this.currentInfoView = CurrentInfoViewFXML.getInstance();
         this.pipelineView = PipelineViewFXML.getInstance();
         this.infoBarView = InfobarViewFXML.getInstance();
+        this.aboutView = AboutViewPopUp.getInstance();
 
         //SCAFFOLDING of M-V-C
         this.menuBarView.initialize(this.appEventHandler, this.appModel);
+        this.aboutView.initialize(this.aboutModel);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-// handle the main window close request
+        // handle the main window close request
         // in real life, this event should not be dealt with here!
         // it should actually be delegated to a suitable ExitController!
         primaryStage.setOnCloseRequest(
