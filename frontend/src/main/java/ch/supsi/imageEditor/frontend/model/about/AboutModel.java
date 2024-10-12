@@ -1,9 +1,6 @@
 package ch.supsi.imageEditor.frontend.model.about;
 
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
-import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,33 +33,43 @@ public class AboutModel extends AbstractModel implements AboutModelInterface {
     }
 
     @Override
-    public Alert getAlertOfInfo() {
-        Alert infoView = new Alert(Alert.AlertType.INFORMATION);
-        Image logoAppImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(PATH_LOGO_APP_IMAGE)));
-        ImageView logoAppImageView = new ImageView(logoAppImage);
-        logoAppImageView.setFitHeight(75);
-        logoAppImageView.setFitWidth(75);
-
-        infoView.setGraphic(logoAppImageView);
-        infoView.setTitle("2D Image Editor - About");
-        infoView.setHeaderText("Version and ArtifactID of: \n" + "2D Image Editor");
-        infoView.setContentText(getVersion() + "\n" + getProjectName() + "\n" + getBuiltDate() + "\n" + getDevelopersName());
-        return infoView;
+    public String getVersion() {
+        return "Version: " + this.buildProperties.getProperty("build.version");
     }
 
-    private String getVersion() {
-        return "Version: " + buildProperties.getProperty("build.version");
+    @Override
+    public String getProjectName() {
+        return "Name: " + this.buildProperties.getProperty("build.name");
     }
 
-    private String getProjectName() {
-        return "Name: " + buildProperties.getProperty("build.name");
+    @Override
+    public String getDevelopersName() {
+        return "Developers: " + this.buildProperties.getProperty("build.devs");
     }
 
-    private String getDevelopersName() {
-        return "Developers: " + buildProperties.getProperty("build.devs");
+    @Override
+    public String getBuiltDate() {
+        return "Build Date: " + this.buildProperties.getProperty("build.timestamp");
     }
 
-    private String getBuiltDate() {
-        return "Build Date: " + buildProperties.getProperty("build.timestamp");
+    @Override
+    public String getTitle() {
+        return "2D Image Editor - About";
+    }
+
+    @Override
+    public String getHeaderText() {
+        return "Version and ArtifactID of: \n" + "2D Image Editor";
+    }
+
+    @Override
+    public String getContextText() {
+        return this.getVersion() + "\n" + this.getProjectName() + "\n" +
+                this.getBuiltDate() + "\n" + this.getDevelopersName();
+    }
+
+    @Override
+    public InputStream getLogoInputStream() {
+        return Objects.requireNonNull(getClass().getResourceAsStream(PATH_LOGO_APP_IMAGE));
     }
 }

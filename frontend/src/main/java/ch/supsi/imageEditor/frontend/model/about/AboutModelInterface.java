@@ -1,7 +1,21 @@
 package ch.supsi.imageEditor.frontend.model.about;
 
-import javafx.scene.control.Alert;
+import java.io.InputStream;
 
 public interface AboutModelInterface {
-    Alert getAlertOfInfo();
+    String getVersion();
+
+    String getProjectName();
+
+    String getDevelopersName();
+
+    String getBuiltDate();
+
+    String getTitle();
+
+    String getHeaderText();
+
+    String getContextText();
+
+    InputStream getLogoInputStream();
 }
