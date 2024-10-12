@@ -87,7 +87,7 @@ public class MainFX extends Application {
         Scene scene = new Scene(mainBorderPane);
 
         // STYLE
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/dark-theme.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/dark-theme.css")).toExternalForm());
 
 
         // PRIMARY STAGE
