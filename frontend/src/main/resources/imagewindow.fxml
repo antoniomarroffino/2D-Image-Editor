@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane fx:id="imagePane" prefHeight="574.0" prefWidth="493.0" stylesheets="@style/dark-theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" styleClass="pane">
-   <AnchorPane prefHeight="574.0" prefWidth="493.0" stylesheets="@style/dark-theme.css" styleClass="anchor-pane"/>
+<Pane fx:id="imagePane" prefHeight="574.0" prefWidth="493.0" styleClass="pane" stylesheets="@style/dark-theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <AnchorPane prefHeight="574.0" prefWidth="493.0" styleClass="anchor-pane" stylesheets="@style/dark-theme.css">
+      <children>
+         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="189.0" layoutY="259.0" prefHeight="55.0" prefWidth="116.0" text="Image">
+            <font>
+               <Font name="Curlz MT" size="36.0" />
+            </font>
+         </Label>
+      </children></AnchorPane>
 </Pane>
