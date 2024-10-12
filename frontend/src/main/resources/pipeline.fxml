@@ -7,11 +7,10 @@
 
 <ScrollPane fx:id="pipelineScrollPane" hbarPolicy="NEVER" prefHeight="450.0" prefWidth="204.0" stylesheets="@style/dark-theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <VBox fx:id="pipelineVBox" prefHeight="450.0" prefWidth="204.0" stylesheets="@style/dark-theme.css">
-      <children>
-         <Label prefHeight="27.0" prefWidth="128.0" text="Pipeline">
-            <font>
-               <Font name="Bell MT" size="18.0" />
-            </font>
-         </Label>
-      </children></VBox>
+        <Label prefHeight="27.0" prefWidth="128.0" text="Pipeline">
+           <font>
+               <Font name="Dubai Light" size="18.0"/>
+           </font>
+        </Label>
+    </VBox>
 </ScrollPane>

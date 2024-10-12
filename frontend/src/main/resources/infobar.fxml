@@ -9,7 +9,7 @@
             stylesheets="@style/dark-theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <Label prefHeight="18.0" prefWidth="110.0" text="Infobar">
       <font>
-         <Font name="Algerian" size="14.0"/>
+         <Font name="Dubai Light" size="14.0"/>
       </font>
    </Label>
 </ScrollPane>
