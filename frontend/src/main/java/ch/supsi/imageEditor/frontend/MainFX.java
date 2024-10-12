@@ -21,6 +21,7 @@ import java.util.Objects;
 
 public class MainFX extends Application {
     public static final String APP_TITLE = "2D Image Editor";
+    //private final static String PATH_LOGO_APP_IMAGE = "/images/logoApp.png";
 
     private final AbstractModel appModel;
     private final ControlledFxView menuBarView;
@@ -92,6 +93,7 @@ public class MainFX extends Application {
 
         // PRIMARY STAGE
         primaryStage.setTitle(MainFX.APP_TITLE);
+        //primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream(PATH_LOGO_APP_IMAGE))));
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.toFront();
