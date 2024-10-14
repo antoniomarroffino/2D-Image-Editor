@@ -53,6 +53,7 @@
                     <include>*.fxml</include>
                     <include>images/*</include>
                     <include>*.properties</include>
+                    <include>style/*</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
