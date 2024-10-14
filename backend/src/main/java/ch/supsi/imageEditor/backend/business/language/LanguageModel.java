@@ -1,0 +1,21 @@
+package ch.supsi.imageEditor.backend.business.language;
+
+import ch.supsi.imageEditor.backend.dataaccess.language.LanguageDataAccess;
+
+public class LanguageModel implements LanguageModelInterface {
+    private static LanguageModel instance;
+    private final LanguageDataAccess languageDataAccess;
+
+    private LanguageModel() {
+        this.languageDataAccess = LanguageDataAccess.getInstance();
+    }
+
+    public static LanguageModel getInstance() {
+        return instance == null ? instance = new LanguageModel() : instance;
+    }
+
+    @Override
+    public String getCurrentLanguageTag() {
+        return this.languageDataAccess.getCurrentLanguageTag();
+    }
+}
