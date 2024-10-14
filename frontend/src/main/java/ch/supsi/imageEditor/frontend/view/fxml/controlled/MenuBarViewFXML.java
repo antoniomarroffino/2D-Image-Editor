@@ -1,9 +1,11 @@
 package ch.supsi.imageEditor.frontend.view.fxml.controlled;
 
-import ch.supsi.imageEditor.frontend.controller.AppEventHandler;
-import ch.supsi.imageEditor.frontend.controller.EventHandler;
+import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
+import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.AppModel;
+import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
+import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,13 +15,14 @@ import javafx.scene.control.MenuItem;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Set;
 
-public class MenuBarViewFXML implements ControlledFxView {
+public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     private static MenuBarViewFXML instance = null;
     private static final String PathResourceFXML = "/menubar.fxml";
 
-    private AppEventHandler appEventHandler;
     private AppModel appModel;
+    private HandleServiceInterface handleService;
 
     @FXML
     private MenuBar menuBar;
@@ -71,14 +74,27 @@ public class MenuBarViewFXML implements ControlledFxView {
     }
 
     @Override
-    public void initialize(EventHandler eventHandler, AbstractModel model) {
-        this.createBehaviour();
-        this.appEventHandler = (AppEventHandler) eventHandler;
+    public void initialize(HandleServiceInterface handleService, AbstractModel model) {
+        this.handleService = handleService;
         this.appModel = (AppModel) model;
+        this.createBehaviour();
+        this.createSupportedLanguagesMenuItem();
     }
 
     private void createBehaviour() {
         //About
-        this.aboutMenuItem.setOnAction(event -> this.appEventHandler.about());
+        this.aboutMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.ABOUT, ((MenuItem) event.getSource())));
+    }
+
+    private void createSupportedLanguagesMenuItem() {
+        LanguageModelInterface languageModelInterface = LanguageModel.getInstance();
+        Set<String> supportedLanguages = languageModelInterface.getSupportedLanguages();
+        for(String supportedLanguage : supportedLanguages){
+            MenuItem item = new MenuItem(supportedLanguage);
+            item.setId(supportedLanguage);
+            item.setMnemonicParsing(false);
+            item.setOnAction(event -> this.handleService.notify(EventOnApplication.CHANGE_LANGUAGE, ((MenuItem) event.getSource())));
+            this.languageMenu.getItems().add(item);
+        }
     }
 }

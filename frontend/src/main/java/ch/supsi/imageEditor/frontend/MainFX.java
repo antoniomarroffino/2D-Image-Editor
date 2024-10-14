@@ -1,14 +1,14 @@
 package ch.supsi.imageEditor.frontend;
 
 import ch.supsi.imageEditor.frontend.controller.AppController;
-import ch.supsi.imageEditor.frontend.controller.AppEventHandler;
+import ch.supsi.imageEditor.frontend.controller.EventHandler;
+import ch.supsi.imageEditor.frontend.controller.language.LanguageController;
+import ch.supsi.imageEditor.frontend.controller.observer.HandleService;
+import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.AppModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModel;
-import ch.supsi.imageEditor.frontend.view.fxml.controlled.ControlledFxView;
-import ch.supsi.imageEditor.frontend.view.fxml.controlled.MenuBarViewFXML;
-import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
-import ch.supsi.imageEditor.frontend.view.fxml.controlled.PipelineViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.*;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.*;
 import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewPopUp;
 import javafx.application.Application;
@@ -25,14 +25,16 @@ public class MainFX extends Application {
 
     private final AbstractModel appModel;
     private final AbstractModel aboutModel;
-    private final ControlledFxView menuBarView;
+    private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
     private final ControlledFxView operationView;
     private final UncontrolledFxView currentInfoView;
     private final ControlledFxView pipelineView;
     private final UncontrolledFxView infoBarView;
     private final UncontrolledView aboutView;
-    private final AppEventHandler appEventHandler;
+    private final HandleServiceInterface handleService;
+    private final EventHandler appController;
+    private final EventHandler languageController;
 
     public MainFX() {
         //APP MODEL
@@ -40,7 +42,9 @@ public class MainFX extends Application {
         this.aboutModel = AboutModel.getInstance();
 
         //CONTROLLERS
-        this.appEventHandler = AppController.getInstance();
+        this.appController = AppController.getInstance();
+        this.languageController = LanguageController.getInstance();
+        this.handleService = HandleService.getInstance();
 
         //VIEWS
         this.menuBarView = MenuBarViewFXML.getInstance();
@@ -52,7 +56,7 @@ public class MainFX extends Application {
         this.aboutView = AboutViewPopUp.getInstance();
 
         //SCAFFOLDING of M-V-C
-        this.menuBarView.initialize(this.appEventHandler, this.appModel);
+        this.menuBarView.initialize(this.handleService, this.appModel);
         this.aboutView.initialize(this.aboutModel);
     }
 

@@ -54,6 +54,7 @@
                     <include>images/*</include>
                     <include>*.properties</include>
                     <include>style/*</include>
+                    <include>i18n/*</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
