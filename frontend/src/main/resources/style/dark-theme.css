@@ -20,6 +20,16 @@
     -fx-background-color: #2b2b2b;
 }
 
+.custom-alert, .dialog-pane, .content {
+    -fx-background-color: #2b2b2b;
+}
+
+.custom-alert .header-panel {
+    -fx-background-color: #2b2b2b;
+    -fx-border-color: #555555;
+    -fx-border-width: 0 0 2px 0;
+}
+
 .tool-bar {
     -fx-background-color: #2b2b2b;
 }

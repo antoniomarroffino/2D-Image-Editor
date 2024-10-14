@@ -6,7 +6,10 @@ import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.UncontrolledView;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class AboutViewPopUp implements AboutViewInterface, UncontrolledView {
     private static AboutViewPopUp instance = null;
@@ -40,6 +43,15 @@ public class AboutViewPopUp implements AboutViewInterface, UncontrolledView {
         ImageView logoAppImageView = new ImageView(logoAppImage);
         logoAppImageView.setFitHeight(LOGO_HEIGHT);
         logoAppImageView.setFitWidth(LOGO_WIDHT);
+
+        // Get the dialog pane of the alert
+        Region dialogPane = infoView.getDialogPane();
+
+        // Add a custom CSS class to the dialog pane
+        dialogPane.getStyleClass().add("custom-alert");
+
+        // Load the CSS file
+        infoView.getDialogPane().getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/dark-theme.css")).toExternalForm());
 
         infoView.setGraphic(logoAppImageView);
         infoView.setTitle(aboutModel.getTitle());
