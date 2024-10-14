@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
 
-
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<ScrollPane fx:id="infobarScrollPane" minHeight="0.0" minWidth="0.0" prefHeight="126.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" />
+<?import javafx.scene.text.Font?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:id="infobarScrollPane" minHeight="0.0" minWidth="0.0"
+            prefHeight="126.0"
+            prefWidth="200.0" stylesheets="@style/dark-theme.css" xmlns="http://javafx.com/javafx/17">
+    <Label prefHeight="18.0" prefWidth="110.0" text="Infobar">
+        <font>
+            <Font name="Dubai Light" size="14.0"/>
+        </font>
+    </Label>
+</ScrollPane>

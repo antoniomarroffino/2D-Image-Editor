@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -14,6 +15,9 @@ import java.net.URL;
 public class OperationViewFXML implements ControlledFxView {
     private static OperationViewFXML instance = null;
     private static final String PathResourceFXML = "/operations.fxml";
+
+    @FXML
+    private Pane operationPane;
 
     @FXML
     private ScrollPane operationScrollPane;
@@ -44,7 +48,7 @@ public class OperationViewFXML implements ControlledFxView {
 
     @Override
     public Node getNode() {
-        return this.operationScrollPane;
+        return this.operationPane;
     }
 
     @Override

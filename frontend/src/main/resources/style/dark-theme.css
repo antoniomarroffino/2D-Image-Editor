@@ -1,0 +1,85 @@
+.root {
+    -fx-background-color: #2b2b2b;
+}
+
+.label, .button, .text-field, .text-area {
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-background-color: #3c3f41;
+    -fx-border-color: #555555;
+}
+
+.text-field {
+    -fx-background-color: #3c3f41;
+    -fx-border-color: #555555;
+}
+
+.menu-bar {
+    -fx-background-color: #2b2b2b;
+}
+
+.tool-bar {
+    -fx-background-color: #2b2b2b;
+}
+
+.scroll-pane {
+    -fx-background: #2b2b2b;
+    -fx-background-insets: 0;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #555555;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #555555;
+}
+
+.scroll-bar {
+    -fx-background-color: #3c3f41;
+}
+
+.menu-bar {
+    -fx-background-color: #2b2b2b;
+    -fx-border-color: #3c3f41;
+}
+
+.menu-bar .label {
+    -fx-text-fill: white;
+}
+
+.menu {
+    -fx-background-color: #2b2b2b;
+}
+
+.menu-item {
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: white;
+}
+
+.menu-item:hover {
+    -fx-background-color: #555555;
+}
+
+.anchor-pane {
+    -fx-background-color: #2b2b2b;
+    -fx-border-color: #555555;
+    -fx-border-width: 1;
+    -fx-padding: 10;
+}
+
+#infobarScrollPane {
+    -fx-background: #333333;
+    -fx-background-insets: 0;
+}
+
+#currentInfoPane {
+    -fx-background: #333333;
+    -fx-background-insets: 0;
+}
+
+#playButton:hover {
+    -fx-background-color: #00d100;
+}

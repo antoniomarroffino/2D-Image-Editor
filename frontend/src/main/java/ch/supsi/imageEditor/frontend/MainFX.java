@@ -92,6 +92,10 @@ public class MainFX extends Application {
         // SCENE
         Scene scene = new Scene(mainBorderPane);
 
+        // STYLE
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/dark-theme.css")).toExternalForm());
+
+
         // PRIMARY STAGE
         primaryStage.setTitle(MainFX.APP_TITLE);
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream(PATH_LOGO_APP_IMAGE))));
