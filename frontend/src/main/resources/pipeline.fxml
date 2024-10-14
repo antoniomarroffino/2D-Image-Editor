@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <Pane xmlns:fx="http://javafx.com/fxml/1" fx:id="pipelinePane" prefHeight="450.0" prefWidth="204.0"
-      xmlns="http://javafx.com/javafx/17">
+      xmlns="http://javafx.com/javafx/17" stylesheets="@style/dark-theme.css">
     <HBox fillHeight="false" prefHeight="42.0" prefWidth="110.0" spacing="20.0">
         <Label contentDisplay="CENTER" prefHeight="42.0" prefWidth="102.0" text="Pipeline">
             <font>
