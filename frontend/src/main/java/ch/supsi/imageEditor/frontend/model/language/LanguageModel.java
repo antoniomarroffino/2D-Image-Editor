@@ -25,10 +25,10 @@ public class LanguageModel implements LanguageModelInterface {
 
     private Properties getSupportedLanguagesProperties() {
         Properties languageProperties = new Properties();
-        try{
+        try {
             InputStream supportedLanguageTagsStream = this.getClass().getResourceAsStream(supportedLanguagesPath);
             languageProperties.load(supportedLanguageTagsStream);
-        }catch (IOException e){
+        } catch (IOException e) {
             System.err.println("ERROR: Unable to load supported languages properties from " + supportedLanguagesPath);
         }
         return languageProperties;

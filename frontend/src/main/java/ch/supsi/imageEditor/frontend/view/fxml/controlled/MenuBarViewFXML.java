@@ -4,7 +4,6 @@ import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.AppModel;
-import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,25 +48,27 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     @FXML
     private MenuItem aboutMenuItem;
 
-    private MenuBarViewFXML() {}
+    private MenuBarViewFXML() {
+    }
 
     public static MenuBarViewFXML getInstance() {
         if (instance == null) {
             instance = new MenuBarViewFXML();
-            try{
+            try {
                 URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
-                if(fxmlUrl != null){
+                if (fxmlUrl != null) {
                     FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
 
         return instance;
     }
+
     @Override
     public Node getNode() {
         return this.menuBar;
@@ -78,7 +79,6 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
         this.handleService = handleService;
         this.appModel = (AppModel) model;
         this.createBehaviour();
-        this.createSupportedLanguagesMenuItem();
     }
 
     private void createBehaviour() {
@@ -86,10 +86,10 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
         this.aboutMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.ABOUT, ((MenuItem) event.getSource())));
     }
 
-    private void createSupportedLanguagesMenuItem() {
-        LanguageModelInterface languageModelInterface = LanguageModel.getInstance();
-        Set<String> supportedLanguages = languageModelInterface.getSupportedLanguages();
-        for(String supportedLanguage : supportedLanguages){
+    @Override
+    public void createSupportedLanguagesMenuItem(LanguageModelInterface languageModel) {
+        Set<String> supportedLanguages = languageModel.getSupportedLanguages();
+        for (String supportedLanguage : supportedLanguages) {
             MenuItem item = new MenuItem(supportedLanguage);
             item.setId(supportedLanguage);
             item.setMnemonicParsing(false);

@@ -25,19 +25,20 @@ public class PipelineViewFXML implements ControlledFxView {
     @FXML
     private VBox pipelineVBox;
 
-    private PipelineViewFXML() {}
+    private PipelineViewFXML() {
+    }
 
     public static PipelineViewFXML getInstance() {
         if (instance == null) {
             instance = new PipelineViewFXML();
-            try{
+            try {
                 URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
-                if(fxmlUrl != null){
+                if (fxmlUrl != null) {
                     FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

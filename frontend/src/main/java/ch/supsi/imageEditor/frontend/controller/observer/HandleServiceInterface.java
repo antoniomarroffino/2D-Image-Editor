@@ -6,6 +6,8 @@ import java.util.function.Consumer;
 
 public interface HandleServiceInterface {
     void subscribe(EventOnApplication eventType, Consumer<MenuItem> consumer);
+
     void unsubscribe(EventOnApplication eventType, Consumer<MenuItem> consumer);
+
     void notify(EventOnApplication eventType, MenuItem event);
 }

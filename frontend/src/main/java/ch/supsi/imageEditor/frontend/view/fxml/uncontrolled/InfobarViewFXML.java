@@ -17,19 +17,20 @@ public class InfobarViewFXML implements UncontrolledFxView {
     @FXML
     private ScrollPane infobarScrollPane;
 
-    private InfobarViewFXML() {}
+    private InfobarViewFXML() {
+    }
 
     public static InfobarViewFXML getInstance() {
         if (instance == null) {
             instance = new InfobarViewFXML();
-            try{
+            try {
                 URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
-                if(fxmlUrl != null){
+                if (fxmlUrl != null) {
                     FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

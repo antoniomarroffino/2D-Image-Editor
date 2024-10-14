@@ -1,15 +1,24 @@
 package ch.supsi.imageEditor.frontend;
 
 import ch.supsi.imageEditor.frontend.controller.AppController;
-import ch.supsi.imageEditor.frontend.controller.EventHandler;
+import ch.supsi.imageEditor.frontend.controller.AppControllerInterface;
 import ch.supsi.imageEditor.frontend.controller.language.LanguageController;
+import ch.supsi.imageEditor.frontend.controller.language.LanguageControllerInterface;
+import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleService;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.AppModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModel;
+import ch.supsi.imageEditor.frontend.model.about.AboutModelInterface;
+import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
+import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.*;
-import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.*;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.CurrentInfoViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.ImageViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.InfobarViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.UncontrolledFxView;
+import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewInterface;
 import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewPopUp;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -24,27 +33,33 @@ public class MainFX extends Application {
     private static final String PATH_LOGO_APP_IMAGE = "/images/logoApp.png";
 
     private final AbstractModel appModel;
-    private final AbstractModel aboutModel;
+    private final AboutModelInterface aboutModel;
+    private final LanguageModelInterface languageModel;
+
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
     private final ControlledFxView operationView;
     private final UncontrolledFxView currentInfoView;
     private final ControlledFxView pipelineView;
     private final UncontrolledFxView infoBarView;
-    private final UncontrolledView aboutView;
+    private final AboutViewInterface aboutView;
+
     private final HandleServiceInterface handleService;
-    private final EventHandler appController;
-    private final EventHandler languageController;
+    private final AppControllerInterface appController;
+    private final LanguageControllerInterface languageController;
 
     public MainFX() {
         //APP MODEL
         this.appModel = AppModel.getInstance();
         this.aboutModel = AboutModel.getInstance();
+        this.languageModel = LanguageModel.getInstance();
 
         //CONTROLLERS
         this.appController = AppController.getInstance();
         this.languageController = LanguageController.getInstance();
         this.handleService = HandleService.getInstance();
+        this.handleService.subscribe(EventOnApplication.ABOUT, this.appController::about);
+        this.handleService.subscribe(EventOnApplication.CHANGE_LANGUAGE, this.languageController::changeLanguage);
 
         //VIEWS
         this.menuBarView = MenuBarViewFXML.getInstance();
@@ -58,6 +73,8 @@ public class MainFX extends Application {
         //SCAFFOLDING of M-V-C
         this.menuBarView.initialize(this.handleService, this.appModel);
         this.aboutView.initialize(this.aboutModel);
+
+        this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel);
     }
 
     @Override

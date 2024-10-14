@@ -17,25 +17,27 @@ public class ImageViewFXML implements UncontrolledFxView {
     @FXML
     private Pane imagePane;
 
-    private ImageViewFXML() {}
+    private ImageViewFXML() {
+    }
 
     public static ImageViewFXML getInstance() {
         if (instance == null) {
             instance = new ImageViewFXML();
-            try{
+            try {
                 URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
-                if(fxmlUrl != null){
+                if (fxmlUrl != null) {
                     FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
 
         return instance;
     }
+
     @Override
     public Node getNode() {
         return this.imagePane;

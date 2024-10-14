@@ -17,19 +17,20 @@ public class CurrentInfoViewFXML implements UncontrolledFxView {
     @FXML
     private ScrollPane currentInfoPane;
 
-    private CurrentInfoViewFXML() {}
+    private CurrentInfoViewFXML() {
+    }
 
     public static CurrentInfoViewFXML getInstance() {
         if (instance == null) {
             instance = new CurrentInfoViewFXML();
-            try{
+            try {
                 URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
-                if(fxmlUrl != null){
+                if (fxmlUrl != null) {
                     FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

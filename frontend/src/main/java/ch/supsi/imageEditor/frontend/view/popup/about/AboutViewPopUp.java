@@ -1,8 +1,6 @@
 package ch.supsi.imageEditor.frontend.view.popup.about;
 
-import ch.supsi.imageEditor.frontend.model.AbstractModel;
-import ch.supsi.imageEditor.frontend.model.about.AboutModel;
-import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.UncontrolledView;
+import ch.supsi.imageEditor.frontend.model.about.AboutModelInterface;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,9 +9,9 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-public class AboutViewPopUp implements AboutViewInterface, UncontrolledView {
+public class AboutViewPopUp implements AboutViewInterface {
     private static AboutViewPopUp instance = null;
-    private AboutModel aboutModel;
+    private AboutModelInterface aboutModel;
     private static final int LOGO_HEIGHT = 75;
     private static final int LOGO_WIDHT = 75;
 
@@ -25,8 +23,8 @@ public class AboutViewPopUp implements AboutViewInterface, UncontrolledView {
     }
 
     @Override
-    public void initialize(AbstractModel model) {
-        this.aboutModel = (AboutModel) model;
+    public void initialize(AboutModelInterface aboutModel) {
+        this.aboutModel = aboutModel;
     }
 
     @Override

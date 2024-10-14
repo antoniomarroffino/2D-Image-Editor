@@ -1,10 +1,10 @@
 package ch.supsi.imageEditor.frontend.controller.observer;
 
-import javafx.event.Event;
-import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class HandleService implements HandleServiceInterface {
@@ -17,7 +17,7 @@ public class HandleService implements HandleServiceInterface {
     }
 
     public static HandleService getInstance() {
-        return instance == null? instance = new HandleService() : instance;
+        return instance == null ? instance = new HandleService() : instance;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class HandleService implements HandleServiceInterface {
     @Override
     public void notify(EventOnApplication eventType, MenuItem event) {
         Consumer<MenuItem> handler = this.subscribers.get(eventType);
-        if(handler != null) {
+        if (handler != null) {
             handler.accept(event);
         }
     }

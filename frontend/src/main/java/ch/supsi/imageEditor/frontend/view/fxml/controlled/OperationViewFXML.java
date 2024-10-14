@@ -25,19 +25,20 @@ public class OperationViewFXML implements ControlledFxView {
     @FXML
     private VBox operationVBox;
 
-    private OperationViewFXML() {}
+    private OperationViewFXML() {
+    }
 
     public static OperationViewFXML getInstance() {
         if (instance == null) {
             instance = new OperationViewFXML();
-            try{
+            try {
                 URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
-                if(fxmlUrl != null){
+                if (fxmlUrl != null) {
                     FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
