@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 
 public class LanguageModel implements LanguageModelInterface {
     private static LanguageModel instance = null;
-    private final Set<String> supportedLanguagesKeys;
-    private final Set<String> supportedLanguagesTags;
     private final LanguageControllerInterface languageController;
 
+    private final Set<String> supportedLanguagesKeys;
+    private final Set<String> supportedLanguagesTags;
     private static final String supportedLanguagesPath = "/i18n/supported_languages.properties";
     private final Properties supportedLanguagesProperties;
     private String currentLanguageTag;
@@ -26,6 +26,7 @@ public class LanguageModel implements LanguageModelInterface {
         this.supportedLanguagesKeys = this.getSupportedLanguagesKeys();
         this.supportedLanguagesTags = this.getSupportedLanguagesTags();
         this.languageController = LanguageController.getInstance();
+
         String languageTag = this.languageController.getCurrentLanguageTag();
         checkLanguageTagSupported(languageTag);
         System.out.println(this.currentLanguageTag);
@@ -56,7 +57,7 @@ public class LanguageModel implements LanguageModelInterface {
 
     private void checkLanguageTagSupported(String languageTag) {
         try {
-            if(!supportedLanguagesTags.contains(languageTag)) {
+            if (!supportedLanguagesTags.contains(languageTag)) {
                 this.currentLanguageTag = supportedLanguagesTags.stream().findFirst().orElseThrow();
                 throw new LanguageNotSupportedException("Language tag " + languageTag + " not supported!\nEnglish is set as default language.");
             } else

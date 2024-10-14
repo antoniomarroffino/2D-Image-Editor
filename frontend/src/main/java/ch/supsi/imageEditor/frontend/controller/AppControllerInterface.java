@@ -1,7 +1,7 @@
 package ch.supsi.imageEditor.frontend.controller;
 
-import javafx.scene.control.MenuItem;
+import ch.supsi.imageEditor.frontend.adapter.Component;
 
-public interface AppControllerInterface extends EventHandler {
-    void about(MenuItem node);
+public interface AppControllerInterface {
+    void about(Component node);
 }

@@ -1,8 +1,7 @@
 package ch.supsi.imageEditor.frontend.controller.language;
 
-import ch.supsi.imageEditor.frontend.controller.EventHandler;
-import javafx.scene.control.MenuItem;
+import ch.supsi.imageEditor.frontend.adapter.Component;
 
-public interface LanguageControllerInterface extends EventHandler {
-    void changeLanguage(MenuItem node);
+public interface LanguageControllerInterface {
+    void changeLanguage(Component node);
 }

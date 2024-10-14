@@ -1,13 +1,13 @@
 package ch.supsi.imageEditor.frontend.controller.observer;
 
-import javafx.scene.control.MenuItem;
+import ch.supsi.imageEditor.frontend.adapter.Component;
 
 import java.util.function.Consumer;
 
 public interface HandleServiceInterface {
-    void subscribe(EventOnApplication eventType, Consumer<MenuItem> consumer);
+    void subscribe(EventOnApplication eventType, Consumer<Component> consumer);
 
-    void unsubscribe(EventOnApplication eventType, Consumer<MenuItem> consumer);
+    void unsubscribe(EventOnApplication eventType, Consumer<Component> consumer);
 
-    void notify(EventOnApplication eventType, MenuItem event);
+    void notify(EventOnApplication eventType, Component event);
 }

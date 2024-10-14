@@ -1,9 +1,9 @@
 package ch.supsi.imageEditor.frontend.controller;
 
+import ch.supsi.imageEditor.frontend.adapter.Component;
 import ch.supsi.imageEditor.frontend.model.AppModel;
 import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewInterface;
 import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewPopUp;
-import javafx.scene.control.MenuItem;
 
 public class AppController implements AppControllerInterface {
     private static AppController instance = null;
@@ -21,7 +21,7 @@ public class AppController implements AppControllerInterface {
     }
 
     @Override
-    public void about(MenuItem node) {
+    public void about(Component node) {
         this.aboutView.showAboutInformation();
     }
 }

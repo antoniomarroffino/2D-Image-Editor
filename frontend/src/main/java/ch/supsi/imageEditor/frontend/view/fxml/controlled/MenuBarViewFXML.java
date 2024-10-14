@@ -1,9 +1,9 @@
 package ch.supsi.imageEditor.frontend.view.fxml.controlled;
 
+import ch.supsi.imageEditor.frontend.adapter.MenuItemAdapter;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
-import ch.supsi.imageEditor.frontend.model.AppModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +19,6 @@ import java.util.Set;
 public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     private static MenuBarViewFXML instance = null;
     private static final String PathResourceFXML = "/menubar.fxml";
-
-    private AppModel appModel;
     private HandleServiceInterface handleService;
 
     @FXML
@@ -77,13 +75,12 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     @Override
     public void initialize(HandleServiceInterface handleService, AbstractModel model) {
         this.handleService = handleService;
-        this.appModel = (AppModel) model;
         this.createBehaviour();
     }
 
     private void createBehaviour() {
         //About
-        this.aboutMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.ABOUT, ((MenuItem) event.getSource())));
+        this.aboutMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.ABOUT, new MenuItemAdapter((MenuItem) event.getSource())));
     }
 
     @Override
@@ -93,7 +90,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
             MenuItem item = new MenuItem(supportedLanguage);
             item.setId(supportedLanguage);
             item.setMnemonicParsing(false);
-            item.setOnAction(event -> this.handleService.notify(EventOnApplication.CHANGE_LANGUAGE, ((MenuItem) event.getSource())));
+            item.setOnAction(event -> this.handleService.notify(EventOnApplication.CHANGE_LANGUAGE, new MenuItemAdapter((MenuItem) event.getSource())));
             this.languageMenu.getItems().add(item);
         }
     }

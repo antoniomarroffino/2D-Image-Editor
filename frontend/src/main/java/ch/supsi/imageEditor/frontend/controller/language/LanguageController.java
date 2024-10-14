@@ -1,8 +1,8 @@
 package ch.supsi.imageEditor.frontend.controller.language;
 
+import ch.supsi.imageEditor.frontend.adapter.Component;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
-import javafx.scene.control.MenuItem;
 
 public class LanguageController implements LanguageControllerInterface {
     private static LanguageController instance = null;
@@ -17,7 +17,7 @@ public class LanguageController implements LanguageControllerInterface {
     }
 
     @Override
-    public void changeLanguage(MenuItem node) {
+    public void changeLanguage(Component node) {
         System.out.println(node.getId());
     }
 }
