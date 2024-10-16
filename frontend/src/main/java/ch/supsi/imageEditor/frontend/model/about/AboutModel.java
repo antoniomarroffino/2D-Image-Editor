@@ -34,22 +34,22 @@ public class AboutModel extends AbstractModel implements AboutModelInterface {
 
     @Override
     public String getVersion() {
-        return "Version: " + this.buildProperties.getProperty("build.version");
+        return ": " + this.buildProperties.getProperty("build.version");
     }
 
     @Override
     public String getProjectName() {
-        return "Name: " + this.buildProperties.getProperty("build.name");
+        return ": " + this.buildProperties.getProperty("build.name");
     }
 
     @Override
     public String getDevelopersName() {
-        return "Developers: " + this.buildProperties.getProperty("build.devs");
+        return ": " + this.buildProperties.getProperty("build.devs");
     }
 
     @Override
     public String getBuiltDate() {
-        return "Build Date: " + this.buildProperties.getProperty("build.timestamp");
+        return ": " + this.buildProperties.getProperty("build.timestamp");
     }
 
     @Override
@@ -59,13 +59,7 @@ public class AboutModel extends AbstractModel implements AboutModelInterface {
 
     @Override
     public String getHeaderText() {
-        return "Version and ArtifactID of: \n" + "2D Image Editor";
-    }
-
-    @Override
-    public String getContextText() {
-        return this.getVersion() + "\n" + this.getProjectName() + "\n" +
-                this.getBuiltDate() + "\n" + this.getDevelopersName();
+        return ": \n" + "2D Image Editor";
     }
 
     @Override

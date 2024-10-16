@@ -8,6 +8,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class AboutViewPopUp implements AboutViewInterface {
     private static AboutViewPopUp instance = null;
@@ -15,10 +16,12 @@ public class AboutViewPopUp implements AboutViewInterface {
     private static final int LOGO_HEIGHT = 75;
     private static final int LOGO_WIDTH = 75;
 
-    private AboutViewPopUp() {
-    }
+    private static ResourceBundle resourceBundle;
 
-    public static AboutViewPopUp getInstance() {
+    private AboutViewPopUp() {}
+
+    public static AboutViewPopUp getInstance(ResourceBundle resBundle) {
+        resourceBundle = resBundle;
         return instance == null ? instance = new AboutViewPopUp() : instance;
     }
 
@@ -53,8 +56,11 @@ public class AboutViewPopUp implements AboutViewInterface {
 
         infoView.setGraphic(logoAppImageView);
         infoView.setTitle(aboutModel.getTitle());
-        infoView.setHeaderText(aboutModel.getHeaderText());
-        infoView.setContentText(aboutModel.getContextText());
+        infoView.setHeaderText(resourceBundle.getString("About.header") + aboutModel.getHeaderText());
+        infoView.setContentText(resourceBundle.getString("About.version") + aboutModel.getVersion() + "\n"
+                + resourceBundle.getString("About.projectName") + aboutModel.getProjectName() + "\n"
+                + resourceBundle.getString("About.buildDate") + aboutModel.getBuiltDate() + "\n"
+                + resourceBundle.getString("About.developers") + aboutModel.getDevelopersName());
         return infoView;
     }
 }

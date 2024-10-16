@@ -15,7 +15,5 @@ public interface AboutModelInterface {
 
     String getHeaderText();
 
-    String getContextText();
-
     InputStream getLogoInputStream();
 }
