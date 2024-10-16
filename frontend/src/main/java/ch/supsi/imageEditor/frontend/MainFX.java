@@ -1,5 +1,6 @@
 package ch.supsi.imageEditor.frontend;
 
+import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.controller.AppController;
 import ch.supsi.imageEditor.frontend.controller.AppControllerInterface;
 import ch.supsi.imageEditor.frontend.controller.language.LanguageController;
@@ -11,6 +12,8 @@ import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.AppModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModelInterface;
+import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModel;
+import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.*;
@@ -35,6 +38,7 @@ public class MainFX extends Application {
     private final AbstractModel appModel;
     private final AboutModelInterface aboutModel;
     private final LanguageModelInterface languageModel;
+    private final HandleViewModelInterface handleViewModel;
 
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
@@ -53,6 +57,7 @@ public class MainFX extends Application {
         this.appModel = AppModel.getInstance();
         this.aboutModel = AboutModel.getInstance();
         this.languageModel = LanguageModel.getInstance();
+        this.handleViewModel = HandleViewModel.getInstance();
 
         //CONTROLLERS
         this.appController = AppController.getInstance();
@@ -71,8 +76,9 @@ public class MainFX extends Application {
         this.aboutView = AboutViewPopUp.getInstance();
 
         //SCAFFOLDING of M-V-C
-        this.menuBarView.initialize(this.handleService, this.appModel);
+        this.menuBarView.initialize(this.handleService, this.appModel, this.handleViewModel);
         this.aboutView.initialize(this.aboutModel);
+        this.infoBarView.initialize(this.appModel, this.handleViewModel);
 
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel);
     }

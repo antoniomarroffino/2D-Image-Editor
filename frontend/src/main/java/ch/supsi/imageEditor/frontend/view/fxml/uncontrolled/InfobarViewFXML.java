@@ -1,6 +1,8 @@
 package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
 
+import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
+import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,7 +46,12 @@ public class InfobarViewFXML implements UncontrolledFxView {
     }
 
     @Override
-    public void initialize(AbstractModel model) {
+    public void initialize(AbstractModel model, HandleViewModelInterface handleViewModel) {
+        handleViewModel.subscribe(EventType.CHANGE_LANGUAGE, this);
+    }
 
+    @Override
+    public void update(EventType eventType) {
+        System.out.println(eventType.name());
     }
 }

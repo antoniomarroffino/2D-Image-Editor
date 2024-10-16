@@ -1,9 +1,11 @@
 package ch.supsi.imageEditor.frontend.view.fxml.controlled;
 
+import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.adapter.MenuItemAdapter;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
+import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,7 +75,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     }
 
     @Override
-    public void initialize(HandleServiceInterface handleService, AbstractModel model) {
+    public void initialize(HandleServiceInterface handleService, AbstractModel model, HandleViewModelInterface handleViewModel) {
         this.handleService = handleService;
         this.createBehaviour();
     }
@@ -93,5 +95,10 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
             item.setOnAction(event -> this.handleService.notify(EventOnApplication.CHANGE_LANGUAGE, new MenuItemAdapter((MenuItem) event.getSource())));
             this.languageMenu.getItems().add(item);
         }
+    }
+
+    @Override
+    public void update(EventType eventType) {
+
     }
 }

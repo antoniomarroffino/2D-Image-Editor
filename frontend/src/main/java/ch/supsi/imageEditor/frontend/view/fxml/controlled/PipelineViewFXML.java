@@ -1,7 +1,9 @@
 package ch.supsi.imageEditor.frontend.view.fxml.controlled;
 
+import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
+import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -53,7 +55,12 @@ public class PipelineViewFXML implements ControlledFxView {
     }
 
     @Override
-    public void initialize(HandleServiceInterface handleService, AbstractModel model) {
+    public void initialize(HandleServiceInterface handleService, AbstractModel model, HandleViewModelInterface handleViewModel) {
         this.handleService = handleService;
+    }
+
+    @Override
+    public void update(EventType eventType) {
+
     }
 }
