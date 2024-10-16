@@ -18,6 +18,7 @@ public class LanguageController implements LanguageControllerInterface {
 
     @Override
     public void changeLanguage(Component node) {
-        System.out.println(node.getId());
+        String languageKey = node.getId();
+        this.languageModel.changeLanguage(languageKey);
     }
 }

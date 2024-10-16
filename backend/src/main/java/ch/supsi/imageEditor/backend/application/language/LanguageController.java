@@ -18,4 +18,9 @@ public class LanguageController implements LanguageControllerInterface {
     public String getCurrentLanguageTag() {
         return this.languageModel.getCurrentLanguageTag();
     }
+
+    @Override
+    public void changeLanguageTag(String languageTag) {
+        this.languageModel.changeLanguage(languageTag);
+    }
 }

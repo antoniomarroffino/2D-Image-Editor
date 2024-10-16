@@ -6,30 +6,26 @@ import ch.supsi.imageEditor.frontend.exception.LanguageNotSupportedException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class LanguageModel implements LanguageModelInterface {
     private static LanguageModel instance = null;
     private final LanguageControllerInterface languageController;
 
-    private final Set<String> supportedLanguagesKeys;
-    private final Set<String> supportedLanguagesTags;
-    private static final String supportedLanguagesPath = "/i18n/supported_languages.properties";
+    private final Map<String, String> supportedLanguagesKeyTag;
     private final Properties supportedLanguagesProperties;
     private String currentLanguageTag;
 
+    private static final String supportedLanguagesPath = "/i18n/supported_languages.properties";
+
     private LanguageModel() {
         this.supportedLanguagesProperties = this.getSupportedLanguagesProperties();
-        this.supportedLanguagesKeys = this.getSupportedLanguagesKeys();
-        this.supportedLanguagesTags = this.getSupportedLanguagesTags();
+        this.supportedLanguagesKeyTag = this.getSupportedLanguagesKeyTag();
         this.languageController = LanguageController.getInstance();
 
         String languageTag = this.languageController.getCurrentLanguageTag();
         checkLanguageTagSupported(languageTag);
-        System.out.println(this.currentLanguageTag);
     }
 
     public static LanguageModel getInstance() {
@@ -47,18 +43,17 @@ public class LanguageModel implements LanguageModelInterface {
         return languageProperties;
     }
 
-    private Set<String> getSupportedLanguagesKeys() {
-        return supportedLanguagesProperties.keySet().stream().map(String::valueOf).collect(Collectors.toSet());
-    }
-
-    private Set<String> getSupportedLanguagesTags() {
-        return supportedLanguagesProperties.values().stream().map(String::valueOf).collect(Collectors.toSet());
+    private Map<String, String> getSupportedLanguagesKeyTag() {
+        Map<String, String> languageKeyTag = new HashMap<>();
+        for(String languageKey : this.supportedLanguagesProperties.keySet().stream().map(String::valueOf).toList())
+            languageKeyTag.put(languageKey, this.supportedLanguagesProperties.getProperty(languageKey));
+        return languageKeyTag;
     }
 
     private void checkLanguageTagSupported(String languageTag) {
         try {
-            if (!supportedLanguagesTags.contains(languageTag)) {
-                this.currentLanguageTag = supportedLanguagesTags.stream().findFirst().orElseThrow();
+            if (!this.supportedLanguagesKeyTag.containsValue(languageTag)) {
+                this.currentLanguageTag = this.supportedLanguagesKeyTag.values().stream().findFirst().orElseThrow();
                 throw new LanguageNotSupportedException("Language tag " + languageTag + " not supported!\nEnglish is set as default language.");
             } else
                 this.currentLanguageTag = languageTag;
@@ -69,6 +64,13 @@ public class LanguageModel implements LanguageModelInterface {
 
     @Override
     public Set<String> getSupportedLanguages() {
-        return new HashSet<>(supportedLanguagesKeys);
+        return new HashSet<>(this.supportedLanguagesKeyTag.keySet());
+    }
+
+    @Override
+    public void changeLanguage(String languageKey) {
+        String languageTag = this.supportedLanguagesKeyTag.get(languageKey);
+        if(languageTag != null)
+            this.languageController.changeLanguageTag(languageTag);
     }
 }

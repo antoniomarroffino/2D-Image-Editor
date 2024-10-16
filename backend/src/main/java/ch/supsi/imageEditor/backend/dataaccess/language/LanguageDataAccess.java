@@ -1,11 +1,9 @@
 package ch.supsi.imageEditor.backend.dataaccess.language;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class LanguageDataAccess implements LanguageDataAccessInterface {
@@ -39,6 +37,17 @@ public class LanguageDataAccess implements LanguageDataAccessInterface {
         this.createUserPreferencesFile(userPreferences);
 
         return this.getLanguageTagFromProperties();
+    }
+
+    @Override
+    public void changeLanguage(String languageTag) {
+        String content = "language-tag=" + languageTag;
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(String.valueOf(this.getUserPreferencesFilePath())))) {
+            writer.write(content);
+        } catch (IOException e) {
+            System.err.println("An error occurred while writing to the file: " + e.getMessage());
+        }
     }
 
     private boolean userPreferencesFileExists() {

@@ -18,4 +18,9 @@ public class LanguageModel implements LanguageModelInterface {
     public String getCurrentLanguageTag() {
         return this.languageDataAccess.getCurrentLanguageTag();
     }
+
+    @Override
+    public void changeLanguage(String languageTag) {
+        this.languageDataAccess.changeLanguage(languageTag);
+    }
 }
