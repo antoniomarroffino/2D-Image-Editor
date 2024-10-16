@@ -50,6 +50,7 @@ public class CurrentInfoViewFXML implements UncontrolledFxView {
     public void initialize(AbstractModel model, HandleViewModelInterface handleViewModel) {
 
     }
+
     @Override
     public void update(EventType eventType) {
 

@@ -2,7 +2,7 @@ package ch.supsi.imageEditor.backend.application.observer;
 
 import java.util.*;
 
-public class NotificationService implements NotificationServiceInterface{
+public class NotificationService implements NotificationServiceInterface {
     private static NotificationService instance = null;
     private final Map<EventType, List<EventListener>> subscribers;
 

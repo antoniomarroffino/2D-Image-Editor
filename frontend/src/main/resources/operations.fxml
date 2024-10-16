@@ -9,7 +9,7 @@
 <Pane xmlns:fx="http://javafx.com/fxml/1" fx:id="operationPane" prefHeight="450.0" prefWidth="204.0"
       stylesheets="@style/dark-theme.css"
       xmlns="http://javafx.com/javafx/17">
-    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="204.0" text="Operations">
+    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="204.0" text="%Operations.title">
         <font>
             <Font name="Dubai Light" size="18.0"/>
         </font>

@@ -5,5 +5,6 @@ import ch.supsi.imageEditor.backend.application.observer.EventType;
 
 public interface PubSubModelInterface {
     void subscribe(EventType eventType, EventListener listener);
+
     void unsubscribe(EventType eventType, EventListener listener);
 }

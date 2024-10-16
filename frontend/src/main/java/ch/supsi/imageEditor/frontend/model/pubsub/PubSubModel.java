@@ -5,7 +5,7 @@ import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.application.observer.NotificationService;
 import ch.supsi.imageEditor.backend.application.observer.NotificationServiceInterface;
 
-public class PubSubModel implements PubSubModelInterface{
+public class PubSubModel implements PubSubModelInterface {
     private static PubSubModel instance = null;
     private final NotificationServiceInterface notificationService;
 

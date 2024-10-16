@@ -8,7 +8,6 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 public class AboutViewPopUp implements AboutViewInterface {
     private static AboutViewPopUp instance = null;
@@ -16,7 +15,8 @@ public class AboutViewPopUp implements AboutViewInterface {
     private static final int LOGO_HEIGHT = 75;
     private static final int LOGO_WIDTH = 75;
 
-    private AboutViewPopUp() { }
+    private AboutViewPopUp() {
+    }
 
     public static AboutViewPopUp getInstance() {
         return instance == null ? instance = new AboutViewPopUp() : instance;

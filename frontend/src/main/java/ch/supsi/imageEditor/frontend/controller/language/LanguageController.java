@@ -21,7 +21,7 @@ public class LanguageController implements LanguageControllerInterface, EventLis
         this.languageModel = LanguageModel.getInstance();
         this.handleViewModel = HandleViewModel.getInstance();
         this.pubSubModel = PubSubModel.getInstance();
-        this.pubSubModel.subscribe(EventType.CHANGE_LANGUAGE,this);
+        this.pubSubModel.subscribe(EventType.CHANGE_LANGUAGE, this);
     }
 
     public static LanguageController getInstance() {
@@ -36,7 +36,7 @@ public class LanguageController implements LanguageControllerInterface, EventLis
 
     @Override
     public void update(EventType eventType) {
-        for(DataView view : this.handleViewModel.getViewsOnEventType(eventType))
+        for (DataView view : this.handleViewModel.getViewsOnEventType(eventType))
             view.update(eventType);
     }
 }

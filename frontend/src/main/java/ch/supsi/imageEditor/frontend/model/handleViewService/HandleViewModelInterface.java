@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface HandleViewModelInterface {
     void subscribe(EventType eventType, DataView view);
+
     void unsubscribe(EventType eventType, DataView view);
+
     List<DataView> getViewsOnEventType(EventType eventType);
 }
