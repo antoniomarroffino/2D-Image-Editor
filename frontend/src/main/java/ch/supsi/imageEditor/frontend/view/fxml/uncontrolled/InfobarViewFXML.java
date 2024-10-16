@@ -11,6 +11,7 @@ import javafx.scene.control.ScrollPane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ResourceBundle;
 
 public class InfobarViewFXML implements UncontrolledFxView {
     private static InfobarViewFXML instance = null;
@@ -22,13 +23,13 @@ public class InfobarViewFXML implements UncontrolledFxView {
     private InfobarViewFXML() {
     }
 
-    public static InfobarViewFXML getInstance() {
+    public static InfobarViewFXML getInstance(ResourceBundle resourceBundle) {
         if (instance == null) {
             instance = new InfobarViewFXML();
             try {
                 URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
                 if (fxmlUrl != null) {
-                    FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+                    FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl, resourceBundle);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
                 }

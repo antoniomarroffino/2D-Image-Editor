@@ -1,6 +1,5 @@
 package ch.supsi.imageEditor.frontend;
 
-import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.controller.AppController;
 import ch.supsi.imageEditor.frontend.controller.AppControllerInterface;
 import ch.supsi.imageEditor.frontend.controller.language.LanguageController;
@@ -30,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class MainFX extends Application {
     public static final String APP_TITLE = "2D Image Editor";
@@ -52,6 +52,8 @@ public class MainFX extends Application {
     private final AppControllerInterface appController;
     private final LanguageControllerInterface languageController;
 
+    private final ResourceBundle resourceBundle;
+
     public MainFX() {
         //APP MODEL
         this.appModel = AppModel.getInstance();
@@ -66,13 +68,15 @@ public class MainFX extends Application {
         this.handleService.subscribe(EventOnApplication.ABOUT, this.appController::about);
         this.handleService.subscribe(EventOnApplication.CHANGE_LANGUAGE, this.languageController::changeLanguage);
 
+        this.resourceBundle = languageModel.getCurrentResourceBundle();
+
         //VIEWS
-        this.menuBarView = MenuBarViewFXML.getInstance();
-        this.imageView = ImageViewFXML.getInstance();
-        this.operationView = OperationViewFXML.getInstance();
-        this.currentInfoView = CurrentInfoViewFXML.getInstance();
-        this.pipelineView = PipelineViewFXML.getInstance();
-        this.infoBarView = InfobarViewFXML.getInstance();
+        this.menuBarView = MenuBarViewFXML.getInstance(this.resourceBundle);
+        this.imageView = ImageViewFXML.getInstance(this.resourceBundle);
+        this.operationView = OperationViewFXML.getInstance(this.resourceBundle);
+        this.currentInfoView = CurrentInfoViewFXML.getInstance(this.resourceBundle);
+        this.pipelineView = PipelineViewFXML.getInstance(this.resourceBundle);
+        this.infoBarView = InfobarViewFXML.getInstance(this.resourceBundle);
         this.aboutView = AboutViewPopUp.getInstance();
 
         //SCAFFOLDING of M-V-C
@@ -122,7 +126,6 @@ public class MainFX extends Application {
         // STYLE
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/dark-theme.css")).toExternalForm());
 
-
         // PRIMARY STAGE
         primaryStage.setTitle(MainFX.APP_TITLE);
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream(PATH_LOGO_APP_IMAGE))));
@@ -130,7 +133,6 @@ public class MainFX extends Application {
         primaryStage.setScene(scene);
         primaryStage.toFront();
         primaryStage.show();
-
     }
 
     public static void main(String[] args) {

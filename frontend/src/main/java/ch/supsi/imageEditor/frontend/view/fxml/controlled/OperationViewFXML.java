@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ResourceBundle;
 
 public class OperationViewFXML implements ControlledFxView {
     private static OperationViewFXML instance = null;
@@ -31,13 +32,13 @@ public class OperationViewFXML implements ControlledFxView {
     private OperationViewFXML() {
     }
 
-    public static OperationViewFXML getInstance() {
+    public static OperationViewFXML getInstance(ResourceBundle resourceBundle) {
         if (instance == null) {
             instance = new OperationViewFXML();
             try {
                 URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
                 if (fxmlUrl != null) {
-                    FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+                    FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl, resourceBundle);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
                 }

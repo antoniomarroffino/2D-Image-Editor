@@ -4,8 +4,8 @@
 <MenuBar xmlns:fx="http://javafx.com/fxml/1" fx:id="menuBar" stylesheets="@style/dark-theme.css"
          xmlns="http://javafx.com/javafx/17">
     <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
-        <MenuItem fx:id="openMenuItem" mnemonicParsing="false" text="Open…"/>
-        <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Open Recent"/>
+        <MenuItem fx:id="openMenuItem" mnemonicParsing="false" text="%MenuBar.open"/>
+        <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="%MenuBar.openRecent"/>
         <MenuItem fx:id="saveMenuItem" disable="true" mnemonicParsing="false" text="Save"/>
         <MenuItem fx:id="saveAsMenuItem" disable="true" mnemonicParsing="false" text="Save As…"/>
         <SeparatorMenuItem mnemonicParsing="false"/>

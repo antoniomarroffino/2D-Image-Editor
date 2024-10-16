@@ -8,15 +8,15 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class AboutViewPopUp implements AboutViewInterface {
     private static AboutViewPopUp instance = null;
     private AboutModelInterface aboutModel;
     private static final int LOGO_HEIGHT = 75;
-    private static final int LOGO_WIDHT = 75;
+    private static final int LOGO_WIDTH = 75;
 
-    private AboutViewPopUp() {
-    }
+    private AboutViewPopUp() { }
 
     public static AboutViewPopUp getInstance() {
         return instance == null ? instance = new AboutViewPopUp() : instance;
@@ -40,7 +40,7 @@ public class AboutViewPopUp implements AboutViewInterface {
         Image logoAppImage = new Image(aboutModel.getLogoInputStream());
         ImageView logoAppImageView = new ImageView(logoAppImage);
         logoAppImageView.setFitHeight(LOGO_HEIGHT);
-        logoAppImageView.setFitWidth(LOGO_WIDHT);
+        logoAppImageView.setFitWidth(LOGO_WIDTH);
 
         // Get the dialog pane of the alert
         Region dialogPane = infoView.getDialogPane();

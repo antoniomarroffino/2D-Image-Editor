@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ResourceBundle;
 
 public class ImageViewFXML implements UncontrolledFxView {
     private static ImageViewFXML instance = null;
@@ -22,13 +23,13 @@ public class ImageViewFXML implements UncontrolledFxView {
     private ImageViewFXML() {
     }
 
-    public static ImageViewFXML getInstance() {
+    public static ImageViewFXML getInstance(ResourceBundle resourceBundle) {
         if (instance == null) {
             instance = new ImageViewFXML();
             try {
                 URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
                 if (fxmlUrl != null) {
-                    FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+                    FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl, resourceBundle);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
                 }

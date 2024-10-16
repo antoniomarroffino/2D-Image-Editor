@@ -16,6 +16,7 @@ import javafx.scene.control.MenuItem;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
@@ -51,13 +52,13 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     private MenuBarViewFXML() {
     }
 
-    public static MenuBarViewFXML getInstance() {
+    public static MenuBarViewFXML getInstance(ResourceBundle resourceBundle) {
         if (instance == null) {
             instance = new MenuBarViewFXML();
             try {
                 URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
                 if (fxmlUrl != null) {
-                    FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+                    FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl, resourceBundle);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
                 }

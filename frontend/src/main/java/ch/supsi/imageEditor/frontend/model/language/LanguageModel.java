@@ -7,7 +7,6 @@ import ch.supsi.imageEditor.frontend.exception.LanguageNotSupportedException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class LanguageModel implements LanguageModelInterface {
     private static LanguageModel instance = null;
@@ -16,7 +15,9 @@ public class LanguageModel implements LanguageModelInterface {
     private final Map<String, String> supportedLanguagesKeyTag;
     private final Properties supportedLanguagesProperties;
     private String currentLanguageTag;
+    private final ResourceBundle resourceBundle;
 
+    private static final String languageBundlePath = "i18n.labels";
     private static final String supportedLanguagesPath = "/i18n/supported_languages.properties";
 
     private LanguageModel() {
@@ -26,10 +27,20 @@ public class LanguageModel implements LanguageModelInterface {
 
         String languageTag = this.languageController.getCurrentLanguageTag();
         checkLanguageTagSupported(languageTag);
+        resourceBundle = this.createCurrentResourceBundle();
     }
 
     public static LanguageModel getInstance() {
         return instance == null ? instance = new LanguageModel() : instance;
+    }
+
+    private ResourceBundle createCurrentResourceBundle() {
+        return ResourceBundle.getBundle(languageBundlePath, Locale.forLanguageTag(this.currentLanguageTag));
+    }
+
+    @Override
+    public ResourceBundle getCurrentResourceBundle() {
+        return this.resourceBundle;
     }
 
     private Properties getSupportedLanguagesProperties() {
@@ -45,7 +56,7 @@ public class LanguageModel implements LanguageModelInterface {
 
     private Map<String, String> getSupportedLanguagesKeyTag() {
         Map<String, String> languageKeyTag = new HashMap<>();
-        for(String languageKey : this.supportedLanguagesProperties.keySet().stream().map(String::valueOf).toList())
+        for (String languageKey : this.supportedLanguagesProperties.keySet().stream().map(String::valueOf).toList())
             languageKeyTag.put(languageKey, this.supportedLanguagesProperties.getProperty(languageKey));
         return languageKeyTag;
     }
@@ -70,7 +81,7 @@ public class LanguageModel implements LanguageModelInterface {
     @Override
     public void changeLanguage(String languageKey) {
         String languageTag = this.supportedLanguagesKeyTag.get(languageKey);
-        if(languageTag != null)
+        if (languageTag != null)
             this.languageController.changeLanguageTag(languageTag);
     }
 }
