@@ -81,7 +81,9 @@ public class LanguageModel implements LanguageModelInterface {
     @Override
     public void changeLanguage(String languageKey) {
         String languageTag = this.supportedLanguagesKeyTag.get(languageKey);
-        if (languageTag != null)
+        if (languageTag != null && !languageTag.equals(this.currentLanguageTag)){
             this.languageController.changeLanguageTag(languageTag);
+            this.currentLanguageTag = languageTag;
+        }
     }
 }

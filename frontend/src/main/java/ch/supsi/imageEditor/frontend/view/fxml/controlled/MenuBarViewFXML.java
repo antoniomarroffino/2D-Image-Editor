@@ -23,6 +23,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     private static MenuBarViewFXML instance = null;
     private static final String PathResourceFXML = "/menubar.fxml";
     private HandleServiceInterface handleService;
+    private static ResourceBundle bundle;
 
     @FXML
     private MenuBar menuBar;
@@ -61,6 +62,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
                     FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl, resourceBundle);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
+                    bundle = resourceBundle;
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -93,6 +95,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
             MenuItem item = new MenuItem(supportedLanguage);
             item.setId(supportedLanguage);
             item.setMnemonicParsing(false);
+            item.setText(bundle.getString("MenuBar." + supportedLanguage));
             item.setOnAction(event -> this.handleService.notify(EventOnApplication.CHANGE_LANGUAGE, new MenuItemAdapter((MenuItem) event.getSource())));
             this.languageMenu.getItems().add(item);
         }

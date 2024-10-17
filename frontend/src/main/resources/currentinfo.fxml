@@ -6,7 +6,7 @@
 <ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:id="currentInfoPane" focusTraversable="true" maxHeight="-Infinity"
             maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="126.0"
             prefWidth="204.0" stylesheets="@style/dark-theme.css" xmlns="http://javafx.com/javafx/17">
-    <Label prefHeight="26.0" prefWidth="134.0" text="Current info">
+    <Label prefHeight="26.0" prefWidth="134.0" text="%CurrentInfo.title">
         <font>
             <Font name="Dubai Light" size="14.0"/>
         </font>
