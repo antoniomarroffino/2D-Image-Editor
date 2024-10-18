@@ -18,7 +18,8 @@ public class AboutViewPopUp implements AboutViewInterface {
 
     private static ResourceBundle resourceBundle;
 
-    private AboutViewPopUp() {}
+    private AboutViewPopUp() {
+    }
 
     public static AboutViewPopUp getInstance(ResourceBundle resBundle) {
         resourceBundle = resBundle;

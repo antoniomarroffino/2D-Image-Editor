@@ -3,12 +3,13 @@ package ch.supsi.imageEditor.frontend.model.language;
 import ch.supsi.imageEditor.backend.application.language.LanguageController;
 import ch.supsi.imageEditor.backend.application.language.LanguageControllerInterface;
 import ch.supsi.imageEditor.frontend.exception.LanguageNotSupportedException;
+import ch.supsi.imageEditor.frontend.model.AbstractModel;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-public class LanguageModel implements LanguageModelInterface {
+public class LanguageModel extends AbstractModel implements LanguageModelInterface {
     private static LanguageModel instance = null;
     private final LanguageControllerInterface languageController;
 
@@ -41,6 +42,15 @@ public class LanguageModel implements LanguageModelInterface {
     @Override
     public ResourceBundle getCurrentResourceBundle() {
         return this.resourceBundle;
+    }
+
+    @Override
+    public String getCurrentLanguage() {
+        return this.supportedLanguagesKeyTag.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().equals(this.currentLanguageTag))
+                .map(Map.Entry::getKey)
+                .findFirst().orElseThrow();
     }
 
     private Properties getSupportedLanguagesProperties() {
@@ -81,7 +91,7 @@ public class LanguageModel implements LanguageModelInterface {
     @Override
     public void changeLanguage(String languageKey) {
         String languageTag = this.supportedLanguagesKeyTag.get(languageKey);
-        if (languageTag != null && !languageTag.equals(this.currentLanguageTag)){
+        if (languageTag != null && !languageTag.equals(this.currentLanguageTag)) {
             this.languageController.changeLanguageTag(languageTag);
             this.currentLanguageTag = languageTag;
         }

@@ -42,7 +42,7 @@ public class MainFX extends Application {
 
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
-    private final ControlledFxView operationView;
+    private final OperationViewFXMLInterface operationView;
     private final UncontrolledFxView currentInfoView;
     private final ControlledFxView pipelineView;
     private final UncontrolledFxView infoBarView;
@@ -66,6 +66,7 @@ public class MainFX extends Application {
         this.languageController = LanguageController.getInstance();
         this.handleService = HandleService.getInstance();
         this.handleService.subscribe(EventOnApplication.ABOUT, this.appController::about);
+        this.handleService.subscribe(EventOnApplication.HELP, this.appController::help);
         this.handleService.subscribe(EventOnApplication.CHANGE_LANGUAGE, this.languageController::changeLanguage);
 
         this.resourceBundle = languageModel.getCurrentResourceBundle();
@@ -82,9 +83,11 @@ public class MainFX extends Application {
         //SCAFFOLDING of M-V-C
         this.menuBarView.initialize(this.handleService, this.appModel, this.handleViewModel);
         this.aboutView.initialize(this.aboutModel);
-        this.infoBarView.initialize(this.appModel, this.handleViewModel);
+        this.infoBarView.initialize((AbstractModel) this.languageModel, this.handleViewModel);
 
-        this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel);
+        this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());
+        //this.menuBarView.createOpenRecentMenuItem(null);
+        // this.operationView.createOperationMenuItem(null);
     }
 
     @Override

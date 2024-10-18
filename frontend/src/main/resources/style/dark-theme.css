@@ -85,7 +85,7 @@
     -fx-background-insets: 0;
 }
 
-#currentInfoPane {
+#currentInfoPane, #infoBarPane, #vboxInfoBar {
     -fx-background: #333333;
     -fx-background-insets: 0;
 }

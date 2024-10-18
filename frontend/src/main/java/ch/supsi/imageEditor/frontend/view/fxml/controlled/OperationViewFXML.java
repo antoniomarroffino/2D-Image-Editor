@@ -7,6 +7,7 @@ import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInte
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -14,8 +15,9 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
 
-public class OperationViewFXML implements ControlledFxView {
+public class OperationViewFXML implements OperationViewFXMLInterface {
     private static OperationViewFXML instance = null;
     private static final String PathResourceFXML = "/operations.fxml";
     private HandleServiceInterface handleService;
@@ -64,5 +66,17 @@ public class OperationViewFXML implements ControlledFxView {
     @Override
     public void update(EventType eventType) {
 
+    }
+
+    @Override
+    public void createOperationMenuItem(Set<String> supportedOperations) {
+        for (String operation : supportedOperations) {
+            Button button = new Button(operation);
+            button.setId(operation);
+            button.setMnemonicParsing(false);
+            //item.setText(bundle.getString("MenuBar." + supportedLanguage));
+            //item.setOnAction(event -> this.handleService.notify(EventOnApplication.CHANGE_LANGUAGE, new MenuItemAdapter((MenuItem) event.getSource())));
+            this.operationVBox.getChildren().add(button);
+        }
     }
 }

@@ -9,4 +9,6 @@ public interface LanguageModelInterface {
     void changeLanguage(String languageKey);
 
     ResourceBundle getCurrentResourceBundle();
+
+    String getCurrentLanguage();
 }

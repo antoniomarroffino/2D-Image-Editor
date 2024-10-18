@@ -18,5 +18,6 @@
     </Menu>
     <Menu fx:id="helpMenu" mnemonicParsing="false" text="%MenuBar.help">
         <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="%MenuBar.about"/>
+        <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" text="%MenuBar.help"/>
     </Menu>
 </MenuBar>

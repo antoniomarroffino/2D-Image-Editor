@@ -4,4 +4,6 @@ import ch.supsi.imageEditor.frontend.adapter.Component;
 
 public interface AppControllerInterface {
     void about(Component node);
+
+    void help(Component node);
 }

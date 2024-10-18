@@ -1,7 +1,9 @@
 package ch.supsi.imageEditor.frontend.view.fxml.controlled;
 
-import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
+import java.util.Set;
 
 public interface MenuBarViewFXMLInterface extends ControlledFxView {
-    void createSupportedLanguagesMenuItem(LanguageModelInterface languageModel);
+    void createSupportedLanguagesMenuItem(Set<String> supportedLanguages);
+
+    void createOpenRecentMenuItem(Set<String> recentFiles);
 }

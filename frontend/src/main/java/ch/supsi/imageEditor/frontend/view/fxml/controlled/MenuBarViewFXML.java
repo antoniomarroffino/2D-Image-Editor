@@ -6,7 +6,6 @@ import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
-import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -49,6 +48,8 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     private Menu languageMenu;
     @FXML
     private MenuItem aboutMenuItem;
+    @FXML
+    private MenuItem helpMenuItem;
 
     private MenuBarViewFXML() {
     }
@@ -86,11 +87,16 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     private void createBehaviour() {
         //About
         this.aboutMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.ABOUT, new MenuItemAdapter((MenuItem) event.getSource())));
+        this.helpMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.HELP, new MenuItemAdapter((MenuItem) event.getSource())));
     }
 
     @Override
-    public void createSupportedLanguagesMenuItem(LanguageModelInterface languageModel) {
-        Set<String> supportedLanguages = languageModel.getSupportedLanguages();
+    public void update(EventType eventType) {
+
+    }
+
+    @Override
+    public void createSupportedLanguagesMenuItem(Set<String> supportedLanguages) {
         for (String supportedLanguage : supportedLanguages) {
             MenuItem item = new MenuItem(supportedLanguage);
             item.setId(supportedLanguage);
@@ -102,7 +108,14 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     }
 
     @Override
-    public void update(EventType eventType) {
-
+    public void createOpenRecentMenuItem(Set<String> recentFiles) {
+        for (String recentFile : recentFiles) {
+            MenuItem item = new MenuItem(recentFile);
+            item.setId(recentFile);
+            item.setMnemonicParsing(false);
+            //item.setText(bundle.getString("MenuBar." + supportedLanguage));
+            //item.setOnAction(event -> this.handleService.notify(EventOnApplication.CHANGE_LANGUAGE, new MenuItemAdapter((MenuItem) event.getSource())));
+            this.languageMenu.getItems().add(item);
+        }
     }
 }
