@@ -10,6 +10,7 @@ import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInte
 import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
@@ -26,6 +27,7 @@ public class OperationViewFXML implements ControlledFxView, OperationViewFXMLInt
     private static OperationViewFXML instance = null;
     private static final String PathResourceFXML = "/operations.fxml";
     private HandleServiceInterface handleService;
+    private static ResourceBundle bundle;
 
     @FXML
     private Pane operationPane;
@@ -48,6 +50,7 @@ public class OperationViewFXML implements ControlledFxView, OperationViewFXMLInt
                     FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl, resourceBundle);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
+                    bundle = resourceBundle;
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -86,7 +89,8 @@ public class OperationViewFXML implements ControlledFxView, OperationViewFXMLInt
             button.setId(supportedOperation);
             button.setMnemonicParsing(false);
             button.setMaxWidth(Double.MAX_VALUE);
-            //button.setText(bundle.getString("Operation." + supportedLanguage)); //TODO: gestire la traduzione
+            button.setText(bundle.getString("Operations." + supportedOperation));
+            button.setAlignment(Pos.BASELINE_LEFT);
             button.setOnAction(event -> this.handleService.notify(EventOnApplication.CLICK_OPERATION, new ButtonAdapter((Button) event.getSource())));
             this.operationVBox.getChildren().add(button);
         }

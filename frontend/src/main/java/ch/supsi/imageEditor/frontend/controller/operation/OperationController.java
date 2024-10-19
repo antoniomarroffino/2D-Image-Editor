@@ -1,11 +1,8 @@
 package ch.supsi.imageEditor.frontend.controller.operation;
 
 import ch.supsi.imageEditor.frontend.adapter.Component;
-import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
-
-import java.sql.SQLOutput;
 
 
 public class OperationController implements OperationControllerInterface {
