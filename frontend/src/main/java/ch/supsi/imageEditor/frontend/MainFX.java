@@ -15,6 +15,8 @@ import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModel;
 import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
+import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
+import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.*;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.CurrentInfoViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.ImageViewFXML;
@@ -38,11 +40,12 @@ public class MainFX extends Application {
     private final AbstractModel appModel;
     private final AboutModelInterface aboutModel;
     private final LanguageModelInterface languageModel;
+    private final OperationModelInterface operationModel;
     private final HandleViewModelInterface handleViewModel;
 
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
-    private final ControlledFxView operationView;
+    private final OperationViewFXMLInterface operationView;
     private final UncontrolledFxView currentInfoView;
     private final ControlledFxView pipelineView;
     private final UncontrolledFxView infoBarView;
@@ -59,6 +62,7 @@ public class MainFX extends Application {
         this.appModel = AppModel.getInstance();
         this.aboutModel = AboutModel.getInstance();
         this.languageModel = LanguageModel.getInstance();
+        this.operationModel = OperationModel.getInstance();
         this.handleViewModel = HandleViewModel.getInstance();
 
         //CONTROLLERS
@@ -85,6 +89,7 @@ public class MainFX extends Application {
         this.infoBarView.initialize(this.appModel, this.handleViewModel);
 
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel);
+        this.operationView.createSupportedOperationsButtons(this.operationModel);
     }
 
     @Override
