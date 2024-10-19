@@ -93,3 +93,7 @@
 #playButton:hover {
     -fx-background-color: #00d100;
 }
+
+.operation-button:hover {
+    -fx-background-color: #1e7bc3;
+}

@@ -83,14 +83,20 @@ public class OperationViewFXML implements ControlledFxView, OperationViewFXMLInt
     public void createSupportedOperationsButtons(OperationModelInterface operationModel) {
         Set<String> supportedOperations = operationModel.getSupportedOperations();
         for (String supportedOperation : supportedOperations) {
-            Button button = new Button(supportedOperation);
-            button.setId(supportedOperation);
-            button.setMnemonicParsing(false);
-            button.setMaxWidth(Double.MAX_VALUE);
-            button.setText(bundle.getString("Operations." + supportedOperation));
-            button.setAlignment(Pos.BASELINE_LEFT);
-            button.setOnAction(event -> this.handleService.notify(EventOnApplication.CLICK_OPERATION, new ButtonAdapter((Button) event.getSource())));
+            Button button = createButton(supportedOperation);
             this.operationVBox.getChildren().add(button);
         }
+    }
+
+    private Button createButton(String operation) {
+        Button button = new Button(operation);
+        button.setId(operation);
+        button.setMnemonicParsing(false);
+        button.setMaxWidth(Double.MAX_VALUE);
+        button.setText(bundle.getString("Operations." + operation));
+        button.setAlignment(Pos.BASELINE_LEFT);
+        button.getStyleClass().add("operation-button");
+        button.setOnAction(event -> this.handleService.notify(EventOnApplication.CLICK_OPERATION, new ButtonAdapter((Button) event.getSource())));
+        return button;
     }
 }
