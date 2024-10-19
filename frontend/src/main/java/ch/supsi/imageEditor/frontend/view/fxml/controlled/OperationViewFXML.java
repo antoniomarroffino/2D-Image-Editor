@@ -86,7 +86,7 @@ public class OperationViewFXML implements ControlledFxView, OperationViewFXMLInt
             button.setId(supportedOperation);
             button.setMnemonicParsing(false);
             button.setMaxWidth(Double.MAX_VALUE);
-            //button.setText(bundle.getString("Operation." + supportedLanguage));
+            //button.setText(bundle.getString("Operation." + supportedLanguage)); //TODO: gestire la traduzione
             button.setOnAction(event -> this.handleService.notify(EventOnApplication.CLICK_OPERATION, new ButtonAdapter((Button) event.getSource())));
             this.operationVBox.getChildren().add(button);
         }
