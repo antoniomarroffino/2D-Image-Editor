@@ -7,7 +7,9 @@ import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,7 +20,19 @@ public class CurrentInfoViewFXML implements UncontrolledFxView {
     private static final String PathResourceFXML = "/currentinfo.fxml";
 
     @FXML
-    private ScrollPane currentInfoPane;
+    private Pane currentInfoPane;
+
+    @FXML
+    private Label nameLabel;
+
+    @FXML
+    private Label formatLabel;
+
+    @FXML
+    private Label dimensionLabel;
+
+    @FXML
+    private Label modificationDateLabel;
 
     private CurrentInfoViewFXML() {
     }

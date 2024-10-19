@@ -9,8 +9,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,12 +29,13 @@ public class InfobarViewFXML implements UncontrolledFxView {
     private static LanguageModelInterface languageModel;
     private static final Map<EventType, String> eventDescription;
     private static ResourceBundle bundle;
+    static int i = 0;
 
     @FXML
     private Pane infoBarPane;
 
     @FXML
-    private VBox contentVBox;
+    private TextArea infoBarTextArea;
 
     static {
         eventDescription = new HashMap<>();
@@ -71,13 +77,15 @@ public class InfobarViewFXML implements UncontrolledFxView {
         handleViewModel.subscribe(EventType.CHANGE_LANGUAGE, this);
         languageModel = (LanguageModelInterface) model;
         fillMap(bundle);
+        this.infoBarTextArea.setWrapText(true);
+        this.infoBarTextArea.setEditable(false);
     }
 
     @Override
     public void update(EventType eventType) {
-        Label newLabel = new Label();
-        newLabel.setText(eventDescription.get(eventType));
-        newLabel.setWrapText(true);
-        this.contentVBox.getChildren().add(0, newLabel);
+        StringBuilder newText = new StringBuilder();
+        String previousText = this.infoBarTextArea.getText();
+        newText.append(eventDescription.get(eventType)).append("\n\n").append(previousText);
+        this.infoBarTextArea.setText(newText.toString());
     }
 }

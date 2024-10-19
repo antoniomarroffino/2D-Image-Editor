@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:id="currentInfoPane" focusTraversable="true" maxHeight="-Infinity"
-            maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="126.0"
-            prefWidth="204.0" stylesheets="@style/dark-theme.css" xmlns="http://javafx.com/javafx/17">
-    <Label prefHeight="26.0" prefWidth="134.0" text="%CurrentInfo.title">
+
+<Pane fx:id="currentInfoPane" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="126.0" prefWidth="209.0" stylesheets="@style/dark-theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <Label alignment="CENTER" prefHeight="37.0" prefWidth="209.0" styleClass="custom-label" text="%CurrentInfo.title">
         <font>
-            <Font name="Dubai Light" size="14.0"/>
+            <Font name="Dubai Light" size="14.0" />
         </font>
     </Label>
-</ScrollPane>
+    <AnchorPane layoutY="37.0" prefHeight="92.0" prefWidth="209.0" style="-fx-background-color: #333333">
+        <Label fx:id="nameLabel" prefHeight="22.25" prefWidth="209.0" styleClass="custom-label-currentInfo"
+               text="%CurrentInfo.name" visible="false"/>
+        <Label fx:id="formatLabel" layoutY="23.0" prefHeight="22.25" prefWidth="209.0"
+               styleClass="custom-label-currentInfo" text="%CurrentInfo.format" visible="false"/>
+        <Label fx:id="dimensionLabel" layoutY="46.0" prefHeight="22.25" prefWidth="209.0"
+               styleClass="custom-label-currentInfo" text="%CurrentInfo.dimension" visible="false"/>
+        <Label fx:id="modificationDateLabel" layoutY="64.0" prefHeight="29.0" prefWidth="209.0"
+               styleClass="custom-label-currentInfo" text="%CurrentInfo.modificationDate" visible="false"/>
+    </AnchorPane>
+</Pane>
