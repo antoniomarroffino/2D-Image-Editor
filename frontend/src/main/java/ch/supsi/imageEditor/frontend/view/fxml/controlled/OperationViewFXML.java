@@ -1,6 +1,7 @@
 package ch.supsi.imageEditor.frontend.view.fxml.controlled;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
+import ch.supsi.imageEditor.frontend.adapter.ButtonAdapter;
 import ch.supsi.imageEditor.frontend.adapter.MenuItemAdapter;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
