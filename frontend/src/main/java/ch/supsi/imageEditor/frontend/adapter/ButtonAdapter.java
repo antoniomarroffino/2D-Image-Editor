@@ -1,7 +1,6 @@
 package ch.supsi.imageEditor.frontend.adapter;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
 
 public class ButtonAdapter implements Component{
 
