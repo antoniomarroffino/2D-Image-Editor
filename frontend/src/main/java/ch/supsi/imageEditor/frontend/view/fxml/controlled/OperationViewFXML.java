@@ -86,7 +86,7 @@ public class OperationViewFXML implements ControlledFxView, OperationViewFXMLInt
             button.setMnemonicParsing(false);
             button.setMaxWidth(Double.MAX_VALUE);
             //button.setText(bundle.getString("MenuBar." + supportedLanguage));
-            //button.setOnAction(event -> this.handleService.notify(EventOnApplication.CHANGE_LANGUAGE, new MenuItemAdapter((MenuItem) event.getSource())));
+            button.setOnAction(event -> this.handleService.notify(EventOnApplication.CLICK_OPERATION, new ButtonAdapter((Button) event.getSource())));
             this.operationVBox.getChildren().add(button);
         }
     }
