@@ -2,7 +2,6 @@ package ch.supsi.imageEditor.frontend.view.fxml.controlled;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.adapter.ButtonAdapter;
-import ch.supsi.imageEditor.frontend.adapter.MenuItemAdapter;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
@@ -13,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;

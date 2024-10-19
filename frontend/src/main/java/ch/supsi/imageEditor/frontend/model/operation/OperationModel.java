@@ -1,12 +1,10 @@
 package ch.supsi.imageEditor.frontend.model.operation;
 
-import ch.supsi.imageEditor.backend.application.operation.OperationControllerInterface;
 import ch.supsi.imageEditor.backend.application.operation.OperationController;
-
+import ch.supsi.imageEditor.backend.application.operation.OperationControllerInterface;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class OperationModel implements OperationModelInterface{

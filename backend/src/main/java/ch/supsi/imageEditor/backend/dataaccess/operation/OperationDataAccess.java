@@ -9,7 +9,7 @@ import java.util.Set;
 public class OperationDataAccess implements OperationDataAccessInterface {
     private static OperationDataAccess instance;
     private static final String operationsFile = "operations.properties";
-    private Properties operationsProperties;
+    private final Properties operationsProperties;
 
     private OperationDataAccess() {
         operationsProperties = new Properties();
