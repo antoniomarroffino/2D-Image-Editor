@@ -19,7 +19,7 @@ public class HelpGuideViewFXML implements HelpGuideViewFXMLInterface {
     private static HelpGuideViewFXML instance = null;
     private static final String PathResourceFXML = "/helpguide.fxml";
     private final static String PATH_LOGO_APP_IMAGE = "/images/logoApp.png";
-    private static Parent root;
+    private static ResourceBundle bundle;
 
     @FXML
     private AnchorPane helpGuideAnchorPane;
@@ -36,26 +36,41 @@ public class HelpGuideViewFXML implements HelpGuideViewFXMLInterface {
             try {
                 URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
                 if (fxmlUrl != null) {
-                    FXMLLoader loader = new FXMLLoader(fxmlUrl, resourceBundle);
+                    bundle = resourceBundle;
+                    FXMLLoader loader = new FXMLLoader(fxmlUrl, bundle);
                     loader.setController(instance);
-                    root = loader.load();
+                    loader.load();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-
         return instance;
     }
 
     @Override
     public void showHelpInfo() {
-        Stage newWindow = new Stage();
-        newWindow.getIcons().add(new Image(PATH_LOGO_APP_IMAGE));
-        newWindow.setTitle("Help guide");
-        newWindow.initModality(Modality.APPLICATION_MODAL);
-        newWindow.setScene(new Scene(root));
-        this.buttonClose.setOnAction(event -> newWindow.close());
-        newWindow.show();
+        try {
+            URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
+            if (fxmlUrl != null) {
+                FXMLLoader loader = new FXMLLoader(fxmlUrl, bundle);
+                loader.setController(instance);
+                Parent newRoot = loader.load();
+
+                Scene scene = new Scene(newRoot);
+                Stage newWindow = new Stage();
+                newWindow.getIcons().add(new Image(PATH_LOGO_APP_IMAGE));
+                newWindow.setTitle("Help guide");
+                newWindow.initModality(Modality.APPLICATION_MODAL);
+                newWindow.setResizable(false);
+                newWindow.setScene(scene);
+
+                this.buttonClose.setOnAction(event -> newWindow.close());
+
+                newWindow.show();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

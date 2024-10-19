@@ -108,3 +108,7 @@
 #playButton:hover {
     -fx-background-color: #00d100;
 }
+
+#buttonClose:hover{
+    -fx-background-color: red;
+}
