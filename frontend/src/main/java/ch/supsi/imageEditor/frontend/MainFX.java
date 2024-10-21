@@ -2,6 +2,8 @@ package ch.supsi.imageEditor.frontend;
 
 import ch.supsi.imageEditor.frontend.controller.AppController;
 import ch.supsi.imageEditor.frontend.controller.AppControllerInterface;
+import ch.supsi.imageEditor.frontend.controller.image.ImageController;
+import ch.supsi.imageEditor.frontend.controller.image.ImageControllerInterface;
 import ch.supsi.imageEditor.frontend.controller.language.LanguageController;
 import ch.supsi.imageEditor.frontend.controller.language.LanguageControllerInterface;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
@@ -63,6 +65,7 @@ public class MainFX extends Application {
     private final LanguageControllerInterface languageController;
     private final OperationControllerInterface operationController;
     private final SavingControllerInterface savingController;
+    private final ImageControllerInterface imageController;
 
     private final ResourceBundle resourceBundle;
 
@@ -81,6 +84,7 @@ public class MainFX extends Application {
         this.languageController = LanguageController.getInstance();
         this.operationController = OperationController.getInstance();
         this.savingController = SavingController.getInstance();
+        this.imageController = ImageController.getInstance();
 
         this.handleService.subscribe(EventOnApplication.ABOUT, this.appController::about);
         this.handleService.subscribe(EventOnApplication.HELP, this.appController::help);

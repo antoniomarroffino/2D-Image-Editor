@@ -8,6 +8,7 @@ import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXM
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXMLInterface;
 
 import java.io.File;
+import java.io.IOException;
 
 public class SavingController implements SavingControllerInterface {
     private static SavingController instance = null;
@@ -38,7 +39,9 @@ public class SavingController implements SavingControllerInterface {
             this.savingModel.loadImage(openFile);
             this.savingModel.setNewSavingFile(openFile);
         } catch (FormatNotSupportedException e) {
-            System.out.println(e.getMessage());
+             System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println("File non trovato");
         }
     }
 }

@@ -1,25 +1,35 @@
 package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
+import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
+import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ImageViewFXML implements UncontrolledFxView {
     private static final String PathResourceFXML = "/imagewindow.fxml";
     private static ImageViewFXML instance = null;
+
+    private ImageModelInterface imageModel;
+    private final Map<EventType, Runnable> onEventDoActionMap;
+
     @FXML
     private Pane imagePane;
 
     private ImageViewFXML() {
+        this.onEventDoActionMap = new HashMap<>();
     }
 
     public static ImageViewFXML getInstance(ResourceBundle resourceBundle) {
@@ -47,11 +57,20 @@ public class ImageViewFXML implements UncontrolledFxView {
 
     @Override
     public void initialize(AbstractModel model, HandleViewModelInterface handleViewModel) {
-
+        handleViewModel.subscribe(EventType.LOAD_IMAGE, this);
+        this.imageModel = (ImageModelInterface) model;
+        this.onEventDoActionMap.put(EventType.LOAD_IMAGE, this::display);
     }
 
     @Override
     public void update(EventType eventType) {
+        Runnable action = this.onEventDoActionMap.get(eventType);
+        if (action != null)
+            action.run();
+    }
 
+    private void display() {
+        AbstractImage img = this.imageModel.getImage();
+        //imagePane.getChildren().add();
     }
 }

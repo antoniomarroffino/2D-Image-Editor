@@ -19,7 +19,6 @@ public class SavingViewFXML implements SavingViewFXMLInterface {
 
     @Override
     public File getOpenFile(Set<String> supportedFormat) {
-        ;
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("Images Supported",supportedFormat.stream().map(String::toLowerCase).map(s -> "*." + s).toArray(String[]::new));
         fileChooser.getExtensionFilters().add(extensionFilter);

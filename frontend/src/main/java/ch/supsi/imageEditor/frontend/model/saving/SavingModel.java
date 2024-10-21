@@ -5,6 +5,7 @@ import ch.supsi.imageEditor.backend.application.image.ImageControllerInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 
 public class SavingModel implements SavingModelInterface {
@@ -32,7 +33,7 @@ public class SavingModel implements SavingModelInterface {
     }
 
     @Override
-    public void loadImage(File openFile) throws FormatNotSupportedException {
-        this.imageController.displayImage(openFile.getName());
+    public void loadImage(File openFile) throws FormatNotSupportedException, IOException {
+        this.imageController.loadImage(openFile.getPath());
     }
 }
