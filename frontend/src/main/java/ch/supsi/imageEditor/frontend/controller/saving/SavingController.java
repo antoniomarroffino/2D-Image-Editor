@@ -28,10 +28,8 @@ public class SavingController implements SavingControllerInterface {
     @Override
     public void openImage(Component component) {
         File openFile = this.savingViewFXML.getOpenFile(this.savingModel.getSupportedFormats());
-        if (openFile != null) {
-            System.out.println(openFile.getAbsolutePath());
+        if (openFile != null)
             loadImage(openFile);
-        }
     }
 
     private void loadImage(File openFile) {

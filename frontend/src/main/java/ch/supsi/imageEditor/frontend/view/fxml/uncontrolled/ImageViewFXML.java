@@ -4,7 +4,6 @@ import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.PNM.Pixel;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
-import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
 import javafx.fxml.FXML;
@@ -59,8 +58,7 @@ public class ImageViewFXML implements UncontrolledFxView {
     }
 
     @Override
-    public void initialize(AbstractModel model, HandleViewModelInterface handleViewModel) {
-        handleViewModel.subscribe(EventType.LOAD_IMAGE, this);
+    public void initialize(AbstractModel model) {
         this.imageModel = (ImageModelInterface) model;
         this.onEventDoActionMap.put(EventType.LOAD_IMAGE, this::display);
     }
