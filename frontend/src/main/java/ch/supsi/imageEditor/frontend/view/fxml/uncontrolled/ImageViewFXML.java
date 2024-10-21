@@ -12,7 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,7 +27,9 @@ public class ImageViewFXML implements UncontrolledFxView {
     private final Map<EventType, Runnable> onEventDoActionMap;
     private ImageModelInterface imageModel;
     @FXML
-    private Pane imagePane;
+    private StackPane imageStackPane;
+    @FXML
+    private Label placeHolderText;
 
     private ImageViewFXML() {
         this.onEventDoActionMap = new HashMap<>();
@@ -52,7 +55,7 @@ public class ImageViewFXML implements UncontrolledFxView {
 
     @Override
     public Node getNode() {
-        return this.imagePane;
+        return this.imageStackPane;
     }
 
     @Override
@@ -71,7 +74,8 @@ public class ImageViewFXML implements UncontrolledFxView {
 
     private void display() {
         AbstractImage img = this.imageModel.getImage();
-        imagePane.getChildren().add(getCanvasFromImage(img));
+        imageStackPane.getChildren().add(getCanvasFromImage(img));
+        placeHolderText.setVisible(false);
     }
 
     private Canvas getCanvasFromImage(AbstractImage image) {

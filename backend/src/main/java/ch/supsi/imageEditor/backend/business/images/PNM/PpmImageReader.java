@@ -15,7 +15,9 @@ public class PpmImageReader extends AbstractPnmImage {
             pixel = new Pixel[height][width];
             for (int i = 0; i < height; i++)
                 for (int j = 0; j < width; j++) {
-                    pixel[i][j] = new Pixel(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+                    pixel[i][j] = new Pixel(scanner.nextInt() * 255 / maxVal,
+                            scanner.nextInt() * 255 / maxVal,
+                            scanner.nextInt() * 255 / maxVal);
                 }
         }
     }
