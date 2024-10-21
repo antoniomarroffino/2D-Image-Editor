@@ -65,5 +65,4 @@
             <Label styleClass="dotPoint" text="%HelpGuide.imageInfoDetails" wrapText="true" minHeight="60"/>
         </VBox>
     </ScrollPane>
-    <!-- <TextArea text="%HelpGuide.guide" wrapText="true" layoutY="47.0" prefHeight="294.0" prefWidth="600.0"/> -->
 </AnchorPane>
