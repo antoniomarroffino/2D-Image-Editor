@@ -2,6 +2,8 @@ package ch.supsi.imageEditor.frontend;
 
 import ch.supsi.imageEditor.frontend.controller.AppController;
 import ch.supsi.imageEditor.frontend.controller.AppControllerInterface;
+import ch.supsi.imageEditor.frontend.controller.image.ImageController;
+import ch.supsi.imageEditor.frontend.controller.image.ImageControllerInterface;
 import ch.supsi.imageEditor.frontend.controller.language.LanguageController;
 import ch.supsi.imageEditor.frontend.controller.language.LanguageControllerInterface;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
@@ -9,21 +11,26 @@ import ch.supsi.imageEditor.frontend.controller.observer.HandleService;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.controller.operation.OperationController;
 import ch.supsi.imageEditor.frontend.controller.operation.OperationControllerInterface;
+import ch.supsi.imageEditor.frontend.controller.saving.SavingController;
+import ch.supsi.imageEditor.frontend.controller.saving.SavingControllerInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.AppModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModelInterface;
-import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModel;
-import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
+import ch.supsi.imageEditor.frontend.model.image.ImageModel;
+import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
+import ch.supsi.imageEditor.frontend.view.fxml.DataView;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.*;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.CurrentInfoViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.ImageViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.InfobarViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.UncontrolledFxView;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXMLInterface;
 import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewInterface;
 import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewPopUp;
 import javafx.application.Application;
@@ -32,6 +39,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -43,7 +51,7 @@ public class MainFX extends Application {
     private final AboutModelInterface aboutModel;
     private final LanguageModelInterface languageModel;
     private final OperationModelInterface operationModel;
-    private final HandleViewModelInterface handleViewModel;
+    private final ImageModelInterface imageModel;
 
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
@@ -52,11 +60,14 @@ public class MainFX extends Application {
     private final ControlledFxView pipelineView;
     private final UncontrolledFxView infoBarView;
     private final AboutViewInterface aboutView;
+    private final SavingViewFXMLInterface savingView;
 
     private final HandleServiceInterface handleService;
     private final AppControllerInterface appController;
     private final LanguageControllerInterface languageController;
     private final OperationControllerInterface operationController;
+    private final SavingControllerInterface savingController;
+    private final ImageControllerInterface imageController;
 
     private final ResourceBundle resourceBundle;
 
@@ -66,19 +77,23 @@ public class MainFX extends Application {
         this.aboutModel = AboutModel.getInstance();
         this.languageModel = LanguageModel.getInstance();
         this.operationModel = OperationModel.getInstance();
-        this.handleViewModel = HandleViewModel.getInstance();
+        this.imageModel = ImageModel.getInstance();
+
 
         //CONTROLLERS
         this.handleService = HandleService.getInstance();
-
         this.appController = AppController.getInstance();
         this.languageController = LanguageController.getInstance();
         this.operationController = OperationController.getInstance();
+        this.savingController = SavingController.getInstance();
+        this.imageController = ImageController.getInstance();
 
         this.handleService.subscribe(EventOnApplication.ABOUT, this.appController::about);
         this.handleService.subscribe(EventOnApplication.HELP, this.appController::help);
         this.handleService.subscribe(EventOnApplication.CHANGE_LANGUAGE, this.languageController::changeLanguage);
         this.handleService.subscribe(EventOnApplication.CLICK_OPERATION, this.operationController::addOperationToPipeline);
+        this.handleService.subscribe(EventOnApplication.OPEN_IMAGE, this.savingController::openImage);
+
         this.resourceBundle = languageModel.getCurrentResourceBundle();
 
         //VIEWS
@@ -89,12 +104,24 @@ public class MainFX extends Application {
         this.pipelineView = PipelineViewFXML.getInstance(this.resourceBundle);
         this.infoBarView = InfobarViewFXML.getInstance(this.resourceBundle);
         this.aboutView = AboutViewPopUp.getInstance(this.resourceBundle);
+        this.savingView = SavingViewFXML.getInstance();
 
         //SCAFFOLDING of M-V-C
-        this.menuBarView.initialize(this.handleService, this.appModel, this.handleViewModel);
-        this.operationView.initialize(this.handleService, this.appModel, this.handleViewModel);
+        this.menuBarView.initialize(this.handleService, this.appModel);
+        this.operationView.initialize(this.handleService, this.appModel);
         this.aboutView.initialize(this.aboutModel);
-        this.infoBarView.initialize((AbstractModel) this.languageModel, this.handleViewModel);
+        this.infoBarView.initialize((AbstractModel) this.languageModel);
+        this.imageView.initialize((AbstractModel) this.imageModel);
+
+        List<DataView> listOfViews = List.of(this.menuBarView, this.imageView,
+                this.operationView, this.currentInfoView,
+                this.pipelineView, this.infoBarView);
+
+        this.languageController.initialize(listOfViews);
+        this.imageController.initialize(listOfViews);
+
+        this.imageModel.setMaxWidthImage(ImageViewFXML.getWidthOfPane());
+        this.imageModel.setMaxHeightImage(ImageViewFXML.getHeightOfPane());
 
         this.operationView.createSupportedOperationsButtons(this.operationModel.getSupportedOperations());
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());
@@ -152,5 +179,7 @@ public class MainFX extends Application {
         primaryStage.setScene(scene);
         primaryStage.toFront();
         primaryStage.show();
+
+        this.savingView.setMainStage(primaryStage);
     }
 }

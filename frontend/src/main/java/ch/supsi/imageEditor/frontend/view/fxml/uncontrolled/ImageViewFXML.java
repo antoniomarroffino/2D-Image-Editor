@@ -1,25 +1,41 @@
 package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
+import ch.supsi.imageEditor.backend.business.images.AbstractImage;
+import ch.supsi.imageEditor.backend.business.images.PNM.Pixel;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
-import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
+import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ImageViewFXML implements UncontrolledFxView {
     private static final String PathResourceFXML = "/imagewindow.fxml";
     private static ImageViewFXML instance = null;
+    private final Map<EventType, Runnable> onEventDoActionMap;
+    private ImageModelInterface imageModel;
+
+    public double width;
+    public double height;
+
     @FXML
-    private Pane imagePane;
+    private StackPane imageStackPane;
+    @FXML
+    private Label placeHolderText;
 
     private ImageViewFXML() {
+        this.onEventDoActionMap = new HashMap<>();
     }
 
     public static ImageViewFXML getInstance(ResourceBundle resourceBundle) {
@@ -42,16 +58,53 @@ public class ImageViewFXML implements UncontrolledFxView {
 
     @Override
     public Node getNode() {
-        return this.imagePane;
+        return this.imageStackPane;
     }
 
     @Override
-    public void initialize(AbstractModel model, HandleViewModelInterface handleViewModel) {
+    public void initialize(AbstractModel model) {
+        this.imageModel = (ImageModelInterface) model;
+        this.onEventDoActionMap.put(EventType.LOAD_IMAGE, this::display);
 
+        width = this.imageStackPane.getPrefWidth();
+        height = this.imageStackPane.getPrefHeight();
+    }
+
+    public static double getWidthOfPane(){
+        if(instance != null)
+            return instance.width;
+        return 0;
+    }
+
+    public static double getHeightOfPane(){
+        if(instance != null)
+            return instance.height;
+        return 0;
     }
 
     @Override
     public void update(EventType eventType) {
+        Runnable action = this.onEventDoActionMap.get(eventType);
+        if (action != null)
+            action.run();
+    }
 
+    private void display() {
+        imageStackPane.getChildren().add(getCanvasFromImage());
+        placeHolderText.setVisible(false);
+    }
+
+    private Canvas getCanvasFromImage() {
+        int height = this.imageModel.getHeightImage();
+        int width = this.imageModel.getWidthImage();
+        Canvas canvas = new Canvas(width, height);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++) {
+                Pixel pixel = this.imageModel.getPixel(x, y);
+                gc.setFill(javafx.scene.paint.Color.rgb(pixel.getRed(), pixel.getGreen(), pixel.getBlue()));
+                gc.fillRect(x, y, 1, 1);
+            }
+        return canvas;
     }
 }

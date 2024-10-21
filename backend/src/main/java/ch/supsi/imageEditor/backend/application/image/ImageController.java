@@ -1,0 +1,44 @@
+package ch.supsi.imageEditor.backend.application.image;
+
+import ch.supsi.imageEditor.backend.application.observer.EventType;
+import ch.supsi.imageEditor.backend.application.observer.NotificationService;
+import ch.supsi.imageEditor.backend.application.observer.NotificationServiceInterface;
+import ch.supsi.imageEditor.backend.business.images.AbstractImage;
+import ch.supsi.imageEditor.backend.business.images.ImageReaderFactory;
+import ch.supsi.imageEditor.backend.business.images.ImageReaderFactoryInterface;
+import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
+
+import java.io.IOException;
+import java.util.Set;
+
+public class ImageController implements ImageControllerInterface {
+    private static ImageController instance = null;
+
+    private final ImageReaderFactoryInterface imageReaderFactory;
+    private final NotificationServiceInterface notificationService;
+
+    private ImageController() {
+        this.imageReaderFactory = ImageReaderFactory.getInstance();
+        this.notificationService = NotificationService.getInstance();
+    }
+
+    public static ImageController getInstance() {
+        return instance == null ? instance = new ImageController() : instance;
+    }
+
+    @Override
+    public void loadImage(String filePath) throws FormatNotSupportedException, IOException {
+        this.imageReaderFactory.readImage(filePath);
+        this.notificationService.notify(EventType.LOAD_IMAGE);
+    }
+
+    @Override
+    public AbstractImage getImage() {
+        return this.imageReaderFactory.getImage();
+    }
+
+    @Override
+    public Set<String> getSupportedFormat() {
+        return this.imageReaderFactory.getSupportedFormat();
+    }
+}

@@ -2,7 +2,6 @@ package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
-import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,7 +58,7 @@ public class CurrentInfoViewFXML implements UncontrolledFxView {
     }
 
     @Override
-    public void initialize(AbstractModel model, HandleViewModelInterface handleViewModel) {
+    public void initialize(AbstractModel model) {
 
     }
 

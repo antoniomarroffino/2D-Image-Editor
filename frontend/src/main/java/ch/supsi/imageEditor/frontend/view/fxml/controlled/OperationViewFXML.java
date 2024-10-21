@@ -5,7 +5,6 @@ import ch.supsi.imageEditor.frontend.adapter.ButtonAdapter;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
-import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -63,7 +62,7 @@ public class OperationViewFXML implements OperationViewFXMLInterface {
     }
 
     @Override
-    public void initialize(HandleServiceInterface handleService, AbstractModel model, HandleViewModelInterface handleViewModel) {
+    public void initialize(HandleServiceInterface handleService, AbstractModel model) {
         this.handleService = handleService;
         this.createBehaviour();
     }

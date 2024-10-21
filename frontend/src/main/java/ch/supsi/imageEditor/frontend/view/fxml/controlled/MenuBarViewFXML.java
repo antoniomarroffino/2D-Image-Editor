@@ -5,7 +5,6 @@ import ch.supsi.imageEditor.frontend.adapter.MenuItemAdapter;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
-import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -78,15 +77,15 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     }
 
     @Override
-    public void initialize(HandleServiceInterface handleService, AbstractModel model, HandleViewModelInterface handleViewModel) {
+    public void initialize(HandleServiceInterface handleService, AbstractModel model) {
         this.handleService = handleService;
         this.createBehaviour();
     }
 
     private void createBehaviour() {
-        //About
         this.aboutMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.ABOUT, new MenuItemAdapter((MenuItem) event.getSource())));
         this.helpMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.HELP, new MenuItemAdapter((MenuItem) event.getSource())));
+        this.openMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.OPEN_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
     }
 
     @Override

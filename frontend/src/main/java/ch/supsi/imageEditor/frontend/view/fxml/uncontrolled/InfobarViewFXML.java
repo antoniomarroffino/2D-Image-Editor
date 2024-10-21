@@ -2,7 +2,6 @@ package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
-import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
 import javafx.fxml.FXML;
@@ -58,6 +57,7 @@ public class InfobarViewFXML implements UncontrolledFxView {
 
     private static void fillMap(ResourceBundle resourceBundle) {
         eventDescription.put(EventType.CHANGE_LANGUAGE, resourceBundle.getString("Infobar.changeLanguage"));
+        eventDescription.put(EventType.LOAD_IMAGE, resourceBundle.getString("Infobar.loadImage"));
     }
 
     @Override
@@ -66,8 +66,7 @@ public class InfobarViewFXML implements UncontrolledFxView {
     }
 
     @Override
-    public void initialize(AbstractModel model, HandleViewModelInterface handleViewModel) {
-        handleViewModel.subscribe(EventType.CHANGE_LANGUAGE, this);
+    public void initialize(AbstractModel model) {
         languageModel = (LanguageModelInterface) model;
         fillMap(bundle);
         this.infoBarTextArea.setWrapText(true);
