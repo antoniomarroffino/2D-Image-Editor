@@ -19,6 +19,8 @@ import ch.supsi.imageEditor.frontend.model.about.AboutModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModelInterface;
 import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModel;
 import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
+import ch.supsi.imageEditor.frontend.model.image.ImageModel;
+import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
@@ -50,6 +52,7 @@ public class MainFX extends Application {
     private final LanguageModelInterface languageModel;
     private final OperationModelInterface operationModel;
     private final HandleViewModelInterface handleViewModel;
+    private final ImageModelInterface imageModel;
 
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
@@ -76,6 +79,7 @@ public class MainFX extends Application {
         this.languageModel = LanguageModel.getInstance();
         this.operationModel = OperationModel.getInstance();
         this.handleViewModel = HandleViewModel.getInstance();
+        this.imageModel = ImageModel.getInstance();
 
         //CONTROLLERS
         this.handleService = HandleService.getInstance();
@@ -108,6 +112,7 @@ public class MainFX extends Application {
         this.operationView.initialize(this.handleService, this.appModel, this.handleViewModel);
         this.aboutView.initialize(this.aboutModel);
         this.infoBarView.initialize((AbstractModel) this.languageModel, this.handleViewModel);
+        this.imageView.initialize((AbstractModel) this.imageModel, this.handleViewModel);
 
         this.operationView.createSupportedOperationsButtons(this.operationModel.getSupportedOperations());
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());

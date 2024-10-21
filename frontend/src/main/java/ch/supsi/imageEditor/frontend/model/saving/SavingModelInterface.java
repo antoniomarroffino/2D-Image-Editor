@@ -1,7 +1,6 @@
 package ch.supsi.imageEditor.frontend.model.saving;
 
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
-import javafx.scene.image.ImageView;
 
 import java.io.File;
 import java.io.IOException;

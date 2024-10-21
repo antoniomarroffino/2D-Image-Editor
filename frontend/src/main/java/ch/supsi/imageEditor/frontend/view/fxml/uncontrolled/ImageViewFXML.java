@@ -2,6 +2,7 @@ package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
+import ch.supsi.imageEditor.backend.business.images.PNM.Pixel;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
@@ -9,7 +10,8 @@ import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -21,10 +23,8 @@ import java.util.ResourceBundle;
 public class ImageViewFXML implements UncontrolledFxView {
     private static final String PathResourceFXML = "/imagewindow.fxml";
     private static ImageViewFXML instance = null;
-
-    private ImageModelInterface imageModel;
     private final Map<EventType, Runnable> onEventDoActionMap;
-
+    private ImageModelInterface imageModel;
     @FXML
     private Pane imagePane;
 
@@ -71,6 +71,19 @@ public class ImageViewFXML implements UncontrolledFxView {
 
     private void display() {
         AbstractImage img = this.imageModel.getImage();
-        //imagePane.getChildren().add();
+        imagePane.getChildren().add(getCanvasFromImage(img));
+    }
+
+    private Canvas getCanvasFromImage(AbstractImage image) {
+        int height = image.getHeight(), width = image.getWidth();
+        Canvas canvas = new Canvas(width, height);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        Pixel[][] pixel = image.getPixel();
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++) {
+                gc.setFill(javafx.scene.paint.Color.rgb(pixel[y][x].getRed(), pixel[y][x].getGreen(), pixel[y][x].getBlue()));
+                gc.fillRect(x, y, 1, 1);
+            }
+        return canvas;
     }
 }

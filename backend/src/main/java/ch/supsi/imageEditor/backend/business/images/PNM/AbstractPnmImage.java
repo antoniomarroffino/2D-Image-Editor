@@ -2,7 +2,6 @@ package ch.supsi.imageEditor.backend.business.images.PNM;
 
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.ImageReaderInterface;
-import javafx.scene.image.WritableImage;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -26,6 +25,6 @@ public abstract class AbstractPnmImage extends AbstractImage implements ImageRea
 
     @Override
     public AbstractImage getImage() {
-       return this;
+        return this;
     }
 }
