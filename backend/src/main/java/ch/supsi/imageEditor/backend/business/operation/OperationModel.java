@@ -2,7 +2,10 @@ package ch.supsi.imageEditor.backend.business.operation;
 
 import ch.supsi.imageEditor.backend.dataaccess.operation.OperationDataAccess;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class OperationModel implements OperationModelInterface {
     private static OperationModel instance;
@@ -16,8 +19,14 @@ public class OperationModel implements OperationModelInterface {
         return instance == null ? instance = new OperationModel() : instance;
     }
 
+    private Set<String> orderOperations(Set<String> operations) {
+        return operations.stream()
+                .sorted()
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
     @Override
     public Set<String> getOperationsTag() {
-        return this.operationDataAccess.getOperationsTag();
+        return this.orderOperations(this.operationDataAccess.getOperationsTag());
     }
 }
