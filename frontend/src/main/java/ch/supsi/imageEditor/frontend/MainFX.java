@@ -1,5 +1,6 @@
 package ch.supsi.imageEditor.frontend;
 
+import ch.supsi.imageEditor.backend.application.image.ImageController;
 import ch.supsi.imageEditor.frontend.controller.AppController;
 import ch.supsi.imageEditor.frontend.controller.AppControllerInterface;
 import ch.supsi.imageEditor.frontend.controller.language.LanguageController;
@@ -57,6 +58,9 @@ public class MainFX extends Application {
     private final AppControllerInterface appController;
     private final LanguageControllerInterface languageController;
     private final OperationControllerInterface operationController;
+
+    //DA CAMBIARE
+    ImageController imageController = ImageController.getInstance();
 
     private final ResourceBundle resourceBundle;
 

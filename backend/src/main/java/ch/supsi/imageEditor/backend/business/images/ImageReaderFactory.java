@@ -1,0 +1,50 @@
+package ch.supsi.imageEditor.backend.business.images;
+
+import ch.supsi.imageEditor.backend.dataaccess.images.ImageReaderDataAccess;
+import ch.supsi.imageEditor.backend.dataaccess.images.ImageReaderDataAccessInterface;
+import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+public class ImageReaderFactory implements ImageReaderFactoryInterface {
+    private static ImageReaderFactory instance = null;
+    private final ImageReaderDataAccessInterface imageReaderDataAccess;
+
+    private final Map<String, ImageReaderInterface> imageReaders;
+    private final Properties imageReaderProperties;
+
+    private ImageReaderFactory() {
+        this.imageReaderDataAccess = ImageReaderDataAccess.getInstance();
+        this.imageReaderProperties = this.imageReaderDataAccess.getFormatReaderProperties();
+
+        this.imageReaders = this.loadImageReadersMap();
+    }
+
+    public static ImageReaderFactory getInstance() {
+        return instance == null ? instance = new ImageReaderFactory() : instance;
+    }
+
+    private Map<String, ImageReaderInterface> loadImageReadersMap() {
+        Map<String, ImageReaderInterface> imageReadersMap = new HashMap<>();
+        for(String extension : this.imageReaderProperties.stringPropertyNames()) {
+            String readerClassName = this.imageReaderProperties.getProperty(extension);
+            try{
+                Class<?> readerClass = Class.forName(readerClassName);
+                ImageReaderInterface imageReader = (ImageReaderInterface) readerClass.getConstructor().newInstance();
+                imageReadersMap.put(extension, imageReader);
+            } catch (Exception e) {
+                throw new RuntimeException("Error during load of image reader: " + extension);
+            }
+        }
+        return imageReadersMap;
+    }
+
+    public void readImage(String format) throws FormatNotSupportedException {
+        ImageReaderInterface imageReader = this.imageReaders.get(format.toUpperCase());
+        if(imageReader == null)
+            throw new FormatNotSupportedException("Format " + format + " is not supported");
+        imageReader.read();
+    }
+}
