@@ -15,7 +15,9 @@ public abstract class AbstractImage {
         return height;
     }
 
-    public Pixel[][] getPixel() {
-        return pixel;
+    public Pixel getPixel(int x, int y) {
+        if(x < 0 || x >= width || y < 0 || y >= height)
+            return null;
+        return pixel[x][y];
     }
 }

@@ -2,6 +2,9 @@ package ch.supsi.imageEditor.frontend.controller.saving;
 
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.frontend.adapter.Component;
+import ch.supsi.imageEditor.frontend.exception.ImageTooBigException;
+import ch.supsi.imageEditor.frontend.model.image.ImageModel;
+import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.saving.SavingModel;
 import ch.supsi.imageEditor.frontend.model.saving.SavingModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXML;

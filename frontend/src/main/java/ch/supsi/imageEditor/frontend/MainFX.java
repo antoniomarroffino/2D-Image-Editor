@@ -120,6 +120,9 @@ public class MainFX extends Application {
         this.languageController.initialize(listOfViews);
         this.imageController.initialize(listOfViews);
 
+        this.imageModel.setMaxWidthImage(ImageViewFXML.getWidthOfPane());
+        this.imageModel.setMaxHeightImage(ImageViewFXML.getHeightOfPane());
+
         this.operationView.createSupportedOperationsButtons(this.operationModel.getSupportedOperations());
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());
         //this.menuBarView.createOpenRecentMenuItem(null);

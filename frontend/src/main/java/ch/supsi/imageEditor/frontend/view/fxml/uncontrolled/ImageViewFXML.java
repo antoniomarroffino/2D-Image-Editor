@@ -25,6 +25,10 @@ public class ImageViewFXML implements UncontrolledFxView {
     private static ImageViewFXML instance = null;
     private final Map<EventType, Runnable> onEventDoActionMap;
     private ImageModelInterface imageModel;
+
+    public double width;
+    public double height;
+
     @FXML
     private StackPane imageStackPane;
     @FXML
@@ -61,6 +65,21 @@ public class ImageViewFXML implements UncontrolledFxView {
     public void initialize(AbstractModel model) {
         this.imageModel = (ImageModelInterface) model;
         this.onEventDoActionMap.put(EventType.LOAD_IMAGE, this::display);
+
+        width = this.imageStackPane.getPrefWidth();
+        height = this.imageStackPane.getPrefHeight();
+    }
+
+    public static double getWidthOfPane(){
+        if(instance != null)
+            return instance.width;
+        return 0;
+    }
+
+    public static double getHeightOfPane(){
+        if(instance != null)
+            return instance.height;
+        return 0;
     }
 
     @Override
@@ -71,19 +90,19 @@ public class ImageViewFXML implements UncontrolledFxView {
     }
 
     private void display() {
-        AbstractImage img = this.imageModel.getImage();
-        imageStackPane.getChildren().add(getCanvasFromImage(img));
+        imageStackPane.getChildren().add(getCanvasFromImage());
         placeHolderText.setVisible(false);
     }
 
-    private Canvas getCanvasFromImage(AbstractImage image) {
-        int height = image.getHeight(), width = image.getWidth();
+    private Canvas getCanvasFromImage() {
+        int height = this.imageModel.getHeightImage();
+        int width = this.imageModel.getWidthImage();
         Canvas canvas = new Canvas(width, height);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        Pixel[][] pixel = image.getPixel();
         for (int y = 0; y < height; y++)
             for (int x = 0; x < width; x++) {
-                gc.setFill(javafx.scene.paint.Color.rgb(pixel[y][x].getRed(), pixel[y][x].getGreen(), pixel[y][x].getBlue()));
+                Pixel pixel = this.imageModel.getPixel(x, y);
+                gc.setFill(javafx.scene.paint.Color.rgb(pixel.getRed(), pixel.getGreen(), pixel.getBlue()));
                 gc.fillRect(x, y, 1, 1);
             }
         return canvas;
