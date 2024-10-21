@@ -1,5 +1,6 @@
 package ch.supsi.imageEditor.frontend.controller.saving;
 
+import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.frontend.adapter.Component;
 import ch.supsi.imageEditor.frontend.model.saving.SavingModel;
 import ch.supsi.imageEditor.frontend.model.saving.SavingModelInterface;
@@ -24,13 +25,20 @@ public class SavingController implements SavingControllerInterface {
     }
 
     @Override
-    public boolean openImage(Component component) {
+    public void openImage(Component component) {
         File openFile = this.savingViewFXML.getOpenFile(this.savingModel.getSupportedFormats());
         if (openFile != null) {
             System.out.println(openFile.getAbsolutePath());
-            //savingGameModel.setNewSavingGameFile(openFile);
-            //return loadGame();
+            loadImage(openFile);
         }
-        return false;
+    }
+
+    private void loadImage(File openFile) {
+        try {
+            this.savingModel.loadImage(openFile);
+            this.savingModel.setNewSavingFile(openFile);
+        } catch (FormatNotSupportedException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

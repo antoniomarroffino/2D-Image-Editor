@@ -20,12 +20,8 @@ public class ImageController implements ImageControllerInterface {
     }
 
     @Override
-    public void displayImage(String fileName) {
-        try {
-            this.imageReaderFactory.readImage(this.getFileExtension(fileName));
-        } catch (FormatNotSupportedException e) {
-            System.out.println(e.getMessage());
-        }
+    public void displayImage(String fileName) throws FormatNotSupportedException {
+        this.imageReaderFactory.readImage(this.getFileExtension(fileName));
     }
 
     @Override
