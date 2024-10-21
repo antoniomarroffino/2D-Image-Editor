@@ -1,5 +1,5 @@
 package ch.supsi.imageEditor.frontend.controller.observer;
 
 public enum EventOnApplication {
-    ABOUT, CHANGE_LANGUAGE, HELP
+    ABOUT, CHANGE_LANGUAGE, CLICK_OPERATION, HELP
 }

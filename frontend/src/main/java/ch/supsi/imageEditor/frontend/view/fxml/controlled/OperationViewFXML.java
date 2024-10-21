@@ -1,11 +1,15 @@
 package ch.supsi.imageEditor.frontend.view.fxml.controlled;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
+import ch.supsi.imageEditor.frontend.adapter.ButtonAdapter;
+import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
+import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -21,6 +25,7 @@ public class OperationViewFXML implements OperationViewFXMLInterface {
     private static OperationViewFXML instance = null;
     private static final String PathResourceFXML = "/operations.fxml";
     private HandleServiceInterface handleService;
+    private static ResourceBundle bundle;
 
     @FXML
     private Pane operationPane;
@@ -43,6 +48,7 @@ public class OperationViewFXML implements OperationViewFXMLInterface {
                     FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl, resourceBundle);
                     fxmlLoader.setController(instance);
                     fxmlLoader.load();
+                    bundle = resourceBundle;
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -61,6 +67,11 @@ public class OperationViewFXML implements OperationViewFXMLInterface {
     @Override
     public void initialize(HandleServiceInterface handleService, AbstractModel model, HandleViewModelInterface handleViewModel) {
         this.handleService = handleService;
+        this.createBehaviour();
+    }
+
+    private void createBehaviour() {
+        //
     }
 
     @Override
@@ -69,14 +80,23 @@ public class OperationViewFXML implements OperationViewFXMLInterface {
     }
 
     @Override
-    public void createOperationMenuItem(Set<String> supportedOperations) {
-        for (String operation : supportedOperations) {
-            Button button = new Button(operation);
-            button.setId(operation);
-            button.setMnemonicParsing(false);
-            //item.setText(bundle.getString("MenuBar." + supportedLanguage));
-            //item.setOnAction(event -> this.handleService.notify(EventOnApplication.CHANGE_LANGUAGE, new MenuItemAdapter((MenuItem) event.getSource())));
+    public void createSupportedOperationsButtons(OperationModelInterface operationModel) {
+        Set<String> supportedOperations = operationModel.getSupportedOperations();
+        for (String supportedOperation : supportedOperations) {
+            Button button = createButton(supportedOperation);
             this.operationVBox.getChildren().add(button);
         }
+    }
+
+    private Button createButton(String operation) {
+        Button button = new Button(operation);
+        button.setId(operation);
+        button.setMnemonicParsing(false);
+        button.setMaxWidth(Double.MAX_VALUE);
+        button.setText(bundle.getString("Operations." + operation));
+        button.setAlignment(Pos.BASELINE_LEFT);
+        button.getStyleClass().add("operation-button");
+        button.setOnAction(event -> this.handleService.notify(EventOnApplication.CLICK_OPERATION, new ButtonAdapter((Button) event.getSource())));
+        return button;
     }
 }

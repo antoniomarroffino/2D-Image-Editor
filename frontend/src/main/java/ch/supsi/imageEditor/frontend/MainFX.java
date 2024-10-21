@@ -7,6 +7,8 @@ import ch.supsi.imageEditor.frontend.controller.language.LanguageControllerInter
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleService;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
+import ch.supsi.imageEditor.frontend.controller.operation.OperationController;
+import ch.supsi.imageEditor.frontend.controller.operation.OperationControllerInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.AppModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModel;
@@ -15,6 +17,8 @@ import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModel;
 import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
+import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
+import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.*;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.CurrentInfoViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.ImageViewFXML;
@@ -38,6 +42,7 @@ public class MainFX extends Application {
     private final AbstractModel appModel;
     private final AboutModelInterface aboutModel;
     private final LanguageModelInterface languageModel;
+    private final OperationModelInterface operationModel;
     private final HandleViewModelInterface handleViewModel;
 
     private final MenuBarViewFXMLInterface menuBarView;
@@ -51,6 +56,7 @@ public class MainFX extends Application {
     private final HandleServiceInterface handleService;
     private final AppControllerInterface appController;
     private final LanguageControllerInterface languageController;
+    private final OperationControllerInterface operationController;
 
     private final ResourceBundle resourceBundle;
 
@@ -59,16 +65,20 @@ public class MainFX extends Application {
         this.appModel = AppModel.getInstance();
         this.aboutModel = AboutModel.getInstance();
         this.languageModel = LanguageModel.getInstance();
+        this.operationModel = OperationModel.getInstance();
         this.handleViewModel = HandleViewModel.getInstance();
 
         //CONTROLLERS
+        this.handleService = HandleService.getInstance();
+
         this.appController = AppController.getInstance();
         this.languageController = LanguageController.getInstance();
-        this.handleService = HandleService.getInstance();
+        this.operationController = OperationController.getInstance();
+
         this.handleService.subscribe(EventOnApplication.ABOUT, this.appController::about);
         this.handleService.subscribe(EventOnApplication.HELP, this.appController::help);
         this.handleService.subscribe(EventOnApplication.CHANGE_LANGUAGE, this.languageController::changeLanguage);
-
+        this.handleService.subscribe(EventOnApplication.CLICK_OPERATION, this.operationController::addOperationToPipeline);
         this.resourceBundle = languageModel.getCurrentResourceBundle();
 
         //VIEWS
@@ -82,9 +92,12 @@ public class MainFX extends Application {
 
         //SCAFFOLDING of M-V-C
         this.menuBarView.initialize(this.handleService, this.appModel, this.handleViewModel);
+        this.operationView.initialize(this.handleService, this.appModel, this.handleViewModel);
         this.aboutView.initialize(this.aboutModel);
         this.infoBarView.initialize((AbstractModel) this.languageModel, this.handleViewModel);
 
+        this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel);
+        this.operationView.createSupportedOperationsButtons(this.operationModel);
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());
         //this.menuBarView.createOpenRecentMenuItem(null);
         // this.operationView.createOperationMenuItem(null);
