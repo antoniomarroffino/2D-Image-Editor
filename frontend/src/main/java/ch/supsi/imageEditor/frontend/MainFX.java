@@ -96,8 +96,7 @@ public class MainFX extends Application {
         this.aboutView.initialize(this.aboutModel);
         this.infoBarView.initialize((AbstractModel) this.languageModel, this.handleViewModel);
 
-        this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel);
-        this.operationView.createSupportedOperationsButtons(this.operationModel);
+        this.operationView.createSupportedOperationsButtons(this.operationModel.getSupportedOperations());
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());
         //this.menuBarView.createOpenRecentMenuItem(null);
         // this.operationView.createOperationMenuItem(null);

@@ -6,7 +6,6 @@ import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
-import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -80,8 +79,7 @@ public class OperationViewFXML implements OperationViewFXMLInterface {
     }
 
     @Override
-    public void createSupportedOperationsButtons(OperationModelInterface operationModel) {
-        Set<String> supportedOperations = operationModel.getSupportedOperations();
+    public void createSupportedOperationsButtons(Set<String> supportedOperations) {
         for (String supportedOperation : supportedOperations) {
             Button button = createButton(supportedOperation);
             this.operationVBox.getChildren().add(button);
