@@ -8,14 +8,8 @@ import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,22 +18,21 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class InfobarViewFXML implements UncontrolledFxView {
-    private static InfobarViewFXML instance = null;
     private static final String PathResourceFXML = "/infobar.fxml";
-    private static LanguageModelInterface languageModel;
     private static final Map<EventType, String> eventDescription;
-    private static ResourceBundle bundle;
     static int i = 0;
-
-    @FXML
-    private Pane infoBarPane;
-
-    @FXML
-    private TextArea infoBarTextArea;
+    private static InfobarViewFXML instance = null;
+    private static LanguageModelInterface languageModel;
+    private static ResourceBundle bundle;
 
     static {
         eventDescription = new HashMap<>();
     }
+
+    @FXML
+    private Pane infoBarPane;
+    @FXML
+    private TextArea infoBarTextArea;
 
     private InfobarViewFXML() {
     }

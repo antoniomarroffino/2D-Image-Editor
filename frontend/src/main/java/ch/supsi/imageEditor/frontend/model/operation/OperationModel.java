@@ -5,7 +5,7 @@ import ch.supsi.imageEditor.backend.application.operation.OperationControllerInt
 
 import java.util.Set;
 
-public class OperationModel implements OperationModelInterface{
+public class OperationModel implements OperationModelInterface {
     private static OperationModel instance;
     private final OperationControllerInterface operationController;
     private final Set<String> operationsTag;

@@ -10,16 +10,14 @@ import java.io.InputStream;
 import java.util.*;
 
 public class LanguageModel extends AbstractModel implements LanguageModelInterface {
-    private static LanguageModel instance = null;
-    private final LanguageControllerInterface languageController;
-
-    private final Map<String, String> supportedLanguagesKeyTag;
-    private final Properties supportedLanguagesProperties;
-    private String currentLanguageTag;
-    private final ResourceBundle resourceBundle;
-
     private static final String languageBundlePath = "i18n.labels";
     private static final String supportedLanguagesPath = "/i18n/supported_languages.properties";
+    private static LanguageModel instance = null;
+    private final LanguageControllerInterface languageController;
+    private final Map<String, String> supportedLanguagesKeyTag;
+    private final Properties supportedLanguagesProperties;
+    private final ResourceBundle resourceBundle;
+    private String currentLanguageTag;
 
     private LanguageModel() {
         this.supportedLanguagesProperties = this.getSupportedLanguagesProperties();

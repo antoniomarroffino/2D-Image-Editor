@@ -8,10 +8,10 @@ import java.util.Objects;
 import java.util.Properties;
 
 public class AboutModel extends AbstractModel implements AboutModelInterface {
-    private static AboutModel instance;
-    private final Properties buildProperties;
     private final static String PATH_BUILD_PROPERTIES = "/build.properties";
     private final static String PATH_LOGO_APP_IMAGE = "/images/logoApp.png";
+    private static AboutModel instance;
+    private final Properties buildProperties;
 
     private AboutModel() {
         this.buildProperties = loadBuildProperties();

@@ -16,9 +16,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class HelpGuideViewFXML implements HelpGuideViewFXMLInterface {
-    private static HelpGuideViewFXML instance = null;
     private static final String PathResourceFXML = "/helpguide.fxml";
     private final static String PATH_LOGO_APP_IMAGE = "/images/logoApp.png";
+    private static HelpGuideViewFXML instance = null;
     private static ResourceBundle bundle;
 
     @FXML

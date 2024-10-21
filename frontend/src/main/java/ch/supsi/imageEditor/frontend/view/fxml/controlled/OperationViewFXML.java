@@ -21,11 +21,10 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public class OperationViewFXML implements OperationViewFXMLInterface {
-    private static OperationViewFXML instance = null;
     private static final String PathResourceFXML = "/operations.fxml";
-    private HandleServiceInterface handleService;
+    private static OperationViewFXML instance = null;
     private static ResourceBundle bundle;
-
+    private HandleServiceInterface handleService;
     @FXML
     private Pane operationPane;
 

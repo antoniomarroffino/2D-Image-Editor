@@ -102,6 +102,10 @@ public class MainFX extends Application {
         // this.operationView.createOperationMenuItem(null);
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         // handle the main window close request
@@ -148,9 +152,5 @@ public class MainFX extends Application {
         primaryStage.setScene(scene);
         primaryStage.toFront();
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

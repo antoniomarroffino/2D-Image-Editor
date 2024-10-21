@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -16,9 +15,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CurrentInfoViewFXML implements UncontrolledFxView {
-    private static CurrentInfoViewFXML instance = null;
     private static final String PathResourceFXML = "/currentinfo.fxml";
-
+    private static CurrentInfoViewFXML instance = null;
     @FXML
     private Pane currentInfoPane;
 

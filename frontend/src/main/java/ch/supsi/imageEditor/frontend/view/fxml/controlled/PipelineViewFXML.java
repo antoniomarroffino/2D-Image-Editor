@@ -16,8 +16,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PipelineViewFXML implements ControlledFxView {
-    private static PipelineViewFXML instance = null;
     private static final String PathResourceFXML = "/pipeline.fxml";
+    private static PipelineViewFXML instance = null;
     private HandleServiceInterface handleService;
 
     @FXML

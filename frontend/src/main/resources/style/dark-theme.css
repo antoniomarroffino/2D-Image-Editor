@@ -113,6 +113,6 @@
     -fx-background-color: #1e7bc3;
 }
 
-#buttonClose:hover{
+#buttonClose:hover {
     -fx-background-color: red;
 }

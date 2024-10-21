@@ -14,9 +14,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ImageViewFXML implements UncontrolledFxView {
-    private static ImageViewFXML instance = null;
     private static final String PathResourceFXML = "/imagewindow.fxml";
-
+    private static ImageViewFXML instance = null;
     @FXML
     private Pane imagePane;
 

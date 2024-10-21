@@ -1,9 +1,10 @@
 package ch.supsi.imageEditor.backend.application.operation;
+
 import ch.supsi.imageEditor.backend.business.operation.OperationModel;
 
 import java.util.Set;
 
-public class OperationController implements OperationControllerInterface{
+public class OperationController implements OperationControllerInterface {
     private static OperationController instance = null;
     private final OperationModel operationModel;
     //private final NotificationServiceInterface notificationService;
