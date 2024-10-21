@@ -14,4 +14,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.surefire</groupId>
+                <artifactId>surefire-api</artifactId>
+                <version>3.5.1</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>

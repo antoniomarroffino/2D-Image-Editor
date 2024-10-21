@@ -116,3 +116,21 @@
 #buttonClose:hover {
     -fx-background-color: red;
 }
+
+.helpTitle {
+    -fx-font-size: 16px;
+}
+
+.helpParagraph {
+    -fx-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10 0 10 10;
+}
+
+.text-bold {
+    -fx-font-weight: bold;
+}
+
+.dotPoint {
+    -fx-padding: 0 0 0 10;
+}
