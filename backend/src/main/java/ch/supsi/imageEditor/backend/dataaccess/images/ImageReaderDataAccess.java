@@ -5,9 +5,8 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ImageReaderDataAccess implements ImageReaderDataAccessInterface {
-    private static ImageReaderDataAccess instance = null;
-
     private static final String formatReaderPropertiesPath = "/format-reader.properties";
+    private static ImageReaderDataAccess instance = null;
     private final Properties formatReaderProperties;
 
     private ImageReaderDataAccess() {

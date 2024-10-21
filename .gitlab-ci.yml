@@ -59,7 +59,7 @@ install-package:
     - 'mvn $MAVEN_CLI_OPTS clean'
     - 'DISPLAY=:99 mvn $MAVEN_CLI_OPTS -Dheadless=true package'
     - cd ..
-    
+
   rules:
     - if: $CI_COMMIT_BRANCH == "dev"
 

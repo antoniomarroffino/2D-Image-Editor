@@ -84,9 +84,9 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     }
 
     private void createBehaviour() {
-        //About
         this.aboutMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.ABOUT, new MenuItemAdapter((MenuItem) event.getSource())));
         this.helpMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.HELP, new MenuItemAdapter((MenuItem) event.getSource())));
+        this.openMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.OPEN_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
     }
 
     @Override

@@ -4,6 +4,8 @@ import ch.supsi.imageEditor.backend.business.images.ImageReaderFactory;
 import ch.supsi.imageEditor.backend.business.images.ImageReaderFactoryInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 
+import java.util.Set;
+
 public class ImageController implements ImageControllerInterface {
     private static ImageController instance = null;
 
@@ -11,20 +13,31 @@ public class ImageController implements ImageControllerInterface {
 
     private ImageController() {
         this.imageReaderFactory = ImageReaderFactory.getInstance();
-
-        this.readImage("");
     }
 
     public static ImageController getInstance() {
         return instance == null ? instance = new ImageController() : instance;
     }
 
-    public void readImage(String path) {
-        path = "jpeg";
+    @Override
+    public void displayImage(String fileName) {
         try {
-            this.imageReaderFactory.readImage(path);
+            this.imageReaderFactory.readImage(this.getFileExtension(fileName));
         } catch (FormatNotSupportedException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public Set<String> getSupportedFormat() {
+        return this.imageReaderFactory.getSupportedFormat();
+    }
+
+    private String getFileExtension(String filePath) {
+        int lastDotIndex = filePath.lastIndexOf('.');
+        if (lastDotIndex == -1 || lastDotIndex == filePath.length() - 1) {
+            return "";
+        }
+        return filePath.substring(lastDotIndex + 1);
     }
 }

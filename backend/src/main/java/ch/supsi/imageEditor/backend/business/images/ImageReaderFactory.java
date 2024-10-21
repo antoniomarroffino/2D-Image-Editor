@@ -7,6 +7,7 @@ import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 public class ImageReaderFactory implements ImageReaderFactoryInterface {
     private static ImageReaderFactory instance = null;
@@ -28,9 +29,9 @@ public class ImageReaderFactory implements ImageReaderFactoryInterface {
 
     private Map<String, ImageReaderInterface> loadImageReadersMap() {
         Map<String, ImageReaderInterface> imageReadersMap = new HashMap<>();
-        for(String extension : this.imageReaderProperties.stringPropertyNames()) {
+        for (String extension : this.imageReaderProperties.stringPropertyNames()) {
             String readerClassName = this.imageReaderProperties.getProperty(extension);
-            try{
+            try {
                 Class<?> readerClass = Class.forName(readerClassName);
                 ImageReaderInterface imageReader = (ImageReaderInterface) readerClass.getConstructor().newInstance();
                 imageReadersMap.put(extension, imageReader);
@@ -41,10 +42,16 @@ public class ImageReaderFactory implements ImageReaderFactoryInterface {
         return imageReadersMap;
     }
 
+    @Override
     public void readImage(String format) throws FormatNotSupportedException {
         ImageReaderInterface imageReader = this.imageReaders.get(format.toUpperCase());
-        if(imageReader == null)
+        if (imageReader == null)
             throw new FormatNotSupportedException("Format " + format + " is not supported");
         imageReader.read();
+    }
+
+    @Override
+    public Set<String> getSupportedFormat() {
+        return Set.copyOf(this.imageReaders.keySet());
     }
 }

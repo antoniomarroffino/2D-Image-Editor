@@ -1,9 +1,9 @@
 package ch.supsi.imageEditor.backend.business.images.PNM;
 
-public class PpmImageReader extends AbstractPnmImage{
+public class PpmImageReader extends AbstractPnmImage {
 
     @Override
-    public void read(){
+    public void read() {
         System.out.println("READ PPM IMAGE");
 
     }

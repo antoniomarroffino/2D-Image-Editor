@@ -1,6 +1,5 @@
 package ch.supsi.imageEditor.frontend;
 
-import ch.supsi.imageEditor.backend.application.image.ImageController;
 import ch.supsi.imageEditor.frontend.controller.AppController;
 import ch.supsi.imageEditor.frontend.controller.AppControllerInterface;
 import ch.supsi.imageEditor.frontend.controller.language.LanguageController;
@@ -10,6 +9,8 @@ import ch.supsi.imageEditor.frontend.controller.observer.HandleService;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.controller.operation.OperationController;
 import ch.supsi.imageEditor.frontend.controller.operation.OperationControllerInterface;
+import ch.supsi.imageEditor.frontend.controller.saving.SavingController;
+import ch.supsi.imageEditor.frontend.controller.saving.SavingControllerInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.AppModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModel;
@@ -25,6 +26,8 @@ import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.CurrentInfoViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.ImageViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.InfobarViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.UncontrolledFxView;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXMLInterface;
 import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewInterface;
 import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewPopUp;
 import javafx.application.Application;
@@ -53,14 +56,13 @@ public class MainFX extends Application {
     private final ControlledFxView pipelineView;
     private final UncontrolledFxView infoBarView;
     private final AboutViewInterface aboutView;
+    private final SavingViewFXMLInterface savingView;
 
     private final HandleServiceInterface handleService;
     private final AppControllerInterface appController;
     private final LanguageControllerInterface languageController;
     private final OperationControllerInterface operationController;
-
-    //DA CAMBIARE
-    ImageController imageController = ImageController.getInstance();
+    private final SavingControllerInterface savingController;
 
     private final ResourceBundle resourceBundle;
 
@@ -78,11 +80,13 @@ public class MainFX extends Application {
         this.appController = AppController.getInstance();
         this.languageController = LanguageController.getInstance();
         this.operationController = OperationController.getInstance();
+        this.savingController = SavingController.getInstance();
 
         this.handleService.subscribe(EventOnApplication.ABOUT, this.appController::about);
         this.handleService.subscribe(EventOnApplication.HELP, this.appController::help);
         this.handleService.subscribe(EventOnApplication.CHANGE_LANGUAGE, this.languageController::changeLanguage);
         this.handleService.subscribe(EventOnApplication.CLICK_OPERATION, this.operationController::addOperationToPipeline);
+        this.handleService.subscribe(EventOnApplication.OPEN_IMAGE, this.savingController::openImage);
         this.resourceBundle = languageModel.getCurrentResourceBundle();
 
         //VIEWS
@@ -93,6 +97,7 @@ public class MainFX extends Application {
         this.pipelineView = PipelineViewFXML.getInstance(this.resourceBundle);
         this.infoBarView = InfobarViewFXML.getInstance(this.resourceBundle);
         this.aboutView = AboutViewPopUp.getInstance(this.resourceBundle);
+        this.savingView = SavingViewFXML.getInstance();
 
         //SCAFFOLDING of M-V-C
         this.menuBarView.initialize(this.handleService, this.appModel, this.handleViewModel);
@@ -156,5 +161,7 @@ public class MainFX extends Application {
         primaryStage.setScene(scene);
         primaryStage.toFront();
         primaryStage.show();
+
+        this.savingView.setMainStage(primaryStage);
     }
 }
