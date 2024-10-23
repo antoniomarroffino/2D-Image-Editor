@@ -109,6 +109,10 @@
     -fx-background-color: #00d100;
 }
 
+#deleteButton:hover {
+    -fx-background-color: red;
+}
+
 .operation-button:hover {
     -fx-background-color: #1e7bc3;
 }
@@ -133,4 +137,9 @@
 
 .dotPoint {
     -fx-padding: 0 0 0 10;
+}
+
+
+.operation-label {
+    -fx-background-color: #1e7bc3;
 }
