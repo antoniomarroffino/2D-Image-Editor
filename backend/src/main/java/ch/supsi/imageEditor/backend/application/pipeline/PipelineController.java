@@ -44,6 +44,6 @@ public class PipelineController implements PipelineControllerInterface{
 
     @Override
     public void runPipeline() {
-
+        //TODO: dopo il merge delle immagini
     }
 }
