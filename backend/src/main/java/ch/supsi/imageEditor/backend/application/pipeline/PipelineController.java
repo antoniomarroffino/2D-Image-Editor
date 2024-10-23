@@ -35,4 +35,15 @@ public class PipelineController implements PipelineControllerInterface{
     public String getLastOperationAdded() {
         return this.pipelineModel.getLastOperationAdded();
     }
+
+    @Override
+    public void deletePipeline() {
+        this.pipelineModel.cleanPipeline();
+        this.notificationService.notify(EventType.CLEAR_PIPELINE);
+    }
+
+    @Override
+    public void runPipeline() {
+
+    }
 }

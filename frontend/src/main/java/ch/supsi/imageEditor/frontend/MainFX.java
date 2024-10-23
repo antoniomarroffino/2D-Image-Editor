@@ -86,6 +86,8 @@ public class MainFX extends Application {
         this.handleService.subscribe(EventOnApplication.HELP, this.appController::help);
         this.handleService.subscribe(EventOnApplication.CHANGE_LANGUAGE, this.languageController::changeLanguage);
         this.handleService.subscribe(EventOnApplication.CLICK_OPERATION, this.operationController::handleOperations);
+        this.handleService.subscribe(EventOnApplication.RUN_PIPELINE, this.pipelineController::runPipeline);
+        this.handleService.subscribe(EventOnApplication.DELETE_PIPELINE, this.pipelineController::deletePipeline);
         this.resourceBundle = languageModel.getCurrentResourceBundle();
 
         //VIEWS

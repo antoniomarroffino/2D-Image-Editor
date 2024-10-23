@@ -109,6 +109,10 @@
     -fx-background-color: #00d100;
 }
 
+#deleteButton:hover {
+    -fx-background-color: red;
+}
+
 .operation-button:hover {
     -fx-background-color: #1e7bc3;
 }

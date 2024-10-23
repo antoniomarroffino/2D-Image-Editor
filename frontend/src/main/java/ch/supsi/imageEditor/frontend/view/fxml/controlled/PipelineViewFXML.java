@@ -1,6 +1,8 @@
 package ch.supsi.imageEditor.frontend.view.fxml.controlled;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
+import ch.supsi.imageEditor.frontend.adapter.ButtonAdapter;
+import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
@@ -10,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
@@ -37,6 +40,12 @@ public class PipelineViewFXML implements ControlledFxView {
 
     @FXML
     private VBox pipelineVBox;
+
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private Button playButton;
 
     private PipelineViewFXML() {
         this.onEventDoActionMap = new HashMap<>();
@@ -70,18 +79,40 @@ public class PipelineViewFXML implements ControlledFxView {
     public void initialize(HandleServiceInterface handleService, AbstractModel model, HandleViewModelInterface handleViewModel) {
         this.handleService = handleService;
         handleViewModel.subscribe(EventType.ADDED_OPERATION, this);
-        pipelineModel = (PipelineModel) model;
+        handleViewModel.subscribe(EventType.CLEAR_PIPELINE, this);
+        this.pipelineModel = (PipelineModel) model;
         fillMap();
+        this.playButton.setOnAction(event -> this.handleService.notify(EventOnApplication.RUN_PIPELINE, new ButtonAdapter((Button) event.getSource())));
+        this.deleteButton.setOnAction(event -> this.handleService.notify(EventOnApplication.DELETE_PIPELINE, new ButtonAdapter((Button) event.getSource())));
     }
 
     private void fillMap() {
         this.onEventDoActionMap.put(EventType.ADDED_OPERATION, this::addOperationToPipeline);
+        this.onEventDoActionMap.put(EventType.CLEAR_PIPELINE, this::clearPipeline);
     }
 
     private void addOperationToPipeline() {
         String operation = this.pipelineModel.getAddedOperation();
-        if (operation != null)
+        if (operation != null){
+            this.enableButtons();
             this.pipelineVBox.getChildren().add(this.createLabel(operation));
+        }
+
+    }
+
+    private void clearPipeline() {
+        this.pipelineVBox.getChildren().clear();
+        this.disableButtons();
+    }
+
+    private void enableButtons() {
+        this.playButton.setDisable(false);
+        this.deleteButton.setDisable(false);
+    }
+
+    private void disableButtons() {
+        this.playButton.setDisable(true);
+        this.deleteButton.setDisable(true);
     }
 
     private Label createLabel(String operation) {

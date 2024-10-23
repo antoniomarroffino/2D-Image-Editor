@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class PipelineModel implements PipelineControllerInterface {
+public class PipelineModel implements PipelineModelInterface {
     private static PipelineModel instance;
     private List<String> pipeline;
 
@@ -29,5 +29,10 @@ public class PipelineModel implements PipelineControllerInterface {
             return this.pipeline.get(this.pipeline.size() - 1);
         }
         return null;
+    }
+
+    @Override
+    public void cleanPipeline() {
+        this.pipeline.clear();
     }
 }

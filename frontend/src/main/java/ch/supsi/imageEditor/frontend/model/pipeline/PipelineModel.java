@@ -26,4 +26,14 @@ public class PipelineModel extends AbstractModel implements PipelineModelInterfa
     public String getAddedOperation() {
         return this.pipelineController.getLastOperationAdded();
     }
+
+    @Override
+    public void deletePipeline() {
+        this.pipelineController.deletePipeline();
+    }
+
+    @Override
+    public void runPipeline() {
+        this.pipelineController.runPipeline();
+    }
 }
