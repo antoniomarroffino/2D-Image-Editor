@@ -19,7 +19,7 @@ public class OperationController implements OperationControllerInterface {
     }
 
     @Override
-    public void handleOperations(Component node) {
+    public void addOperationToPipeline(Component node) {
         System.out.println(node.getId());
         this.operationModel.addOperationToPipeline(node.getId());
     }

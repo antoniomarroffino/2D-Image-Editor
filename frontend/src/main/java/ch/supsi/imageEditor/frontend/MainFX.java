@@ -25,9 +25,9 @@ import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
-import ch.supsi.imageEditor.frontend.view.fxml.DataView;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModel;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModelInterface;
+import ch.supsi.imageEditor.frontend.view.fxml.DataView;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.*;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.CurrentInfoViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.ImageViewFXML;
@@ -56,7 +56,7 @@ public class MainFX extends Application {
     private final LanguageModelInterface languageModel;
     private final OperationModelInterface operationModel;
     private final PipelineModelInterface pipelineModel;
-    private final HandleViewModelInterface handleViewModel;
+    private final ImageModelInterface imageModel;
 
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
@@ -84,7 +84,6 @@ public class MainFX extends Application {
         this.languageModel = LanguageModel.getInstance();
         this.operationModel = OperationModel.getInstance();
         this.pipelineModel = PipelineModel.getInstance();
-        this.handleViewModel = HandleViewModel.getInstance();
         this.imageModel = ImageModel.getInstance();
 
 
@@ -100,7 +99,6 @@ public class MainFX extends Application {
         this.handleService.subscribe(EventOnApplication.ABOUT, this.appController::about);
         this.handleService.subscribe(EventOnApplication.HELP, this.appController::help);
         this.handleService.subscribe(EventOnApplication.CHANGE_LANGUAGE, this.languageController::changeLanguage);
-        this.handleService.subscribe(EventOnApplication.CLICK_OPERATION, this.operationController::handleOperations);
         this.handleService.subscribe(EventOnApplication.RUN_PIPELINE, this.pipelineController::runPipeline);
         this.handleService.subscribe(EventOnApplication.DELETE_PIPELINE, this.pipelineController::deletePipeline);
         this.handleService.subscribe(EventOnApplication.CLICK_OPERATION, this.operationController::addOperationToPipeline);
@@ -122,8 +120,8 @@ public class MainFX extends Application {
         this.menuBarView.initialize(this.handleService, this.appModel);
         this.operationView.initialize(this.handleService, this.appModel);
         this.aboutView.initialize(this.aboutModel);
-        this.infoBarView.initialize((AbstractModel) this.languageModel, this.handleViewModel);
-        this.pipelineView.initialize(this.handleService, (AbstractModel) this.pipelineModel, this.handleViewModel);
+        this.infoBarView.initialize((AbstractModel) this.languageModel);
+        this.pipelineView.initialize(this.handleService, (AbstractModel) this.pipelineModel);
         this.infoBarView.initialize((AbstractModel) this.languageModel);
         this.imageView.initialize((AbstractModel) this.imageModel);
 
@@ -133,6 +131,7 @@ public class MainFX extends Application {
 
         this.languageController.initialize(listOfViews);
         this.imageController.initialize(listOfViews);
+        this.pipelineController.initialize(listOfViews);
 
         this.imageModel.setMaxWidthImage(ImageViewFXML.getWidthOfPane());
         this.imageModel.setMaxHeightImage(ImageViewFXML.getHeightOfPane());

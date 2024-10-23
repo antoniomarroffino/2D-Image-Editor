@@ -5,7 +5,6 @@ import ch.supsi.imageEditor.frontend.adapter.ButtonAdapter;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
-import ch.supsi.imageEditor.frontend.model.handleViewService.HandleViewModelInterface;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModel;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModelInterface;
 import javafx.fxml.FXML;
@@ -78,8 +77,6 @@ public class PipelineViewFXML implements ControlledFxView {
     @Override
     public void initialize(HandleServiceInterface handleService, AbstractModel model) {
         this.handleService = handleService;
-        handleViewModel.subscribe(EventType.ADDED_OPERATION, this);
-        handleViewModel.subscribe(EventType.CLEAR_PIPELINE, this);
         this.pipelineModel = (PipelineModel) model;
         fillMap();
         this.playButton.setOnAction(event -> this.handleService.notify(EventOnApplication.RUN_PIPELINE, new ButtonAdapter((Button) event.getSource())));
