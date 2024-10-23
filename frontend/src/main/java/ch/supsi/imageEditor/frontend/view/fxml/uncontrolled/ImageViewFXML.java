@@ -1,8 +1,6 @@
 package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
-import ch.supsi.imageEditor.backend.business.images.AbstractImage;
-import ch.supsi.imageEditor.backend.business.images.PNM.Pixel;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
@@ -70,14 +68,14 @@ public class ImageViewFXML implements UncontrolledFxView {
         height = this.imageStackPane.getPrefHeight();
     }
 
-    public static double getWidthOfPane(){
-        if(instance != null)
+    public static double getWidthOfPane() {
+        if (instance != null)
             return instance.width;
         return 0;
     }
 
-    public static double getHeightOfPane(){
-        if(instance != null)
+    public static double getHeightOfPane() {
+        if (instance != null)
             return instance.height;
         return 0;
     }
@@ -101,8 +99,9 @@ public class ImageViewFXML implements UncontrolledFxView {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         for (int y = 0; y < height; y++)
             for (int x = 0; x < width; x++) {
-                Pixel pixel = this.imageModel.getPixel(x, y);
-                gc.setFill(javafx.scene.paint.Color.rgb(pixel.getRed(), pixel.getGreen(), pixel.getBlue()));
+                gc.setFill(javafx.scene.paint.Color.rgb(this.imageModel.getPixelRed(x, y),
+                        this.imageModel.getPixelGreen(x, y),
+                        this.imageModel.getPixelBlue(x, y)));
                 gc.fillRect(x, y, 1, 1);
             }
         return canvas;

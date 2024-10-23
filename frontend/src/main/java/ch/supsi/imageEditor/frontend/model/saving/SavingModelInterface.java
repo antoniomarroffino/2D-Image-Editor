@@ -1,6 +1,7 @@
 package ch.supsi.imageEditor.frontend.model.saving;
 
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
+import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,5 +12,5 @@ public interface SavingModelInterface {
 
     void setNewSavingFile(File openFile);
 
-    void loadImage(File openFile) throws FormatNotSupportedException, IOException;
+    void loadImage(File openFile) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException;
 }

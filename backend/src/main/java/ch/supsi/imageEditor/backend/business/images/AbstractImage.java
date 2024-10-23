@@ -1,7 +1,5 @@
 package ch.supsi.imageEditor.backend.business.images;
 
-import ch.supsi.imageEditor.backend.business.images.PNM.Pixel;
-
 public abstract class AbstractImage {
     protected int width;
     protected int height;

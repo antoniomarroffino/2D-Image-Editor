@@ -1,4 +1,4 @@
-package ch.supsi.imageEditor.backend.business.images.PNM;
+package ch.supsi.imageEditor.backend.business.images;
 
 public class Pixel {
     private int red;

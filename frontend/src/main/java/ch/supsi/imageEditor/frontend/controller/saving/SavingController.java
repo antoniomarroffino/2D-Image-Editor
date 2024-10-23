@@ -1,6 +1,7 @@
 package ch.supsi.imageEditor.frontend.controller.saving;
 
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
+import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 import ch.supsi.imageEditor.frontend.adapter.Component;
 import ch.supsi.imageEditor.frontend.exception.ImageTooBigException;
 import ch.supsi.imageEditor.frontend.model.image.ImageModel;
@@ -39,10 +40,8 @@ public class SavingController implements SavingControllerInterface {
         try {
             this.savingModel.loadImage(openFile);
             this.savingModel.setNewSavingFile(openFile);
-        } catch (FormatNotSupportedException e) {
+        } catch (FormatNotSupportedException | IOException | ImageHeaderUncorrectException e) {
             System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println("File non trovato");
         }
     }
 }

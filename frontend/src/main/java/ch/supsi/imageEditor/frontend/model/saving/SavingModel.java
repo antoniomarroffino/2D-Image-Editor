@@ -3,6 +3,7 @@ package ch.supsi.imageEditor.frontend.model.saving;
 import ch.supsi.imageEditor.backend.application.image.ImageController;
 import ch.supsi.imageEditor.backend.application.image.ImageControllerInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
+import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class SavingModel implements SavingModelInterface {
     }
 
     @Override
-    public void loadImage(File openFile) throws FormatNotSupportedException, IOException {
+    public void loadImage(File openFile) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
         this.imageController.loadImage(openFile.getPath());
     }
 }

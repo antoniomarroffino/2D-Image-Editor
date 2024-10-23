@@ -3,6 +3,7 @@ package ch.supsi.imageEditor.backend.business.images;
 import ch.supsi.imageEditor.backend.dataaccess.images.ImageReaderDataAccess;
 import ch.supsi.imageEditor.backend.dataaccess.images.ImageReaderDataAccessInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
+import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,7 +46,7 @@ public class ImageReaderFactory implements ImageReaderFactoryInterface {
     }
 
     @Override
-    public void readImage(String filePath) throws FormatNotSupportedException, IOException {
+    public void readImage(String filePath) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
         String extension = this.getFileExtension(filePath).toUpperCase();
         this.currentImageReader = this.imageReaders.get(extension);
         if (this.currentImageReader == null)
@@ -55,9 +56,8 @@ public class ImageReaderFactory implements ImageReaderFactoryInterface {
 
     private String getFileExtension(String filePath) {
         int lastDotIndex = filePath.lastIndexOf('.');
-        if (lastDotIndex == -1 || lastDotIndex == filePath.length() - 1) {
+        if (lastDotIndex == -1 || lastDotIndex == filePath.length() - 1)
             return "";
-        }
         return filePath.substring(lastDotIndex + 1);
     }
 

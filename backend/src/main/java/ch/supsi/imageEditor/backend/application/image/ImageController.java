@@ -7,6 +7,7 @@ import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.ImageReaderFactory;
 import ch.supsi.imageEditor.backend.business.images.ImageReaderFactoryInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
+import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
 import java.io.IOException;
 import java.util.Set;
@@ -27,7 +28,7 @@ public class ImageController implements ImageControllerInterface {
     }
 
     @Override
-    public void loadImage(String filePath) throws FormatNotSupportedException, IOException {
+    public void loadImage(String filePath) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
         this.imageReaderFactory.readImage(filePath);
         this.notificationService.notify(EventType.LOAD_IMAGE);
     }
