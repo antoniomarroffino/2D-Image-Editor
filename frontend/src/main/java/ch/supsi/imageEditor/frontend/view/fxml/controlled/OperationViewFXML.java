@@ -74,7 +74,6 @@ public class OperationViewFXML implements OperationViewFXMLInterface {
 
     @Override
     public void update(EventType eventType) {
-
     }
 
     @Override

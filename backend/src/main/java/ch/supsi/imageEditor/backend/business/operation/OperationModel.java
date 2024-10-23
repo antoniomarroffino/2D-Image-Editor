@@ -10,9 +10,11 @@ import java.util.stream.Collectors;
 public class OperationModel implements OperationModelInterface {
     private static OperationModel instance;
     private final OperationDataAccess operationDataAccess;
+    private final Set<String> supportedOperations;
 
     private OperationModel() {
         this.operationDataAccess = OperationDataAccess.getInstance();
+        this.supportedOperations = this.operationDataAccess.getOperationsTag();
     }
 
     public static OperationModel getInstance() {
@@ -25,8 +27,14 @@ public class OperationModel implements OperationModelInterface {
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
+    public void checkOperationExists(String operation) {
+        if(!this.supportedOperations.contains(operation)) {
+            //TODO: lanciare eccezione
+        }
+    }
+
     @Override
     public Set<String> getOperationsTag() {
-        return this.orderOperations(this.operationDataAccess.getOperationsTag());
+        return this.orderOperations(this.supportedOperations);
     }
 }

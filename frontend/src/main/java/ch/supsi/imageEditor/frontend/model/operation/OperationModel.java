@@ -4,6 +4,7 @@ import ch.supsi.imageEditor.backend.application.operation.OperationController;
 import ch.supsi.imageEditor.backend.application.operation.OperationControllerInterface;
 import ch.supsi.imageEditor.backend.application.pipeline.PipelineController;
 import ch.supsi.imageEditor.backend.application.pipeline.PipelineControllerInterface;
+import ch.supsi.imageEditor.frontend.adapter.Component;
 
 import java.util.Set;
 
@@ -25,6 +26,11 @@ public class OperationModel implements OperationModelInterface {
 
     @Override
     public Set<String> getSupportedOperations() {
-        return operationsTag;
+        return this.operationsTag;
+    }
+
+    @Override
+    public void addOperationToPipeline(String name) {
+        this.pipelineController.addOperationToPipeline(name);
     }
 }

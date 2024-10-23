@@ -9,6 +9,8 @@ import ch.supsi.imageEditor.frontend.controller.observer.HandleService;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.controller.operation.OperationController;
 import ch.supsi.imageEditor.frontend.controller.operation.OperationControllerInterface;
+import ch.supsi.imageEditor.frontend.controller.pipeline.PipelineController;
+import ch.supsi.imageEditor.frontend.controller.pipeline.PipelineControllerInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.AppModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModel;
@@ -19,6 +21,8 @@ import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
+import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModel;
+import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.*;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.CurrentInfoViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.ImageViewFXML;
@@ -43,6 +47,7 @@ public class MainFX extends Application {
     private final AboutModelInterface aboutModel;
     private final LanguageModelInterface languageModel;
     private final OperationModelInterface operationModel;
+    private final PipelineModelInterface pipelineModel;
     private final HandleViewModelInterface handleViewModel;
 
     private final MenuBarViewFXMLInterface menuBarView;
@@ -57,6 +62,7 @@ public class MainFX extends Application {
     private final AppControllerInterface appController;
     private final LanguageControllerInterface languageController;
     private final OperationControllerInterface operationController;
+    private final PipelineControllerInterface pipelineController;
 
     private final ResourceBundle resourceBundle;
 
@@ -66,6 +72,7 @@ public class MainFX extends Application {
         this.aboutModel = AboutModel.getInstance();
         this.languageModel = LanguageModel.getInstance();
         this.operationModel = OperationModel.getInstance();
+        this.pipelineModel = PipelineModel.getInstance();
         this.handleViewModel = HandleViewModel.getInstance();
 
         //CONTROLLERS
@@ -74,11 +81,11 @@ public class MainFX extends Application {
         this.appController = AppController.getInstance();
         this.languageController = LanguageController.getInstance();
         this.operationController = OperationController.getInstance();
-
+        this.pipelineController = PipelineController.getInstance();
         this.handleService.subscribe(EventOnApplication.ABOUT, this.appController::about);
         this.handleService.subscribe(EventOnApplication.HELP, this.appController::help);
         this.handleService.subscribe(EventOnApplication.CHANGE_LANGUAGE, this.languageController::changeLanguage);
-        this.handleService.subscribe(EventOnApplication.CLICK_OPERATION, this.operationController::addOperationToPipeline);
+        this.handleService.subscribe(EventOnApplication.CLICK_OPERATION, this.operationController::handleOperations);
         this.resourceBundle = languageModel.getCurrentResourceBundle();
 
         //VIEWS
@@ -95,6 +102,7 @@ public class MainFX extends Application {
         this.operationView.initialize(this.handleService, this.appModel, this.handleViewModel);
         this.aboutView.initialize(this.aboutModel);
         this.infoBarView.initialize((AbstractModel) this.languageModel, this.handleViewModel);
+        this.pipelineView.initialize(this.handleService, (AbstractModel) this.pipelineModel, this.handleViewModel);
 
         this.operationView.createSupportedOperationsButtons(this.operationModel.getSupportedOperations());
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());

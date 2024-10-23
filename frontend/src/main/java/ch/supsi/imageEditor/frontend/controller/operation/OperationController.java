@@ -19,7 +19,8 @@ public class OperationController implements OperationControllerInterface {
     }
 
     @Override
-    public void addOperationToPipeline(Component node) {
-        System.out.println("CIAO - " + node.getId()); //TODO: gestire l'evento
+    public void handleOperations(Component node) {
+        System.out.println(node.getId());
+        this.operationModel.addOperationToPipeline(node.getId());
     }
 }

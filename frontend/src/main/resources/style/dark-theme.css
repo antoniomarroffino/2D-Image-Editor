@@ -116,3 +116,7 @@
 #buttonClose:hover {
     -fx-background-color: red;
 }
+
+.operation-label {
+    -fx-background-color: #1e7bc3;
+}
