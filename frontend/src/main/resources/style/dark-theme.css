@@ -121,6 +121,11 @@
     -fx-background-color: red;
 }
 
+#error-ok-button:hover {
+    -fx-background-color: #0078D7;
+    -fx-text-fill: white;
+}
+
 .helpTitle {
     -fx-font-size: 16px;
 }

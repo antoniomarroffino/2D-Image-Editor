@@ -8,6 +8,8 @@ import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.pubsub.PubSubModel;
 import ch.supsi.imageEditor.frontend.model.pubsub.PubSubModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.DataView;
+import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewInterface;
+import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewPopUp;
 
 import java.util.List;
 
@@ -16,12 +18,13 @@ public class ImageController implements ImageControllerInterface, EventListener 
     private final PubSubModelInterface pubSubModel;
     private final ImageModelInterface imageModel;
     private List<DataView> views;
+    private final ErrorViewInterface errorView;
 
     private ImageController() {
         this.pubSubModel = PubSubModel.getInstance();
         this.pubSubModel.subscribe(EventType.LOAD_IMAGE, this);
-
         this.imageModel = ImageModel.getInstance();
+        this.errorView = ErrorViewPopUp.getInstance();
     }
 
     public static ImageController getInstance() {
@@ -39,7 +42,7 @@ public class ImageController implements ImageControllerInterface, EventListener 
             for (DataView view : this.views)
                 view.update(eventType);
         } catch (ImageTooBigException e) {
-            System.out.println(e.getMessage());
+            this.errorView.showPopUpError(e.getClass().getSimpleName(), e.getMessage());
         }
     }
 }

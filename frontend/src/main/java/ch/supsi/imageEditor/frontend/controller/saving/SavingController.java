@@ -10,6 +10,8 @@ import ch.supsi.imageEditor.frontend.model.saving.SavingModel;
 import ch.supsi.imageEditor.frontend.model.saving.SavingModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXMLInterface;
+import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewInterface;
+import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewPopUp;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,10 +21,12 @@ public class SavingController implements SavingControllerInterface {
     private final SavingModelInterface savingModel;
 
     private final SavingViewFXMLInterface savingViewFXML;
+    private final ErrorViewInterface errorView;
 
     private SavingController() {
         this.savingViewFXML = SavingViewFXML.getInstance();
         this.savingModel = SavingModel.getInstance();
+        this.errorView = ErrorViewPopUp.getInstance();
     }
 
     public static SavingController getInstance() {
@@ -41,7 +45,7 @@ public class SavingController implements SavingControllerInterface {
             this.savingModel.loadImage(openFile);
             this.savingModel.setNewSavingFile(openFile);
         } catch (FormatNotSupportedException | IOException | ImageHeaderUncorrectException e) {
-            System.out.println(e.getMessage());
+            this.errorView.showPopUpError(e.getClass().getSimpleName(), e.getMessage());
         }
     }
 }
