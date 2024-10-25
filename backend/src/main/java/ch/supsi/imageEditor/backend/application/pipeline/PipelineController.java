@@ -51,7 +51,6 @@ public class PipelineController implements PipelineControllerInterface {
         AbstractImage imageAfterOperations = this.operationModel.executeOperations(this.pipelineModel.getPipeline(), this.imageReaderModel.getImage());
         this.imageReaderModel.setImage(imageAfterOperations);
         this.notificationService.notify(EventType.RUN_PIPELINE);
-        //this.notificationService.notify(EventType.VIEW_NEW_IMAGE);
         this.pipelineModel.cleanPipeline();
         this.notificationService.notify(EventType.CLEAR_PIPELINE);
     }
