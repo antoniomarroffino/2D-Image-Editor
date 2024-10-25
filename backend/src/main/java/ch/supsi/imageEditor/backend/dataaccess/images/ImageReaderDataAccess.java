@@ -28,6 +28,7 @@ public class ImageReaderDataAccess implements ImageReaderDataAccessInterface {
         return defaultPreferences;
     }
 
+    @Override
     public Properties getFormatReaderProperties() {
         return this.formatReaderProperties;
     }

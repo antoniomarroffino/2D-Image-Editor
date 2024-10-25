@@ -35,4 +35,9 @@ public class PipelineModel implements PipelineModelInterface {
     public void cleanPipeline() {
         this.pipeline.clear();
     }
+
+    @Override
+    public List<String> getPipeline() {
+        return this.pipeline;
+    }
 }

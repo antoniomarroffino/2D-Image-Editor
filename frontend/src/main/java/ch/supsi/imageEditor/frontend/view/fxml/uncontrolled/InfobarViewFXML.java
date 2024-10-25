@@ -59,6 +59,7 @@ public class InfobarViewFXML implements UncontrolledFxView {
         eventDescription.put(EventType.LOAD_IMAGE, resourceBundle.getString("Infobar.loadImage"));
         eventDescription.put(EventType.ADDED_OPERATION, resourceBundle.getString("Infobar.addedOperation"));
         eventDescription.put(EventType.CLEAR_PIPELINE, resourceBundle.getString("Infobar.clearPipeline"));
+        eventDescription.put(EventType.RUN_PIPELINE, resourceBundle.getString("Infobar.runPipeline"));
     }
 
     @Override

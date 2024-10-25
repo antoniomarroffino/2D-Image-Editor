@@ -18,12 +18,14 @@ public class ImageReaderFactory implements ImageReaderFactoryInterface {
     private final Map<String, ImageReaderInterface> imageReaders;
     private final Properties imageReaderProperties;
     private ImageReaderInterface currentImageReader;
+    private AbstractImage currentImage;
 
     private ImageReaderFactory() {
         this.imageReaderDataAccess = ImageReaderDataAccess.getInstance();
         this.imageReaderProperties = this.imageReaderDataAccess.getFormatReaderProperties();
 
         this.imageReaders = this.loadImageReadersMap();
+        this.currentImage = null;
     }
 
     public static ImageReaderFactory getInstance() {
@@ -52,6 +54,7 @@ public class ImageReaderFactory implements ImageReaderFactoryInterface {
         if (this.currentImageReader == null)
             throw new FormatNotSupportedException("Format " + extension + " is not supported");
         this.currentImageReader.read(filePath);
+        this.currentImage = this.currentImageReader.getImage();
     }
 
     private String getFileExtension(String filePath) {
@@ -68,6 +71,6 @@ public class ImageReaderFactory implements ImageReaderFactoryInterface {
 
     @Override
     public AbstractImage getImage() {
-        return this.currentImageReader.getImage();
+        return this.currentImage;
     }
 }
