@@ -5,6 +5,7 @@ import ch.supsi.imageEditor.backend.application.observer.NotificationService;
 import ch.supsi.imageEditor.backend.application.observer.NotificationServiceInterface;
 import ch.supsi.imageEditor.backend.business.operation.OperationModel;
 import ch.supsi.imageEditor.backend.business.pipeline.PipelineModel;
+import ch.supsi.imageEditor.backend.exception.OperationNotSupportedException;
 
 public class PipelineController implements PipelineControllerInterface{
     private static PipelineController instance = null;
@@ -25,7 +26,7 @@ public class PipelineController implements PipelineControllerInterface{
 
 
     @Override
-    public void addOperationToPipeline(String name){
+    public void addOperationToPipeline(String name) throws OperationNotSupportedException {
         this.operationModel.checkOperationExists(name);
         this.pipelineModel.addOperationToPipeline(name);
         this.notificationService.notify(EventType.ADDED_OPERATION);

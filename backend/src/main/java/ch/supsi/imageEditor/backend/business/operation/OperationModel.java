@@ -1,6 +1,7 @@
 package ch.supsi.imageEditor.backend.business.operation;
 
 import ch.supsi.imageEditor.backend.dataaccess.operation.OperationDataAccess;
+import ch.supsi.imageEditor.backend.exception.OperationNotSupportedException;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -27,10 +28,10 @@ public class OperationModel implements OperationModelInterface {
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
-    public void checkOperationExists(String operation) {
-        if(!this.supportedOperations.contains(operation)) {
-            //TODO: lanciare eccezione
-        }
+    @Override
+    public void checkOperationExists(String operation) throws OperationNotSupportedException {
+        if(!this.supportedOperations.contains(operation))
+            throw new OperationNotSupportedException("Operation " + operation + " is not supported");
     }
 
     @Override

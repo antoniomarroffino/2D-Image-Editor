@@ -4,6 +4,7 @@ import ch.supsi.imageEditor.backend.application.operation.OperationController;
 import ch.supsi.imageEditor.backend.application.operation.OperationControllerInterface;
 import ch.supsi.imageEditor.backend.application.pipeline.PipelineController;
 import ch.supsi.imageEditor.backend.application.pipeline.PipelineControllerInterface;
+import ch.supsi.imageEditor.backend.exception.OperationNotSupportedException;
 import ch.supsi.imageEditor.frontend.adapter.Component;
 
 import java.util.Set;
@@ -30,7 +31,7 @@ public class OperationModel implements OperationModelInterface {
     }
 
     @Override
-    public void addOperationToPipeline(String name) {
+    public void addOperationToPipeline(String name) throws OperationNotSupportedException {
         this.pipelineController.addOperationToPipeline(name);
     }
 }

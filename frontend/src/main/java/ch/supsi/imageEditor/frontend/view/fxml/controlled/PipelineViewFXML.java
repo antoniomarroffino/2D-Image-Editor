@@ -24,8 +24,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class PipelineViewFXML implements ControlledFxView {
-    private static final String PathResourceFXML = "/pipeline.fxml";
     private static PipelineViewFXML instance = null;
+    private static final String PathResourceFXML = "/pipeline.fxml";
+    private int cntOperationInPipeline;
     private PipelineModelInterface pipelineModel;
     private HandleServiceInterface handleService;
     private final Map<EventType, Runnable> onEventDoActionMap;
@@ -48,6 +49,7 @@ public class PipelineViewFXML implements ControlledFxView {
 
     private PipelineViewFXML() {
         this.onEventDoActionMap = new HashMap<>();
+        this.cntOperationInPipeline = 0;
     }
 
     public static PipelineViewFXML getInstance(ResourceBundle resourceBundle) {
@@ -92,6 +94,7 @@ public class PipelineViewFXML implements ControlledFxView {
         String operation = this.pipelineModel.getAddedOperation();
         if (operation != null){
             this.enableButtons();
+            this.cntOperationInPipeline++;
             this.pipelineVBox.getChildren().add(this.createLabel(operation));
         }
 
@@ -100,6 +103,7 @@ public class PipelineViewFXML implements ControlledFxView {
     private void clearPipeline() {
         this.pipelineVBox.getChildren().clear();
         this.disableButtons();
+        this.cntOperationInPipeline = 0;
     }
 
     private void enableButtons() {
@@ -116,8 +120,9 @@ public class PipelineViewFXML implements ControlledFxView {
         Label label = new Label(operation);
         label.setId(operation);
         label.setMnemonicParsing(false);
+        label.setWrapText(true);
         label.setMaxWidth(Double.MAX_VALUE);
-        label.setText(bundle.getString("Operations." + operation));
+        label.setText(this.cntOperationInPipeline + ": " + bundle.getString("Operations." + operation));
         label.setAlignment(Pos.BASELINE_LEFT);
         label.getStyleClass().add("operation-label");
         return label;

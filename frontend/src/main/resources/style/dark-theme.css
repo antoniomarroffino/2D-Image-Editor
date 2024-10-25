@@ -115,15 +115,24 @@
 
 .operation-button:hover {
     -fx-background-color: #1e7bc3;
+    -fx-cursor: hand;
 }
 
 #buttonClose:hover {
     -fx-background-color: red;
+    -fx-cursor: hand;
 }
 
 #error-ok-button:hover {
     -fx-background-color: #0078D7;
     -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+#info-ok-button:hover{
+    -fx-background-color: #0078D7;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
 }
 
 .helpTitle {
@@ -143,7 +152,6 @@
 .dotPoint {
     -fx-padding: 0 0 0 10;
 }
-
 
 .operation-label {
     -fx-background-color: #1e7bc3;

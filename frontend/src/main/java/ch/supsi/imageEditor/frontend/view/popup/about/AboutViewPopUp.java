@@ -2,6 +2,8 @@ package ch.supsi.imageEditor.frontend.view.popup.about;
 
 import ch.supsi.imageEditor.frontend.model.about.AboutModelInterface;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
@@ -45,13 +47,10 @@ public class AboutViewPopUp implements AboutViewInterface {
         logoAppImageView.setFitHeight(LOGO_HEIGHT);
         logoAppImageView.setFitWidth(LOGO_WIDTH);
 
-        // Get the dialog pane of the alert
         Region dialogPane = infoView.getDialogPane();
-
-        // Add a custom CSS class to the dialog pane
         dialogPane.getStyleClass().add("custom-alert");
-
-        // Load the CSS file
+        Button okButton = (Button) infoView.getDialogPane().lookupButton(ButtonType.OK);
+        okButton.setId("info-ok-button");
         infoView.getDialogPane().getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/dark-theme.css")).toExternalForm());
 
         infoView.setGraphic(logoAppImageView);
