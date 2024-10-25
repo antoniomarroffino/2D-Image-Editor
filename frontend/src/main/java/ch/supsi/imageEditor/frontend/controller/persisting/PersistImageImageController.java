@@ -1,13 +1,10 @@
-package ch.supsi.imageEditor.frontend.controller.saving;
+package ch.supsi.imageEditor.frontend.controller.persisting;
 
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 import ch.supsi.imageEditor.frontend.adapter.Component;
-import ch.supsi.imageEditor.frontend.exception.ImageTooBigException;
-import ch.supsi.imageEditor.frontend.model.image.ImageModel;
-import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
-import ch.supsi.imageEditor.frontend.model.saving.SavingModel;
-import ch.supsi.imageEditor.frontend.model.saving.SavingModelInterface;
+import ch.supsi.imageEditor.frontend.model.persist.PersistImageImageModel;
+import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXMLInterface;
 import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewInterface;
@@ -16,34 +13,48 @@ import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewPopUp;
 import java.io.File;
 import java.io.IOException;
 
-public class SavingController implements SavingControllerInterface {
-    private static SavingController instance = null;
-    private final SavingModelInterface savingModel;
+public class PersistImageImageController implements PersistImageControllerInterface {
+    private static PersistImageImageController instance = null;
+    private final PersistImageModelInterface persistImageModel;
 
     private final SavingViewFXMLInterface savingViewFXML;
     private final ErrorViewInterface errorView;
 
-    private SavingController() {
+    private PersistImageImageController() {
         this.savingViewFXML = SavingViewFXML.getInstance();
-        this.savingModel = SavingModel.getInstance();
+        this.persistImageModel = PersistImageImageModel.getInstance();
         this.errorView = ErrorViewPopUp.getInstance();
     }
 
-    public static SavingController getInstance() {
-        return instance == null ? instance = new SavingController() : instance;
+    public static PersistImageImageController getInstance() {
+        return instance == null ? instance = new PersistImageImageController() : instance;
     }
 
     @Override
     public void openImage(Component component) {
-        File openFile = this.savingViewFXML.getOpenFile(this.savingModel.getSupportedFormats());
+        File openFile = this.savingViewFXML.getOpenFile(this.persistImageModel.getSupportedFormats());
         if (openFile != null)
             loadImage(openFile);
     }
 
+    @Override
+    public void saveImage(Component component) {
+        if(!this.persistImageModel.isAlreadySave())
+            save();
+    }
+
+    @Override
+    public void saveImageAs(Component component) {
+
+    }
+
+    private void save() {
+    }
+
     private void loadImage(File openFile) {
         try {
-            this.savingModel.loadImage(openFile);
-            this.savingModel.setNewSavingFile(openFile);
+            this.persistImageModel.loadImage(openFile);
+            this.persistImageModel.setNewSavingFile(openFile);
         } catch (FormatNotSupportedException | IOException | ImageHeaderUncorrectException e) {
             this.errorView.showPopUpError(e.getClass().getSimpleName(), e.getMessage());
         }

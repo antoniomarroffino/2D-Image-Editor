@@ -5,6 +5,7 @@ import ch.supsi.imageEditor.frontend.adapter.MenuItemAdapter;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -14,6 +15,8 @@ import javafx.scene.control.MenuItem;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -22,6 +25,8 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     private static MenuBarViewFXML instance = null;
     private static ResourceBundle bundle;
     private HandleServiceInterface handleService;
+    private final Map<EventType, Runnable> onEventDoActionMap;
+
     @FXML
     private MenuBar menuBar;
 
@@ -41,6 +46,8 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     @FXML
     private MenuItem saveAsMenuItem;
     @FXML
+    private MenuItem closeMenuItem;
+    @FXML
     private MenuItem quitMenuItem;
     @FXML
     private Menu languageMenu;
@@ -50,6 +57,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     private MenuItem helpMenuItem;
 
     private MenuBarViewFXML() {
+        this.onEventDoActionMap = new HashMap<>();
     }
 
     public static MenuBarViewFXML getInstance(ResourceBundle resourceBundle) {
@@ -79,18 +87,34 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     @Override
     public void initialize(HandleServiceInterface handleService, AbstractModel model) {
         this.handleService = handleService;
+        this.fillMap();
         this.createBehaviour();
+    }
+
+    private void fillMap(){
+        this.onEventDoActionMap.put(EventType.LOAD_IMAGE, this::enablePersistingButtons);
     }
 
     private void createBehaviour() {
         this.aboutMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.ABOUT, new MenuItemAdapter((MenuItem) event.getSource())));
         this.helpMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.HELP, new MenuItemAdapter((MenuItem) event.getSource())));
         this.openMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.OPEN_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
+        this.saveMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.SAVE_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
+        this.saveMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.SAVE_IMAGE_AS, new MenuItemAdapter((MenuItem) event.getSource())));
+        this.quitMenuItem.setOnAction(actionEvent -> Platform.exit()); //TODO: controllare se si ha un'immagine caricata e se è già stata salvata
     }
 
     @Override
     public void update(EventType eventType) {
+        Runnable action = this.onEventDoActionMap.get(eventType);
+        if (action != null)
+            action.run();
+    }
 
+    private void enablePersistingButtons(){
+        this.saveMenuItem.setDisable(false);
+        this.saveAsMenuItem.setDisable(false);
+        this.closeMenuItem.setDisable(false);
     }
 
     @Override

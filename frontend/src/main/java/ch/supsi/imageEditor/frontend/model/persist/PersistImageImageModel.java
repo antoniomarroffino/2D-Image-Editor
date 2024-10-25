@@ -1,4 +1,4 @@
-package ch.supsi.imageEditor.frontend.model.saving;
+package ch.supsi.imageEditor.frontend.model.persist;
 
 import ch.supsi.imageEditor.backend.application.image.ImageController;
 import ch.supsi.imageEditor.backend.application.image.ImageControllerInterface;
@@ -9,18 +9,21 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-public class SavingModel implements SavingModelInterface {
-    private static SavingModel instance = null;
+public class PersistImageImageModel implements PersistImageModelInterface {
+    private static PersistImageImageModel instance = null;
 
     private final ImageControllerInterface imageController;
-    private File currentSavingFile = null;
+    private File currentSavingFile;
+    private boolean isAlreadySaved;
 
-    private SavingModel() {
+    private PersistImageImageModel() {
         this.imageController = ImageController.getInstance();
+        this.currentSavingFile = null;
+        this.isAlreadySaved = false;
     }
 
-    public static SavingModel getInstance() {
-        return instance == null ? instance = new SavingModel() : instance;
+    public static PersistImageImageModel getInstance() {
+        return instance == null ? instance = new PersistImageImageModel() : instance;
     }
 
     @Override
@@ -31,6 +34,12 @@ public class SavingModel implements SavingModelInterface {
     @Override
     public void setNewSavingFile(File openFile) {
         this.currentSavingFile = openFile;
+        this.isAlreadySaved = true;
+    }
+
+    @Override
+    public boolean isAlreadySave() {
+        return this.isAlreadySaved;
     }
 
     @Override
