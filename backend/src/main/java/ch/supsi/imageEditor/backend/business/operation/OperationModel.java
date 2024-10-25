@@ -1,8 +1,7 @@
 package ch.supsi.imageEditor.backend.business.operation;
 
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
-import ch.supsi.imageEditor.backend.business.images.ImageReaderInterface;
-import ch.supsi.imageEditor.backend.business.operation.allOperations.*;
+import ch.supsi.imageEditor.backend.business.operation.allOperations.Operation;
 import ch.supsi.imageEditor.backend.dataaccess.operation.OperationDataAccess;
 import ch.supsi.imageEditor.backend.exception.OperationNotSupportedException;
 
@@ -51,7 +50,7 @@ public class OperationModel implements OperationModelInterface {
 
     @Override
     public void checkOperationExists(String operation) throws OperationNotSupportedException {
-        if(!this.supportedOperations.contains(operation))
+        if (!this.supportedOperations.contains(operation))
             throw new OperationNotSupportedException("Operation " + operation + " is not supported");
     }
 
@@ -61,10 +60,10 @@ public class OperationModel implements OperationModelInterface {
     }
 
     @Override
-    public AbstractImage executeOperations(List<String> operationsTag, AbstractImage currentImage) { //TODO: fare algoritmo operazioni
-        for(String operationTag : operationsTag) {
+    public AbstractImage executeOperations(List<String> operationsTag, AbstractImage currentImage) { //TODO: fare algoritmo operazioni & chiedere al prof se salavare ogni volta in locale abstract image
+        for (String operationTag : operationsTag) {
             Operation operation = this.operationsMap.get(operationTag);
-            if(operation != null)
+            if (operation != null)
                 currentImage = operation.doOperation(currentImage);
         }
         return currentImage;

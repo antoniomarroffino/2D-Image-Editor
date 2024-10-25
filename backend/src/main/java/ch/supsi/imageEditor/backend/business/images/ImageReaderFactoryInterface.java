@@ -12,4 +12,6 @@ public interface ImageReaderFactoryInterface {
     Set<String> getSupportedFormat();
 
     AbstractImage getImage();
+
+    void setImage(AbstractImage image);
 }

@@ -3,13 +3,14 @@ package ch.supsi.imageEditor.backend.application.pipeline;
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.application.observer.NotificationService;
 import ch.supsi.imageEditor.backend.application.observer.NotificationServiceInterface;
+import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.ImageReaderFactory;
 import ch.supsi.imageEditor.backend.business.images.ImageReaderFactoryInterface;
 import ch.supsi.imageEditor.backend.business.operation.OperationModel;
 import ch.supsi.imageEditor.backend.business.pipeline.PipelineModel;
 import ch.supsi.imageEditor.backend.exception.OperationNotSupportedException;
 
-public class PipelineController implements PipelineControllerInterface{
+public class PipelineController implements PipelineControllerInterface {
     private static PipelineController instance = null;
     private final PipelineModel pipelineModel;
     private final OperationModel operationModel;
@@ -47,8 +48,10 @@ public class PipelineController implements PipelineControllerInterface{
 
     @Override
     public void runPipeline() {
-        this.operationModel.executeOperations(this.pipelineModel.getPipeline(), this.imageReaderModel.getImage());
+        AbstractImage imageAfterOperations = this.operationModel.executeOperations(this.pipelineModel.getPipeline(), this.imageReaderModel.getImage());
+        this.imageReaderModel.setImage(imageAfterOperations);
         this.notificationService.notify(EventType.RUN_PIPELINE);
+        //this.notificationService.notify(EventType.VIEW_NEW_IMAGE);
         this.pipelineModel.cleanPipeline();
         this.notificationService.notify(EventType.CLEAR_PIPELINE);
     }

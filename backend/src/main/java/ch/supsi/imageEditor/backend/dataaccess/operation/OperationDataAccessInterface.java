@@ -5,5 +5,6 @@ import java.util.Set;
 
 public interface OperationDataAccessInterface {
     Properties getOperationProperties();
+
     Set<String> getOperationsTag();
 }

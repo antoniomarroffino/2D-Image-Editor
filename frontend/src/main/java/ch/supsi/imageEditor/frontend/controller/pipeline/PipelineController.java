@@ -23,7 +23,6 @@ public class PipelineController implements PipelineControllerInterface, EventLis
         this.pubSubModel = PubSubModel.getInstance();
         this.pubSubModel.subscribe(EventType.ADDED_OPERATION, this);
         this.pubSubModel.subscribe(EventType.CLEAR_PIPELINE, this);
-        this.pubSubModel.subscribe(EventType.RUN_PIPELINE, this);
     }
 
     public static PipelineController getInstance() {
@@ -49,7 +48,6 @@ public class PipelineController implements PipelineControllerInterface, EventLis
     public void runPipeline(Component node) { //TODO: controllare il Component
         this.pipelineModel.runPipeline();
     }
-
 
     @Override
     public void update(EventType eventType) {

@@ -129,7 +129,7 @@
     -fx-cursor: hand;
 }
 
-#info-ok-button:hover{
+#info-ok-button:hover {
     -fx-background-color: #0078D7;
     -fx-text-fill: white;
     -fx-cursor: hand;

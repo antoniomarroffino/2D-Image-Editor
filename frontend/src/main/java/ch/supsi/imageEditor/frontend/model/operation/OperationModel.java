@@ -5,11 +5,11 @@ import ch.supsi.imageEditor.backend.application.operation.OperationControllerInt
 import ch.supsi.imageEditor.backend.application.pipeline.PipelineController;
 import ch.supsi.imageEditor.backend.application.pipeline.PipelineControllerInterface;
 import ch.supsi.imageEditor.backend.exception.OperationNotSupportedException;
-import ch.supsi.imageEditor.frontend.adapter.Component;
+import ch.supsi.imageEditor.frontend.model.AbstractModel;
 
 import java.util.Set;
 
-public class OperationModel implements OperationModelInterface {
+public class OperationModel extends AbstractModel implements OperationModelInterface {
     private static OperationModel instance;
     private final OperationControllerInterface operationController;
     private final PipelineControllerInterface pipelineController;

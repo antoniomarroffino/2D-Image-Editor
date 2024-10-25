@@ -73,4 +73,9 @@ public class ImageReaderFactory implements ImageReaderFactoryInterface {
     public AbstractImage getImage() {
         return this.currentImage;
     }
+
+    @Override
+    public void setImage(AbstractImage image) {
+        this.currentImage = image;
+    }
 }

@@ -56,7 +56,7 @@ public class InfobarViewFXML implements UncontrolledFxView {
 
     private static void fillMap(ResourceBundle resourceBundle) {
         eventDescription.put(EventType.CHANGE_LANGUAGE, resourceBundle.getString("Infobar.changeLanguage"));
-        eventDescription.put(EventType.LOAD_IMAGE, resourceBundle.getString("Infobar.loadImage"));
+        eventDescription.put(EventType.OPEN_IMAGE, resourceBundle.getString("Infobar.loadImage"));
         eventDescription.put(EventType.ADDED_OPERATION, resourceBundle.getString("Infobar.addedOperation"));
         eventDescription.put(EventType.CLEAR_PIPELINE, resourceBundle.getString("Infobar.clearPipeline"));
         eventDescription.put(EventType.RUN_PIPELINE, resourceBundle.getString("Infobar.runPipeline"));

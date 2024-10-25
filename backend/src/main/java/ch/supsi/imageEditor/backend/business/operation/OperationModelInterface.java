@@ -8,6 +8,8 @@ import java.util.Set;
 
 public interface OperationModelInterface {
     Set<String> getOperationsTag();
+
     void checkOperationExists(String operation) throws OperationNotSupportedException;
+
     AbstractImage executeOperations(List<String> operationsTag, AbstractImage currentImage);
 }

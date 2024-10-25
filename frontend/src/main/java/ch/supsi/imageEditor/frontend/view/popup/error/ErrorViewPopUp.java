@@ -9,13 +9,14 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-public class ErrorViewPopUp implements ErrorViewInterface{
-    private static ErrorViewPopUp instance = null;
+public class ErrorViewPopUp implements ErrorViewInterface {
     private final static String logoPath = "/images/logoApp.png";
+    private static ErrorViewPopUp instance = null;
 
-    private ErrorViewPopUp(){}
+    private ErrorViewPopUp() {
+    }
 
-    public static ErrorViewPopUp getInstance(){
+    public static ErrorViewPopUp getInstance() {
         return instance == null ? instance = new ErrorViewPopUp() : instance;
     }
 
