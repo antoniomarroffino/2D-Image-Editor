@@ -19,6 +19,11 @@ public abstract class AbstractImage {
         return pixel[x][y];
     }
 
+    public Pixel[][] getPixelMatrix() {
+        return this.pixel;
+    }
+
+
     public void setWidth(int width) {
         this.width = width;
     }
