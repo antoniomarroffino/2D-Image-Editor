@@ -92,7 +92,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     }
 
     private void fillMap(){
-        this.onEventDoActionMap.put(EventType.LOAD_IMAGE, this::enablePersistingButtons);
+        this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::enablePersistingButtons);
     }
 
     private void createBehaviour() {
@@ -100,7 +100,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
         this.helpMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.HELP, new MenuItemAdapter((MenuItem) event.getSource())));
         this.openMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.OPEN_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
         this.saveMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.SAVE_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
-        this.saveMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.SAVE_IMAGE_AS, new MenuItemAdapter((MenuItem) event.getSource())));
+        this.saveAsMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.SAVE_IMAGE_AS, new MenuItemAdapter((MenuItem) event.getSource())));
         this.quitMenuItem.setOnAction(actionEvent -> Platform.exit()); //TODO: controllare se si ha un'immagine caricata e se è già stata salvata
     }
 

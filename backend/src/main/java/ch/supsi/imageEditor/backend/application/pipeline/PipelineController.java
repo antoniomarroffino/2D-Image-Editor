@@ -4,8 +4,8 @@ import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.application.observer.NotificationService;
 import ch.supsi.imageEditor.backend.application.observer.NotificationServiceInterface;
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
-import ch.supsi.imageEditor.backend.business.images.ImageReaderFactory;
-import ch.supsi.imageEditor.backend.business.images.ImageReaderFactoryInterface;
+import ch.supsi.imageEditor.backend.business.images.ImageFactory;
+import ch.supsi.imageEditor.backend.business.images.ImageFactoryInterface;
 import ch.supsi.imageEditor.backend.business.operation.OperationModel;
 import ch.supsi.imageEditor.backend.business.pipeline.PipelineModel;
 import ch.supsi.imageEditor.backend.exception.OperationNotSupportedException;
@@ -14,14 +14,14 @@ public class PipelineController implements PipelineControllerInterface {
     private static PipelineController instance = null;
     private final PipelineModel pipelineModel;
     private final OperationModel operationModel;
-    private final ImageReaderFactoryInterface imageReaderModel;
+    private final ImageFactoryInterface imageModel;
     private final NotificationServiceInterface notificationService;
 
     private PipelineController() {
         this.pipelineModel = PipelineModel.getInstance();
         this.operationModel = OperationModel.getInstance();
         this.notificationService = NotificationService.getInstance();
-        this.imageReaderModel = ImageReaderFactory.getInstance();
+        this.imageModel = ImageFactory.getInstance();
     }
 
     public static PipelineController getInstance() {
@@ -48,8 +48,8 @@ public class PipelineController implements PipelineControllerInterface {
 
     @Override
     public void runPipeline() {
-        AbstractImage imageAfterOperations = this.operationModel.executeOperations(this.pipelineModel.getPipeline(), this.imageReaderModel.getImage());
-        this.imageReaderModel.setImage(imageAfterOperations);
+        AbstractImage imageAfterOperations = this.operationModel.executeOperations(this.pipelineModel.getPipeline(), this.imageModel.getImage());
+        this.imageModel.setImage(imageAfterOperations);
         this.notificationService.notify(EventType.RUN_PIPELINE);
         this.pipelineModel.cleanPipeline();
         this.notificationService.notify(EventType.CLEAR_PIPELINE);

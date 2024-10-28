@@ -1,13 +1,13 @@
 package ch.supsi.imageEditor.backend.business.images.PNM;
 
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
-import ch.supsi.imageEditor.backend.business.images.ImageReaderInterface;
+import ch.supsi.imageEditor.backend.business.images.ImageInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
 import java.util.Scanner;
 
-public abstract class AbstractPnmImage extends AbstractImage implements ImageReaderInterface {
+public abstract class AbstractPnmImage extends AbstractImage implements ImageInterface {
     public void readHeader(Scanner scanner, String filepath) throws FormatNotSupportedException, ImageHeaderUncorrectException {
         String format = scanner.nextLine();
         this.format = format.toUpperCase();

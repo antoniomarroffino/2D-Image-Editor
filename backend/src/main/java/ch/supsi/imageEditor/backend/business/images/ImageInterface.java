@@ -5,7 +5,7 @@ import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
 import java.io.IOException;
 
-public interface ImageReaderInterface {
+public interface ImageInterface {
     void read(String filePath) throws IOException, FormatNotSupportedException, ImageHeaderUncorrectException;
 
     AbstractImage getImage();

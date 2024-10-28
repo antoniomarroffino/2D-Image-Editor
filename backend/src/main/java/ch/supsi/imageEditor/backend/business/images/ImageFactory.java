@@ -14,16 +14,16 @@ import java.util.Set;
 
 public class ImageFactory implements ImageFactoryInterface {
     private static ImageFactory instance = null;
-    private final ImageDataAccessInterface imageReaderDataAccess;
+    private final ImageDataAccessInterface imageDataAccess;
 
-    private final Map<String, ImageReaderInterface> imageReaders;
+    private final Map<String, ImageInterface> imageReaders;
     private final Properties imageReaderProperties;
-    private ImageReaderInterface currentImageReader;
+    private ImageInterface currentImageReader;
     private AbstractImage currentImage;
 
     private ImageFactory() {
-        this.imageReaderDataAccess = ImageDataAccess.getInstance();
-        this.imageReaderProperties = this.imageReaderDataAccess.getFormatReaderProperties();
+        this.imageDataAccess = ImageDataAccess.getInstance();
+        this.imageReaderProperties = this.imageDataAccess.getFormatReaderProperties();
 
         this.imageReaders = this.loadImageReadersMap();
         this.currentImage = null;
@@ -33,13 +33,13 @@ public class ImageFactory implements ImageFactoryInterface {
         return instance == null ? instance = new ImageFactory() : instance;
     }
 
-    private Map<String, ImageReaderInterface> loadImageReadersMap() {
-        Map<String, ImageReaderInterface> imageReadersMap = new HashMap<>();
+    private Map<String, ImageInterface> loadImageReadersMap() {
+        Map<String, ImageInterface> imageReadersMap = new HashMap<>();
         for (String extension : this.imageReaderProperties.stringPropertyNames()) {
             String readerClassName = this.imageReaderProperties.getProperty(extension);
             try {
                 Class<?> readerClass = Class.forName(readerClassName);
-                ImageReaderInterface imageReader = (ImageReaderInterface) readerClass.getConstructor().newInstance();
+                ImageInterface imageReader = (ImageInterface) readerClass.getConstructor().newInstance();
                 imageReadersMap.put(extension, imageReader);
             } catch (Exception e) {
                 throw new RuntimeException("Error during load of image reader: " + extension);
@@ -82,6 +82,6 @@ public class ImageFactory implements ImageFactoryInterface {
 
     @Override
     public void writeImage(AbstractImage image, File file) {
-        this.imageReaderDataAccess.writeImage(image, file);
+        this.imageDataAccess.writeImage(image, file);
     }
 }

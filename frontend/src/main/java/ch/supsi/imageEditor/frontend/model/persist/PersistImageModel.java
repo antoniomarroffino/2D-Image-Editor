@@ -9,21 +9,21 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-public class PersistImageImageModel implements PersistImageModelInterface {
-    private static PersistImageImageModel instance = null;
+public class PersistImageModel implements PersistImageModelInterface {
+    private static PersistImageModel instance = null;
 
     private final ImageControllerInterface imageController;
     private File currentSavingFile;
     private boolean isAlreadySaved;
 
-    private PersistImageImageModel() {
+    private PersistImageModel() {
         this.imageController = ImageController.getInstance();
         this.currentSavingFile = null;
         this.isAlreadySaved = false;
     }
 
-    public static PersistImageImageModel getInstance() {
-        return instance == null ? instance = new PersistImageImageModel() : instance;
+    public static PersistImageModel getInstance() {
+        return instance == null ? instance = new PersistImageModel() : instance;
     }
 
     @Override
@@ -34,7 +34,6 @@ public class PersistImageImageModel implements PersistImageModelInterface {
     @Override
     public void setNewSavingFile(File openFile) {
         this.currentSavingFile = openFile;
-        this.isAlreadySaved = true;
     }
 
     @Override
@@ -50,5 +49,10 @@ public class PersistImageImageModel implements PersistImageModelInterface {
     @Override
     public void writeImage() {
         this.imageController.writeImage(this.currentSavingFile);
+    }
+
+    @Override
+    public void setAlreadySave(boolean isAlreadySaved) {
+        this.isAlreadySaved = isAlreadySaved;
     }
 }

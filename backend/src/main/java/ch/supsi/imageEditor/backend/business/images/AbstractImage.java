@@ -1,5 +1,7 @@
 package ch.supsi.imageEditor.backend.business.images;
 
+import java.util.Arrays;
+
 public abstract class AbstractImage {
     protected String format;
     protected int width;
@@ -31,5 +33,12 @@ public abstract class AbstractImage {
 
     public int getMaxIntensity() {
         return this.maxIntensity;
+    }
+
+    @Override
+    public String toString() {
+        return this.format + System.lineSeparator() +
+                "# Image edited by 2D Image Editor" + System.lineSeparator() +
+                this.width + " " + this.height + System.lineSeparator();
     }
 }

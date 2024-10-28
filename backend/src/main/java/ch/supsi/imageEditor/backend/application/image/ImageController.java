@@ -37,6 +37,7 @@ public class ImageController implements ImageControllerInterface {
     @Override
     public void writeImage(File file) {
         this.imageReaderFactory.writeImage(this.imageReaderFactory.getImage(), file);
+        this.notificationService.notify(EventType.SAVE_IMAGE);
     }
 
     @Override
