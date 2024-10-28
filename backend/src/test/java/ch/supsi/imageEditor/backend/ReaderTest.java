@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class ReaderTest {
     private ImageFactory factory;
@@ -31,12 +32,12 @@ public class ReaderTest {
 
     @Test
     public void testPBMReadImage() {
-        try{
+        try {
             this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P1.pbm");
             AbstractImage image = this.factory.getImage();
             assertEquals(4, image.getWidth());
             assertEquals(4, image.getHeight());
-        }catch(IOException | FormatNotSupportedException | ImageHeaderUncorrectException ignored){
+        } catch (IOException | FormatNotSupportedException | ImageHeaderUncorrectException ignored) {
             ;
         } catch (ImageHeaderUncorrectException e) {
             throw new RuntimeException(e);
@@ -45,24 +46,24 @@ public class ReaderTest {
 
     @Test
     public void testPGMReadImage() {
-        try{
+        try {
             this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P2.pgm");
             AbstractImage image = this.factory.getImage();
             assertEquals(5, image.getWidth());
             assertEquals(5, image.getHeight());
-        }catch(IOException | FormatNotSupportedException | ImageHeaderUncorrectException ignored){
+        } catch (IOException | FormatNotSupportedException | ImageHeaderUncorrectException ignored) {
             ;
         }
     }
 
     @Test
     public void testPPMReadImage() {
-        try{
+        try {
             this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P3.ppm");
             AbstractImage image = this.factory.getImage();
             assertEquals(3, image.getWidth());
             assertEquals(2, image.getHeight());
-        }catch(IOException | FormatNotSupportedException | ImageHeaderUncorrectException ignored){
+        } catch (IOException | FormatNotSupportedException | ImageHeaderUncorrectException ignored) {
             ;
         }
     }

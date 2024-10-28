@@ -24,9 +24,8 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     private static final String PathResourceFXML = "/menubar.fxml";
     private static MenuBarViewFXML instance = null;
     private static ResourceBundle bundle;
-    private HandleServiceInterface handleService;
     private final Map<EventType, Runnable> onEventDoActionMap;
-
+    private HandleServiceInterface handleService;
     @FXML
     private MenuBar menuBar;
 
@@ -91,7 +90,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
         this.createBehaviour();
     }
 
-    private void fillMap(){
+    private void fillMap() {
         this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::enablePersistingButtons);
     }
 
@@ -111,7 +110,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
             action.run();
     }
 
-    private void enablePersistingButtons(){
+    private void enablePersistingButtons() {
         this.saveMenuItem.setDisable(false);
         this.saveAsMenuItem.setDisable(false);
         this.closeMenuItem.setDisable(false);

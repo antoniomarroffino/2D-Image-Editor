@@ -1,7 +1,6 @@
 package ch.supsi.imageEditor.backend.dataaccess.images;
 
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
-import ch.supsi.imageEditor.backend.business.images.Pixel;
 
 import java.io.*;
 import java.util.Properties;
@@ -39,7 +38,7 @@ public class ImageDataAccess implements ImageDataAccessInterface {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(image.toString());
         } catch (IOException ignored) {
-           ;
+            ;
         }
     }
 }

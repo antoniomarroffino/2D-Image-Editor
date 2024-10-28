@@ -7,22 +7,17 @@ public class InvertColor implements Operation {
 
     @Override
     public AbstractImage doOperation(AbstractImage image) {
-        System.out.println(getClass().getSimpleName());
-
         int width = image.getWidth();
         int height = image.getHeight();
         Pixel[][] pixels = image.getPixelMatrix();
 
-        for (int y = 0; y < height; y++) {
+        for (int y = 0; y < height; y++)
             for (int x = 0; x < width; x++) {
                 Pixel pixel = pixels[x][y];
-                int maxIntensity = image.getMaxIntensity();
-
-                pixel.setRed(maxIntensity - pixel.getRed());
-                pixel.setGreen(maxIntensity - pixel.getGreen());
-                pixel.setBlue(maxIntensity - pixel.getBlue());
+                pixel.setRed(255 - pixel.getRed());
+                pixel.setGreen(255 - pixel.getGreen());
+                pixel.setBlue(255 - pixel.getBlue());
             }
-        }
         image.setPixel(pixels);
         return image;
     }

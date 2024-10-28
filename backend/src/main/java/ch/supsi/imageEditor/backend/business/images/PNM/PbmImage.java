@@ -14,11 +14,9 @@ public class PbmImage extends AbstractPnmImage {
     public void read(String filePath) throws IOException, FormatNotSupportedException, ImageHeaderUncorrectException {
         try (Scanner scanner = new Scanner(new FileReader(filePath))) {
             readHeader(scanner, filePath);
+            this.maxIntensity = 1;
             this.pixel = new Pixel[this.height][this.width];
             try {
-                for (int i = 0; i < height; i++)
-                    for (int j = 0; j < width; j++)
-                        pixel[i][j] = new Pixel(scanner.nextInt() * 255 / maxIntensity);
                 for (int i = 0; i < this.height; i++)
                     for (int j = 0; j < this.width; j++)
                         this.pixel[i][j] = new Pixel(scanner.nextInt() == 1 ? 0 : 255);

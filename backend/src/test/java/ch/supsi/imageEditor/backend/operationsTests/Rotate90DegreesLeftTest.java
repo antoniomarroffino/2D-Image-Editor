@@ -1,12 +1,11 @@
 package ch.supsi.imageEditor.backend.operationsTests;
 
-import ch.supsi.imageEditor.backend.business.images.AbstractImage;
-import ch.supsi.imageEditor.backend.business.images.ImageReaderFactory;
-import ch.supsi.imageEditor.backend.business.operation.allOperations.Rotate90DegreesLeft;
+import ch.supsi.imageEditor.backend.business.images.ImageFactory;
 import org.junit.jupiter.api.Test;
 
 public class Rotate90DegreesLeftTest {
-    private ImageReaderFactory factory;
+    private ImageFactory factory;
+
     @Test
     public void testRotate90DegreesLeft() {
         try {
@@ -17,7 +16,7 @@ public class Rotate90DegreesLeftTest {
             this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P1RotatedLeft.pbm");
             AbstractImage newP1Image = new Rotate90DegreesLeft().doOperation(P1Image);
             */
-        }catch( Exception ignored) {
+        } catch (Exception ignored) {
             ;
         }
     }

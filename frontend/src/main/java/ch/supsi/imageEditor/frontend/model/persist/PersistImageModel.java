@@ -42,6 +42,11 @@ public class PersistImageModel implements PersistImageModelInterface {
     }
 
     @Override
+    public void setAlreadySave(boolean isAlreadySaved) {
+        this.isAlreadySaved = isAlreadySaved;
+    }
+
+    @Override
     public void loadImage(File openFile) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
         this.imageController.loadImage(openFile.getPath());
     }
@@ -49,10 +54,5 @@ public class PersistImageModel implements PersistImageModelInterface {
     @Override
     public void writeImage() {
         this.imageController.writeImage(this.currentSavingFile);
-    }
-
-    @Override
-    public void setAlreadySave(boolean isAlreadySaved) {
-        this.isAlreadySaved = isAlreadySaved;
     }
 }

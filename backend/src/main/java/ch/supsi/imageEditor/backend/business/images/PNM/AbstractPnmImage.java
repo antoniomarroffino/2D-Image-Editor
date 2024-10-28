@@ -11,12 +11,12 @@ public abstract class AbstractPnmImage extends AbstractImage implements ImageInt
     public void readHeader(Scanner scanner, String filepath) throws FormatNotSupportedException, ImageHeaderUncorrectException {
         String format = scanner.nextLine();
         this.format = format.toUpperCase();
-        if (! this.format.equals("P1") && ! this.format.equals("P2") && ! this.format.equals("P3"))
-            throw new FormatNotSupportedException("Format " +  this.format + " is not supported");
+        if (!this.format.equals("P1") && !this.format.equals("P2") && !this.format.equals("P3"))
+            throw new FormatNotSupportedException("Format " + this.format + " is not supported");
 
         String extension = this.getFileExtension(filepath);
-        if (( this.format.equals("P1") && !extension.equals("PBM")) || ( this.format.equals("P2") && !extension.equals("PGM")) || ( this.format.equals("P3") && !extension.equals("PPM")))
-            throw new ImageHeaderUncorrectException(extension + " not correspond to " +  this.format + " format in the image header");
+        if ((this.format.equals("P1") && !extension.equals("PBM")) || (this.format.equals("P2") && !extension.equals("PGM")) || (this.format.equals("P3") && !extension.equals("PPM")))
+            throw new ImageHeaderUncorrectException(extension + " not correspond to " + this.format + " format in the image header");
 
         String line;
         do

@@ -9,13 +9,12 @@ public class FlipUpsideDown implements Operation {
         int width = image.getWidth();
         int height = image.getHeight();
         Pixel[][] pixels = image.getPixelMatrix();
-        for (int x = 0; x < width; x++) {
+        for (int x = 0; x < width; x++)
             for (int y = 0; y < height / 2; y++) {
                 Pixel temp = pixels[x][y];
                 pixels[x][y] = pixels[x][height - y - 1];
                 pixels[x][height - y - 1] = temp;
             }
-        }
         image.setPixel(pixels);
         return image;
     }

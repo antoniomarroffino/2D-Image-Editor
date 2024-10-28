@@ -10,7 +10,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class PgmImage extends AbstractPnmImage {
-
     @Override
     public void read(String filePath) throws IOException, FormatNotSupportedException, ImageHeaderUncorrectException {
         try (Scanner scanner = new Scanner(new FileReader(filePath))) {
@@ -20,9 +19,7 @@ public class PgmImage extends AbstractPnmImage {
             try {
                 for (int i = 0; i < height; i++)
                     for (int j = 0; j < width; j++)
-                        pixel[i][j] = new Pixel(scanner.nextInt() * 255 / maxIntensity,
-                                scanner.nextInt() * 255 / maxIntensity,
-                                scanner.nextInt() * 255 / maxIntensity);
+                        pixel[i][j] = new Pixel(scanner.nextInt() * 255 / maxIntensity);
             } catch (NoSuchElementException ignored) {
                 throw new ImageHeaderUncorrectException("The dimensions declared in the header don't match those of the image");
             }
@@ -33,10 +30,10 @@ public class PgmImage extends AbstractPnmImage {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(super.toString());
-        stringBuilder.append(this.maxVal).append(System.lineSeparator());
+        stringBuilder.append(this.maxIntensity).append(System.lineSeparator());
         for (int i = 0; i < this.height; i++)
             for (int j = 0; j < this.width; j++)
-                stringBuilder.append(this.pixel[i][j].getRed() * maxVal / 255).append(" ");
+                stringBuilder.append(this.pixel[i][j].getRed() * this.maxIntensity / 255).append(" ");
         return stringBuilder.toString();
     }
 }
