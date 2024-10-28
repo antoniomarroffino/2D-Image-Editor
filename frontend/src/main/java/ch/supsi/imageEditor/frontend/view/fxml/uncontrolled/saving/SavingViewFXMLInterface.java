@@ -9,8 +9,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public interface SavingViewFXMLInterface {
-    void initialize(ResourceBundle resourceBundle);
-
     File getOpenFile(Set<String> supportedFormat);
 
     void setMainStage(Stage mainStage);

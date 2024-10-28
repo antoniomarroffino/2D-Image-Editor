@@ -102,7 +102,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
         this.saveMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.SAVE_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
         this.saveAsMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.SAVE_IMAGE_AS, new MenuItemAdapter((MenuItem) event.getSource())));
         this.closeMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.CLOSE_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
-        this.quitMenuItem.setOnAction(actionEvent -> Platform.exit());
+        this.quitMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.QUIT_APPLICATION, new MenuItemAdapter((MenuItem) event.getSource())));
     }
 
     @Override

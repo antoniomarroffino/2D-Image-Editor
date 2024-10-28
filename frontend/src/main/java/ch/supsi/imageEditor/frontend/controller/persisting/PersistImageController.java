@@ -4,6 +4,7 @@ import ch.supsi.imageEditor.backend.application.observer.EventListener;
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
+import ch.supsi.imageEditor.frontend.MainFX;
 import ch.supsi.imageEditor.frontend.adapter.Component;
 import ch.supsi.imageEditor.frontend.model.persist.PersistImageModel;
 import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
@@ -14,10 +15,10 @@ import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXM
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXMLInterface;
 import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewInterface;
 import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewPopUp;
+import javafx.application.Platform;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.Native;
 import java.util.List;
 
 public class PersistImageController implements PersistImageControllerInterface, EventListener {
@@ -84,7 +85,7 @@ public class PersistImageController implements PersistImageControllerInterface, 
 
     @Override
     public void requestSaveBeforeClose(Component component) {
-        if(!this.persistImageModel.isAlreadySave())
+        if (!this.persistImageModel.isAlreadySave())
             this.savingViewFXML.showSaveConfirmationPopup(this::save, this::closeImage);
         else
             this.closeImage();
@@ -92,8 +93,10 @@ public class PersistImageController implements PersistImageControllerInterface, 
 
     @Override
     public void requestSaveBeforeQuit(Component component) {
-        if(!this.persistImageModel.isAlreadySave());
-         //   this.savingViewFXML.showSaveConfirmationPopup(this::save, this::closeImage);
+        if (this.persistImageModel.existCurrentFile() && ! this.persistImageModel.isAlreadySave())
+            this.savingViewFXML.showSaveConfirmationPopup(this::save, MainFX::closeApplication);
+        else
+            MainFX.closeApplication();
     }
 
     private void closeImage() {

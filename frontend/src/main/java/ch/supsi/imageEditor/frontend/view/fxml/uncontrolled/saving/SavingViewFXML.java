@@ -1,22 +1,39 @@
 package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving;
 
-import javafx.event.Event;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 public class SavingViewFXML implements SavingViewFXMLInterface {
     private static SavingViewFXML instance = null;
+    private static final String PathResourceFXML = "/saveConfirmation.fxml";
+    private final static String PATH_LOGO_APP_IMAGE = "/images/logoApp.png";
     private Stage mainStage;
-    private ResourceBundle resourceBundle;
+    private static ResourceBundle bundle;
+
+    @FXML
+    private VBox confirmationVBox;
+    @FXML
+    private Button buttonYes;
+    @FXML
+    private Button buttonNo;
 
     private SavingViewFXML() {
     }
@@ -25,9 +42,22 @@ public class SavingViewFXML implements SavingViewFXMLInterface {
         return instance == null ? instance = new SavingViewFXML() : instance;
     }
 
-    @Override
-    public void initialize(ResourceBundle resourceBundle) {
-        this.resourceBundle = resourceBundle;
+    public static SavingViewFXML getInstance(ResourceBundle resourceBundle) {
+        if (instance == null) {
+            instance = new SavingViewFXML();
+        }
+        try {
+            URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
+            if (fxmlUrl != null) {
+                FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl, resourceBundle);
+                fxmlLoader.setController(instance);
+                fxmlLoader.load();
+                bundle = resourceBundle;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return instance;
     }
 
     @Override
@@ -54,30 +84,37 @@ public class SavingViewFXML implements SavingViewFXMLInterface {
 
     @Override
     public void showSaveConfirmationPopup(Runnable handleYes, Runnable handleNo) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.initStyle(StageStyle.UTILITY);
-        alert.setTitle(this.resourceBundle.getString("SaveGamePopup.title"));
-        alert.setHeaderText(this.resourceBundle.getString("SaveGamePopup.header"));
-        alert.setContentText(this.resourceBundle.getString("SaveGamePopup.context"));
+        try {
+            URL fxmlUrl = SavingViewFXML.class.getResource(PathResourceFXML);
+            if (fxmlUrl != null) {
+                FXMLLoader loader = new FXMLLoader(fxmlUrl, bundle);
+                loader.setController(instance);
 
-        ButtonType yesButton = new ButtonType(this.resourceBundle.getString("SaveGamePopup.buttonYes"));
-        ButtonType noButton = new ButtonType(this.resourceBundle.getString("SaveGamePopup.buttonNo"));
-        alert.getButtonTypes().setAll(yesButton, noButton);
+                Parent newRoot = loader.load();
 
-        alert.getDialogPane().getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/dark-theme.css")).toExternalForm());
+                Scene scene = new Scene(newRoot);
+                Stage newWindow = new Stage();
+                newWindow.getIcons().add(new Image(PATH_LOGO_APP_IMAGE));
+                newWindow.setTitle(bundle.getString("ChoiceSave.title"));
+                newWindow.initModality(Modality.APPLICATION_MODAL);
+                newWindow.setResizable(false);
+                newWindow.setScene(scene);
 
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.setOnCloseRequest(Event::consume);
+                this.buttonYes.setOnAction(e -> {
+                    handleYes.run();
+                    handleNo.run();
+                    newWindow.close();
+                });
 
-        alert.showAndWait().ifPresent(response -> {
-            if (response == yesButton) {
-                handleYes.run();    //SAVE
-                handleNo.run();     //CLOSE / QUIT
-            } else if (response == noButton) {
-                handleNo.run();     //CLOSE / QUIT
+                this.buttonNo.setOnAction(e -> {
+                    handleNo.run();
+                    newWindow.close();
+                });
+
+                newWindow.show();
             }
-        });
-
-
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

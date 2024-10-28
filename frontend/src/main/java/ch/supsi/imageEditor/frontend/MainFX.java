@@ -38,6 +38,7 @@ import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXM
 import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewInterface;
 import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewPopUp;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -106,6 +107,7 @@ public class MainFX extends Application {
         this.handleService.subscribe(EventOnApplication.SAVE_IMAGE, this.persistImageController::saveImage);
         this.handleService.subscribe(EventOnApplication.SAVE_IMAGE_AS, this.persistImageController::saveImageAs);
         this.handleService.subscribe(EventOnApplication.CLOSE_IMAGE, this.persistImageController::requestSaveBeforeClose);
+        this.handleService.subscribe(EventOnApplication.QUIT_APPLICATION, this.persistImageController::requestSaveBeforeQuit);
 
         this.resourceBundle = languageModel.getCurrentResourceBundle();
 
@@ -117,7 +119,7 @@ public class MainFX extends Application {
         this.pipelineView = PipelineViewFXML.getInstance(this.resourceBundle);
         this.infoBarView = InfobarViewFXML.getInstance(this.resourceBundle);
         this.aboutView = AboutViewPopUp.getInstance(this.resourceBundle);
-        this.savingView = SavingViewFXML.getInstance();
+        this.savingView = SavingViewFXML.getInstance(this.resourceBundle);
 
         //SCAFFOLDING of M-V-C
         this.menuBarView.initialize(this.handleService, this.appModel);
@@ -127,7 +129,6 @@ public class MainFX extends Application {
         this.pipelineView.initialize(this.handleService, (AbstractModel) this.pipelineModel);
         this.infoBarView.initialize((AbstractModel) this.languageModel);
         this.imageView.initialize((AbstractModel) this.imageModel);
-        this.savingView.initialize(this.resourceBundle);
 
         List<DataView> listOfViews = List.of(this.menuBarView, this.imageView,
                 this.operationView, this.currentInfoView,
@@ -199,5 +200,9 @@ public class MainFX extends Application {
         primaryStage.show();
 
         this.savingView.setMainStage(primaryStage);
+    }
+
+    public static void closeApplication() {
+        Platform.exit();
     }
 }

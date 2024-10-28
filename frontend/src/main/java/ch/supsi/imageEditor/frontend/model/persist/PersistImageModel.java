@@ -37,6 +37,11 @@ public class PersistImageModel implements PersistImageModelInterface {
     }
 
     @Override
+    public boolean existCurrentFile() {
+        return this.currentSavingFile != null;
+    }
+
+    @Override
     public boolean isAlreadySave() {
         return this.isAlreadySaved;
     }

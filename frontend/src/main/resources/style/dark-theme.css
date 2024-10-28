@@ -135,6 +135,12 @@
     -fx-cursor: hand;
 }
 
+#buttonYes:hover, #buttonNo:hover {
+    -fx-background-color: #0078D7;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
 .helpTitle {
     -fx-font-size: 16px;
 }
