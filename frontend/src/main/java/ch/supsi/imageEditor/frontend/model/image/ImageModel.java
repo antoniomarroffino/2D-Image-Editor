@@ -8,17 +8,16 @@ import ch.supsi.imageEditor.frontend.model.AbstractModel;
 
 public class ImageModel extends AbstractModel implements ImageModelInterface {
     private static ImageModelInterface instance;
-
-    private final ImageControllerInterface imageController;
-
     private static double MAX_WIDTH_IMAGE;
     private static double MAX_HEIGHT_IMAGE;
-    private AbstractImage currentImage;
 
     static {
         MAX_HEIGHT_IMAGE = 0;
         MAX_WIDTH_IMAGE = 0;
     }
+
+    private final ImageControllerInterface imageController;
+    private AbstractImage currentImage;
 
     private ImageModel() {
         this.imageController = ImageController.getInstance();

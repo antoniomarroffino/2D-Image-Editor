@@ -17,12 +17,13 @@ public class ImageController implements ImageControllerInterface, EventListener 
     private static ImageController instance = null;
     private final PubSubModelInterface pubSubModel;
     private final ImageModelInterface imageModel;
-    private List<DataView> views;
     private final ErrorViewInterface errorView;
+    private List<DataView> views;
 
     private ImageController() {
         this.pubSubModel = PubSubModel.getInstance();
-        this.pubSubModel.subscribe(EventType.LOAD_IMAGE, this);
+        this.pubSubModel.subscribe(EventType.OPEN_IMAGE, this);
+        this.pubSubModel.subscribe(EventType.RUN_PIPELINE, this);
         this.imageModel = ImageModel.getInstance();
         this.errorView = ErrorViewPopUp.getInstance();
     }

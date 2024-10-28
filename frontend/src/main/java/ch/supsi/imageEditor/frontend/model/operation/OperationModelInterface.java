@@ -6,5 +6,6 @@ import java.util.Set;
 
 public interface OperationModelInterface {
     Set<String> getSupportedOperations();
+
     void addOperationToPipeline(String name) throws OperationNotSupportedException;
 }

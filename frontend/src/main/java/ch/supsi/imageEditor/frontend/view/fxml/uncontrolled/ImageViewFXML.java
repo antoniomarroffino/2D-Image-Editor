@@ -22,11 +22,9 @@ public class ImageViewFXML implements UncontrolledFxView {
     private static final String PathResourceFXML = "/imagewindow.fxml";
     private static ImageViewFXML instance = null;
     private final Map<EventType, Runnable> onEventDoActionMap;
-    private ImageModelInterface imageModel;
-
     public double width;
     public double height;
-
+    private ImageModelInterface imageModel;
     @FXML
     private StackPane imageStackPane;
     @FXML
@@ -54,20 +52,6 @@ public class ImageViewFXML implements UncontrolledFxView {
         return instance;
     }
 
-    @Override
-    public Node getNode() {
-        return this.imageStackPane;
-    }
-
-    @Override
-    public void initialize(AbstractModel model) {
-        this.imageModel = (ImageModelInterface) model;
-        this.onEventDoActionMap.put(EventType.LOAD_IMAGE, this::display);
-
-        width = this.imageStackPane.getPrefWidth();
-        height = this.imageStackPane.getPrefHeight();
-    }
-
     public static double getWidthOfPane() {
         if (instance != null)
             return instance.width;
@@ -78,6 +62,21 @@ public class ImageViewFXML implements UncontrolledFxView {
         if (instance != null)
             return instance.height;
         return 0;
+    }
+
+    @Override
+    public Node getNode() {
+        return this.imageStackPane;
+    }
+
+    @Override
+    public void initialize(AbstractModel model) {
+        this.imageModel = (ImageModelInterface) model;
+        this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::display);
+        this.onEventDoActionMap.put(EventType.RUN_PIPELINE, this::display);
+
+        width = this.imageStackPane.getPrefWidth();
+        height = this.imageStackPane.getPrefHeight();
     }
 
     @Override

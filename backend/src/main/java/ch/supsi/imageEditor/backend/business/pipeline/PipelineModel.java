@@ -1,10 +1,7 @@
 package ch.supsi.imageEditor.backend.business.pipeline;
 
-import ch.supsi.imageEditor.backend.application.pipeline.PipelineControllerInterface;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class PipelineModel implements PipelineModelInterface {
     private static PipelineModel instance;
@@ -20,12 +17,12 @@ public class PipelineModel implements PipelineModelInterface {
 
     @Override
     public void addOperationToPipeline(String name) {
-         this.pipeline.add(name);
+        this.pipeline.add(name);
     }
 
     @Override
-    public String getLastOperationAdded(){
-        if(!this.pipeline.isEmpty()){
+    public String getLastOperationAdded() {
+        if (!this.pipeline.isEmpty()) {
             return this.pipeline.get(this.pipeline.size() - 1);
         }
         return null;
@@ -34,5 +31,10 @@ public class PipelineModel implements PipelineModelInterface {
     @Override
     public void cleanPipeline() {
         this.pipeline.clear();
+    }
+
+    @Override
+    public List<String> getPipeline() {
+        return this.pipeline;
     }
 }

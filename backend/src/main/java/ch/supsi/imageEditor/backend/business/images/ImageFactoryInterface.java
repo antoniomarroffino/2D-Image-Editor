@@ -14,5 +14,7 @@ public interface ImageFactoryInterface {
 
     AbstractImage getImage();
 
+    void setImage(AbstractImage image);
+
     void writeImage(AbstractImage image, File file);
 }

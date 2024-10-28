@@ -24,7 +24,6 @@ import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
-import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModel;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.DataView;
@@ -54,13 +53,13 @@ public class MainFX extends Application {
     private final AbstractModel appModel;
     private final AboutModelInterface aboutModel;
     private final LanguageModelInterface languageModel;
-    private final OperationModelInterface operationModel;
+    private final AbstractModel operationModel;
     private final PipelineModelInterface pipelineModel;
     private final ImageModelInterface imageModel;
 
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
-    private final OperationViewFXMLInterface operationView;
+    private final ControlledFxView operationView;
     private final UncontrolledFxView currentInfoView;
     private final ControlledFxView pipelineView;
     private final UncontrolledFxView infoBarView;
@@ -120,7 +119,7 @@ public class MainFX extends Application {
 
         //SCAFFOLDING of M-V-C
         this.menuBarView.initialize(this.handleService, this.appModel);
-        this.operationView.initialize(this.handleService, this.appModel);
+        this.operationView.initialize(this.handleService, this.operationModel);
         this.aboutView.initialize(this.aboutModel);
         this.infoBarView.initialize((AbstractModel) this.languageModel);
         this.pipelineView.initialize(this.handleService, (AbstractModel) this.pipelineModel);
@@ -138,7 +137,7 @@ public class MainFX extends Application {
         this.imageModel.setMaxWidthImage(ImageViewFXML.getWidthOfPane());
         this.imageModel.setMaxHeightImage(ImageViewFXML.getHeightOfPane());
 
-        this.operationView.createSupportedOperationsButtons(this.operationModel.getSupportedOperations());
+        //this.operationView.createSupportedOperationsButtons(this.operationModel.getSupportedOperations());
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());
         //this.menuBarView.createOpenRecentMenuItem(null);
         // this.operationView.createOperationMenuItem(null);

@@ -1,15 +1,10 @@
 package ch.supsi.imageEditor.frontend.model.pipeline;
 
-import ch.supsi.imageEditor.backend.application.operation.OperationController;
-import ch.supsi.imageEditor.backend.application.operation.OperationControllerInterface;
 import ch.supsi.imageEditor.backend.application.pipeline.PipelineController;
 import ch.supsi.imageEditor.backend.application.pipeline.PipelineControllerInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
-import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
 
-import java.util.Set;
-
-public class PipelineModel extends AbstractModel implements PipelineModelInterface{
+public class PipelineModel extends AbstractModel implements PipelineModelInterface {
     private static PipelineModel instance;
     private final PipelineControllerInterface pipelineController;
 

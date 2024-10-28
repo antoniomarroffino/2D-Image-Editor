@@ -24,14 +24,13 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class PipelineViewFXML implements ControlledFxView {
-    private static PipelineViewFXML instance = null;
     private static final String PathResourceFXML = "/pipeline.fxml";
+    private static PipelineViewFXML instance = null;
+    private static ResourceBundle bundle;
+    private final Map<EventType, Runnable> onEventDoActionMap;
     private int cntOperationInPipeline;
     private PipelineModelInterface pipelineModel;
     private HandleServiceInterface handleService;
-    private final Map<EventType, Runnable> onEventDoActionMap;
-    private static ResourceBundle bundle;
-
     @FXML
     private Pane pipelinePane;
 
@@ -96,7 +95,7 @@ public class PipelineViewFXML implements ControlledFxView {
 
     private void addOperationToPipeline() {
         String operation = this.pipelineModel.getAddedOperation();
-        if (operation != null){
+        if (operation != null) {
             this.enableButtons();
             this.cntOperationInPipeline++;
             this.pipelineVBox.getChildren().add(this.createLabel(operation));

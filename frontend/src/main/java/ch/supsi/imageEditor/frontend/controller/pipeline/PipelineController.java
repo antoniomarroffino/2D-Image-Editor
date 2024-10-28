@@ -49,7 +49,6 @@ public class PipelineController implements PipelineControllerInterface, EventLis
         this.pipelineModel.runPipeline();
     }
 
-
     @Override
     public void update(EventType eventType) {
         for (DataView view : this.views)
