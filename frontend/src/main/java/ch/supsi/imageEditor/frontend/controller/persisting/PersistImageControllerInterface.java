@@ -8,7 +8,9 @@ import java.util.List;
 public interface PersistImageControllerInterface {
     void initialize(List<DataView> views);
 
-    void openImage(Component component);
+    void requestSaveBeforeOpen(Component component);
+
+    void openRecentImage(Component component);
 
     void saveImage(Component component);
 

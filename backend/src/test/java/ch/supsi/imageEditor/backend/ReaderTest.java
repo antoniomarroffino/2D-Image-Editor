@@ -22,18 +22,18 @@ public class ReaderTest {
 
     @Test
     public void testFormatNotExists() {
-        assertThrows(FormatNotSupportedException.class, () -> this.factory.readImage("test.png"));
+        assertThrows(FormatNotSupportedException.class, () -> this.factory.loadImage("test.png"));
     }
 
     @Test
     public void testFileNotExists() {
-        assertThrows(IOException.class, () -> this.factory.readImage("test.ppm"));
+        assertThrows(IOException.class, () -> this.factory.loadImage("test.ppm"));
     }
 
     @Test
     public void testPBMReadImage() {
         try {
-            this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P1.pbm");
+            this.factory.loadImage("./src/test/java/ch/supsi/imageEditor/backend/images/P1.pbm");
             AbstractImage image = this.factory.getImage();
             assertEquals(4, image.getWidth());
             assertEquals(4, image.getHeight());
@@ -45,7 +45,7 @@ public class ReaderTest {
     @Test
     public void testPGMReadImage() {
         try {
-            this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P2.pgm");
+            this.factory.loadImage("./src/test/java/ch/supsi/imageEditor/backend/images/P2.pgm");
             AbstractImage image = this.factory.getImage();
             assertEquals(5, image.getWidth());
             assertEquals(5, image.getHeight());
@@ -57,7 +57,7 @@ public class ReaderTest {
     @Test
     public void testPPMReadImage() {
         try {
-            this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P3.ppm");
+            this.factory.loadImage("./src/test/java/ch/supsi/imageEditor/backend/images/P3.ppm");
             AbstractImage image = this.factory.getImage();
             assertEquals(3, image.getWidth());
             assertEquals(2, image.getHeight());

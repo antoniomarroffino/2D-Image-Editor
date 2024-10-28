@@ -13,6 +13,7 @@ import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 public class ImageController implements ImageControllerInterface {
@@ -34,7 +35,7 @@ public class ImageController implements ImageControllerInterface {
 
     @Override
     public void loadImage(String filePath) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
-        this.imageReaderFactory.readImage(filePath);
+        this.imageReaderFactory.loadImage(filePath);
         this.notificationService.notify(EventType.OPEN_IMAGE);
     }
 
@@ -52,6 +53,11 @@ public class ImageController implements ImageControllerInterface {
     @Override
     public Set<String> getSupportedFormat() {
         return this.imageReaderFactory.getSupportedFormat();
+    }
+
+    @Override
+    public List<String> getRecentFiles() {
+        return this.imageReaderFactory.getRecentFiles();
     }
 
     @Override

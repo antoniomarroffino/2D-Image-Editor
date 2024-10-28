@@ -4,12 +4,16 @@ import ch.supsi.imageEditor.backend.application.image.ImageController;
 import ch.supsi.imageEditor.backend.application.image.ImageControllerInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
+import ch.supsi.imageEditor.frontend.model.AbstractModel;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-public class PersistImageModel implements PersistImageModelInterface {
+public class PersistImageModel extends AbstractModel implements PersistImageModelInterface {
     private static PersistImageModel instance = null;
 
     private final ImageControllerInterface imageController;
@@ -29,6 +33,11 @@ public class PersistImageModel implements PersistImageModelInterface {
     @Override
     public Set<String> getSupportedFormats() {
         return this.imageController.getSupportedFormat();
+    }
+
+    @Override
+    public List<String> getRecentFiles() {
+        return this.imageController.getRecentFiles().stream().limit(5).collect(Collectors.toList());
     }
 
     @Override
@@ -53,7 +62,7 @@ public class PersistImageModel implements PersistImageModelInterface {
 
     @Override
     public void loadImage(File openFile) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
-        this.imageController.loadImage(openFile.getPath());
+        this.imageController.loadImage(openFile.getAbsolutePath());
     }
 
     @Override

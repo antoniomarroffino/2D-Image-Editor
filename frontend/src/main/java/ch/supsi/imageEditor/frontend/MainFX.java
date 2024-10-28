@@ -25,6 +25,8 @@ import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
+import ch.supsi.imageEditor.frontend.model.persist.PersistImageModel;
+import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModel;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.DataView;
@@ -58,6 +60,7 @@ public class MainFX extends Application {
     private final AbstractModel operationModel;
     private final PipelineModelInterface pipelineModel;
     private final ImageModelInterface imageModel;
+    private final PersistImageModelInterface persistModel;
 
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
@@ -86,6 +89,7 @@ public class MainFX extends Application {
         this.operationModel = OperationModel.getInstance();
         this.pipelineModel = PipelineModel.getInstance();
         this.imageModel = ImageModel.getInstance();
+        this.persistModel = PersistImageModel.getInstance();
 
 
         //CONTROLLERS
@@ -103,7 +107,8 @@ public class MainFX extends Application {
         this.handleService.subscribe(EventOnApplication.RUN_PIPELINE, this.pipelineController::runPipeline);
         this.handleService.subscribe(EventOnApplication.DELETE_PIPELINE, this.pipelineController::deletePipeline);
         this.handleService.subscribe(EventOnApplication.CLICK_OPERATION, this.operationController::addOperationToPipeline);
-        this.handleService.subscribe(EventOnApplication.OPEN_IMAGE, this.persistImageController::openImage);
+        this.handleService.subscribe(EventOnApplication.OPEN_IMAGE, this.persistImageController::requestSaveBeforeOpen);
+        this.handleService.subscribe(EventOnApplication.OPEN_RECENT, this.persistImageController::openRecentImage);
         this.handleService.subscribe(EventOnApplication.SAVE_IMAGE, this.persistImageController::saveImage);
         this.handleService.subscribe(EventOnApplication.SAVE_IMAGE_AS, this.persistImageController::saveImageAs);
         this.handleService.subscribe(EventOnApplication.CLOSE_IMAGE, this.persistImageController::requestSaveBeforeClose);
@@ -122,7 +127,7 @@ public class MainFX extends Application {
         this.savingView = SavingViewFXML.getInstance(this.resourceBundle);
 
         //SCAFFOLDING of M-V-C
-        this.menuBarView.initialize(this.handleService, this.appModel);
+        this.menuBarView.initialize(this.handleService, (AbstractModel) this.persistModel);
         this.operationView.initialize(this.handleService, this.operationModel);
         this.aboutView.initialize(this.aboutModel);
         this.infoBarView.initialize((AbstractModel) this.languageModel);
@@ -144,8 +149,7 @@ public class MainFX extends Application {
 
         this.operationView.createSupportedOperationsButtons();
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());
-        //this.menuBarView.createOpenRecentMenuItem(null);
-        // this.operationView.createOperationMenuItem(null);
+        this.menuBarView.createOpenRecentMenuItem(this.persistModel.getRecentFiles());
     }
 
     public static void main(String[] args) {

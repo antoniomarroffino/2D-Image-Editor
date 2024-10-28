@@ -6,6 +6,7 @@ import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 public interface ImageControllerInterface {
@@ -16,6 +17,8 @@ public interface ImageControllerInterface {
     AbstractImage getImage();
 
     Set<String> getSupportedFormat();
+
+    List<String> getRecentFiles();
 
     void closeImage();
 }

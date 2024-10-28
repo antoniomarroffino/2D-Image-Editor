@@ -5,6 +5,8 @@ import ch.supsi.imageEditor.frontend.adapter.MenuItemAdapter;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
+import ch.supsi.imageEditor.frontend.model.persist.PersistImageModel;
+import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,14 +17,12 @@ import javafx.scene.control.MenuItem;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     private static final String PathResourceFXML = "/menubar.fxml";
     private static MenuBarViewFXML instance = null;
+    private PersistImageModelInterface persistImageModel;
     private static ResourceBundle bundle;
     private final Map<EventType, Runnable> onEventDoActionMap;
     private HandleServiceInterface handleService;
@@ -86,6 +86,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     @Override
     public void initialize(HandleServiceInterface handleService, AbstractModel model) {
         this.handleService = handleService;
+        this.persistImageModel = (PersistImageModelInterface) model;
         this.fillMap();
         this.createBehaviour();
     }
@@ -113,6 +114,8 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     }
 
     private void enablePersistingButtons() {
+        this.openRecentMenu.getItems().clear();
+        this.createOpenRecentMenuItem(this.persistImageModel.getRecentFiles());
         this.saveMenuItem.setDisable(false);
         this.saveAsMenuItem.setDisable(false);
         this.closeMenuItem.setDisable(false);
@@ -137,14 +140,17 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     }
 
     @Override
-    public void createOpenRecentMenuItem(Set<String> recentFiles) {
-        for (String recentFile : recentFiles) {
-            MenuItem item = new MenuItem(recentFile);
-            item.setId(recentFile);
-            item.setMnemonicParsing(false);
-            //item.setText(bundle.getString("MenuBar." + supportedLanguage));
-            //item.setOnAction(event -> this.handleService.notify(EventOnApplication.CHANGE_LANGUAGE, new MenuItemAdapter((MenuItem) event.getSource())));
-            this.languageMenu.getItems().add(item);
-        }
+    public void createOpenRecentMenuItem(List<String> recentFiles) {
+        for (String recentFile : recentFiles)
+            this.openRecentMenu.getItems().add(getOpenRecentMenuItem(recentFile));
+    }
+
+    private MenuItem getOpenRecentMenuItem(String recentFile) {
+        MenuItem item = new MenuItem(recentFile);
+        item.setId(recentFile);
+        item.setText(recentFile);
+        item.setMnemonicParsing(false);
+        item.setOnAction(event -> this.handleService.notify(EventOnApplication.OPEN_RECENT, new MenuItemAdapter((MenuItem) event.getSource())));
+        return item;
     }
 }
