@@ -92,6 +92,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
 
     private void fillMap() {
         this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::enablePersistingButtons);
+        this.onEventDoActionMap.put(EventType.CLOSE_IMAGE, this::disablePersistingButtons);
     }
 
     private void createBehaviour() {
@@ -100,7 +101,8 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
         this.openMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.OPEN_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
         this.saveMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.SAVE_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
         this.saveAsMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.SAVE_IMAGE_AS, new MenuItemAdapter((MenuItem) event.getSource())));
-        this.quitMenuItem.setOnAction(actionEvent -> Platform.exit()); //TODO: controllare se si ha un'immagine caricata e se è già stata salvata
+        this.closeMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.CLOSE_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
+        this.quitMenuItem.setOnAction(actionEvent -> Platform.exit());
     }
 
     @Override
@@ -114,6 +116,12 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
         this.saveMenuItem.setDisable(false);
         this.saveAsMenuItem.setDisable(false);
         this.closeMenuItem.setDisable(false);
+    }
+
+    private void disablePersistingButtons() {
+        this.saveMenuItem.setDisable(true);
+        this.saveAsMenuItem.setDisable(true);
+        this.closeMenuItem.setDisable(true);
     }
 
     @Override

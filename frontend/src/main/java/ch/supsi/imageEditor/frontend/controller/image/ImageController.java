@@ -11,7 +11,9 @@ import ch.supsi.imageEditor.frontend.view.fxml.DataView;
 import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewInterface;
 import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewPopUp;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ImageController implements ImageControllerInterface, EventListener {
     private static ImageController instance = null;
@@ -19,13 +21,16 @@ public class ImageController implements ImageControllerInterface, EventListener 
     private final ImageModelInterface imageModel;
     private final ErrorViewInterface errorView;
     private List<DataView> views;
+    private final Map<EventType, Runnable> onEventDoActionMap;
 
     private ImageController() {
         this.pubSubModel = PubSubModel.getInstance();
         this.pubSubModel.subscribe(EventType.OPEN_IMAGE, this);
         this.pubSubModel.subscribe(EventType.RUN_PIPELINE, this);
+        this.pubSubModel.subscribe(EventType.CLOSE_IMAGE, this);
         this.imageModel = ImageModel.getInstance();
         this.errorView = ErrorViewPopUp.getInstance();
+        this.onEventDoActionMap = new HashMap<>();
     }
 
     public static ImageController getInstance() {
@@ -34,16 +39,29 @@ public class ImageController implements ImageControllerInterface, EventListener 
 
     public void initialize(List<DataView> views) {
         this.views = views;
+        this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::openImage);
+        this.onEventDoActionMap.put(EventType.CLOSE_IMAGE, this::closeImage);
     }
 
     @Override
     public void update(EventType eventType) {
+        Runnable action = onEventDoActionMap.get(eventType);
+        if (action != null)
+            action.run();
+
+        for (DataView view : this.views)
+            view.update(eventType);
+    }
+
+    private void openImage() {
         try {
             this.imageModel.loadCurrentImage();
-            for (DataView view : this.views)
-                view.update(eventType);
         } catch (ImageTooBigException e) {
             this.errorView.showPopUpError(e.getClass().getSimpleName(), e.getMessage());
         }
+    }
+
+    private void closeImage() {
+        this.imageModel.closeCurrentImage();
     }
 }

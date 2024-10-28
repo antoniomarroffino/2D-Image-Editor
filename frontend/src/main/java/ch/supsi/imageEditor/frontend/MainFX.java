@@ -24,6 +24,7 @@ import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
+import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModel;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.DataView;
@@ -59,7 +60,7 @@ public class MainFX extends Application {
 
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
-    private final ControlledFxView operationView;
+    private final OperationViewFXMLInterface operationView;
     private final UncontrolledFxView currentInfoView;
     private final ControlledFxView pipelineView;
     private final UncontrolledFxView infoBarView;
@@ -104,6 +105,7 @@ public class MainFX extends Application {
         this.handleService.subscribe(EventOnApplication.OPEN_IMAGE, this.persistImageController::openImage);
         this.handleService.subscribe(EventOnApplication.SAVE_IMAGE, this.persistImageController::saveImage);
         this.handleService.subscribe(EventOnApplication.SAVE_IMAGE_AS, this.persistImageController::saveImageAs);
+        this.handleService.subscribe(EventOnApplication.CLOSE_IMAGE, this.persistImageController::requestSaveBeforeClose);
 
         this.resourceBundle = languageModel.getCurrentResourceBundle();
 
@@ -125,6 +127,7 @@ public class MainFX extends Application {
         this.pipelineView.initialize(this.handleService, (AbstractModel) this.pipelineModel);
         this.infoBarView.initialize((AbstractModel) this.languageModel);
         this.imageView.initialize((AbstractModel) this.imageModel);
+        this.savingView.initialize(this.resourceBundle);
 
         List<DataView> listOfViews = List.of(this.menuBarView, this.imageView,
                 this.operationView, this.currentInfoView,
@@ -138,7 +141,7 @@ public class MainFX extends Application {
         this.imageModel.setMaxWidthImage(ImageViewFXML.getWidthOfPane());
         this.imageModel.setMaxHeightImage(ImageViewFXML.getHeightOfPane());
 
-        //this.operationView.createSupportedOperationsButtons(this.operationModel.getSupportedOperations());
+        this.operationView.createSupportedOperationsButtons();
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());
         //this.menuBarView.createOpenRecentMenuItem(null);
         // this.operationView.createOperationMenuItem(null);

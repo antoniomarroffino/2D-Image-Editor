@@ -55,4 +55,11 @@ public class PersistImageModel implements PersistImageModelInterface {
     public void writeImage() {
         this.imageController.writeImage(this.currentSavingFile);
     }
+
+    @Override
+    public void closeImage() {
+        this.currentSavingFile = null;
+        this.isAlreadySaved = false;
+        this.imageController.closeImage();
+    }
 }

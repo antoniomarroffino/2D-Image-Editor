@@ -13,4 +13,8 @@ public interface PersistImageControllerInterface {
     void saveImage(Component component);
 
     void saveImageAs(Component component);
+
+    void requestSaveBeforeClose(Component component);
+
+    void requestSaveBeforeQuit(Component component);
 }

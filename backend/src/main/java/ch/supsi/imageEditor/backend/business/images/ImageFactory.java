@@ -84,4 +84,10 @@ public class ImageFactory implements ImageFactoryInterface {
     public void writeImage(AbstractImage image, File file) {
         this.imageDataAccess.writeImage(image, file);
     }
+
+    @Override
+    public void closeImage() {
+        this.currentImage = null;
+        this.currentImageReader = null;
+    }
 }

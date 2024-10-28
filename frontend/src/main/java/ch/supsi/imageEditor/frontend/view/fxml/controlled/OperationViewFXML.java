@@ -20,8 +20,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
-public class OperationViewFXML implements ControlledFxView {
+public class OperationViewFXML implements OperationViewFXMLInterface {
     private static final String PathResourceFXML = "/operations.fxml";
     private static OperationViewFXML instance = null;
     private static ResourceBundle bundle;
@@ -57,7 +58,6 @@ public class OperationViewFXML implements ControlledFxView {
             }
         }
 
-
         return instance;
     }
 
@@ -74,7 +74,8 @@ public class OperationViewFXML implements ControlledFxView {
     }
 
     private void fillMap() {
-        this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::createSupportedOperationsButtons);
+        this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::enableOperationsButton);
+        this.onEventDoActionMap.put(EventType.CLOSE_IMAGE, this::disableOperationsButton);
     }
 
     @Override
@@ -84,11 +85,21 @@ public class OperationViewFXML implements ControlledFxView {
             action.run();
     }
 
-    private void createSupportedOperationsButtons() {
+    private void disableOperationsButton(){
+        this.operationVBox.getChildren().forEach(op -> op.setDisable(true));
+    }
+
+    private void enableOperationsButton(){
+        this.operationVBox.getChildren().forEach(op -> op.setDisable(false));
+    }
+
+    @Override
+    public void createSupportedOperationsButtons() {
         this.clearOperations();
         for (String supportedOperation : this.operationModel.getSupportedOperations()) {
             Button button = createButton(supportedOperation);
             this.operationVBox.getChildren().add(button);
+            this.disableOperationsButton();
         }
     }
 

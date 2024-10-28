@@ -10,6 +10,8 @@ public interface ImageModelInterface {
 
     void loadCurrentImage() throws ImageTooBigException;
 
+    void closeCurrentImage();
+
     AbstractImage getImage();
 
     int getWidthImage();

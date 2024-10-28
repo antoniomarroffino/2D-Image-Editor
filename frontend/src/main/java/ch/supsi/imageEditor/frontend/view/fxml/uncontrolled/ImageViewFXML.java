@@ -74,9 +74,10 @@ public class ImageViewFXML implements UncontrolledFxView {
         this.imageModel = (ImageModelInterface) model;
         this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::display);
         this.onEventDoActionMap.put(EventType.RUN_PIPELINE, this::display);
+        this.onEventDoActionMap.put(EventType.CLOSE_IMAGE, this::closeImage);
 
-        width = this.imageStackPane.getPrefWidth();
-        height = this.imageStackPane.getPrefHeight();
+        this.width = this.imageStackPane.getPrefWidth();
+        this.height = this.imageStackPane.getPrefHeight();
     }
 
     @Override
@@ -87,8 +88,8 @@ public class ImageViewFXML implements UncontrolledFxView {
     }
 
     private void display() {
-        imageStackPane.getChildren().add(getCanvasFromImage());
-        placeHolderText.setVisible(false);
+        this.imageStackPane.getChildren().add(getCanvasFromImage());
+        this.placeHolderText.setVisible(false);
     }
 
     private Canvas getCanvasFromImage() {
@@ -104,5 +105,10 @@ public class ImageViewFXML implements UncontrolledFxView {
                 gc.fillRect(x, y, 1, 1);
             }
         return canvas;
+    }
+
+    private void closeImage(){
+        this.imageStackPane.getChildren().removeIf(n -> n instanceof Canvas);
+        this.placeHolderText.setVisible(true);
     }
 }

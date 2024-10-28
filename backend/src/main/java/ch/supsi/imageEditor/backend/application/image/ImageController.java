@@ -6,6 +6,8 @@ import ch.supsi.imageEditor.backend.application.observer.NotificationServiceInte
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.ImageFactory;
 import ch.supsi.imageEditor.backend.business.images.ImageFactoryInterface;
+import ch.supsi.imageEditor.backend.business.pipeline.PipelineModel;
+import ch.supsi.imageEditor.backend.business.pipeline.PipelineModelInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
@@ -17,10 +19,12 @@ public class ImageController implements ImageControllerInterface {
     private static ImageController instance = null;
 
     private final ImageFactoryInterface imageReaderFactory;
+    private final PipelineModelInterface pipelineModel;
     private final NotificationServiceInterface notificationService;
 
     private ImageController() {
         this.imageReaderFactory = ImageFactory.getInstance();
+        this.pipelineModel = PipelineModel.getInstance();
         this.notificationService = NotificationService.getInstance();
     }
 
@@ -48,5 +52,15 @@ public class ImageController implements ImageControllerInterface {
     @Override
     public Set<String> getSupportedFormat() {
         return this.imageReaderFactory.getSupportedFormat();
+    }
+
+    @Override
+    public void closeImage() {
+        if (!this.pipelineModel.getPipeline().isEmpty()) {
+            this.pipelineModel.cleanPipeline();
+            this.notificationService.notify(EventType.CLEAR_PIPELINE);
+        }
+        this.imageReaderFactory.closeImage();
+        this.notificationService.notify(EventType.CLOSE_IMAGE);
     }
 }

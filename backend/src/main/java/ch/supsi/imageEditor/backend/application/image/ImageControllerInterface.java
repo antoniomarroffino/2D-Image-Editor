@@ -16,4 +16,6 @@ public interface ImageControllerInterface {
     AbstractImage getImage();
 
     Set<String> getSupportedFormat();
+
+    void closeImage();
 }

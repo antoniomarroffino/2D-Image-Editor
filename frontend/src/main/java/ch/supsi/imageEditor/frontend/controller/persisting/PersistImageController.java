@@ -17,6 +17,7 @@ import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewPopUp;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Native;
 import java.util.List;
 
 public class PersistImageController implements PersistImageControllerInterface, EventListener {
@@ -79,6 +80,24 @@ public class PersistImageController implements PersistImageControllerInterface, 
         } catch (FormatNotSupportedException | IOException | ImageHeaderUncorrectException e) {
             this.errorView.showPopUpError(e.getClass().getSimpleName(), e.getMessage());
         }
+    }
+
+    @Override
+    public void requestSaveBeforeClose(Component component) {
+        if(!this.persistImageModel.isAlreadySave())
+            this.savingViewFXML.showSaveConfirmationPopup(this::save, this::closeImage);
+        else
+            this.closeImage();
+    }
+
+    @Override
+    public void requestSaveBeforeQuit(Component component) {
+        if(!this.persistImageModel.isAlreadySave());
+         //   this.savingViewFXML.showSaveConfirmationPopup(this::save, this::closeImage);
+    }
+
+    private void closeImage() {
+        this.persistImageModel.closeImage();
     }
 
     @Override
