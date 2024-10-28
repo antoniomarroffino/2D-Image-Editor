@@ -18,4 +18,16 @@ public abstract class AbstractImage {
             return null;
         return pixel[x][y];
     }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setPixel(Pixel[][] pixel) {
+        this.pixel = pixel;
+    }
 }

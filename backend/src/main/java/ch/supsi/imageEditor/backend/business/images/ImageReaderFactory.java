@@ -54,7 +54,7 @@ public class ImageReaderFactory implements ImageReaderFactoryInterface {
         if (this.currentImageReader == null)
             throw new FormatNotSupportedException("Format " + extension + " is not supported");
         this.currentImageReader.read(filePath);
-        this.currentImage = this.currentImageReader.getImage();
+        this.currentImage= this.currentImageReader.getImage();
     }
 
     private String getFileExtension(String filePath) {
