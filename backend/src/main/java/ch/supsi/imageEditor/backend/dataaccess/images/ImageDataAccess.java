@@ -1,20 +1,22 @@
 package ch.supsi.imageEditor.backend.dataaccess.images;
 
-import java.io.IOException;
-import java.io.InputStream;
+import ch.supsi.imageEditor.backend.business.images.AbstractImage;
+import ch.supsi.imageEditor.backend.business.images.Pixel;
+
+import java.io.*;
 import java.util.Properties;
 
-public class ImageReaderDataAccess implements ImageReaderDataAccessInterface {
+public class ImageDataAccess implements ImageDataAccessInterface {
     private static final String formatReaderPropertiesPath = "/format-reader.properties";
-    private static ImageReaderDataAccess instance = null;
+    private static ImageDataAccess instance = null;
     private final Properties formatReaderProperties;
 
-    private ImageReaderDataAccess() {
+    private ImageDataAccess() {
         this.formatReaderProperties = this.loadFormatReaderProperties();
     }
 
-    public static ImageReaderDataAccess getInstance() {
-        return instance == null ? instance = new ImageReaderDataAccess() : instance;
+    public static ImageDataAccess getInstance() {
+        return instance == null ? instance = new ImageDataAccess() : instance;
     }
 
     private Properties loadFormatReaderProperties() {
@@ -28,8 +30,16 @@ public class ImageReaderDataAccess implements ImageReaderDataAccessInterface {
         return defaultPreferences;
     }
 
-    @Override
     public Properties getFormatReaderProperties() {
         return this.formatReaderProperties;
+    }
+
+    @Override
+    public void writeImage(AbstractImage image, File file) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(image.toString());
+        } catch (IOException ignored) {
+           ;
+        }
     }
 }

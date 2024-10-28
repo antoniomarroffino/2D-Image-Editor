@@ -23,10 +23,19 @@ public class SavingViewFXML implements SavingViewFXMLInterface {
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("Images Supported", supportedFormat.stream().map(String::toLowerCase).map(s -> "*." + s).toArray(String[]::new));
         fileChooser.getExtensionFilters().add(extensionFilter);
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        return fileChooser.showOpenDialog(mainStage);
+        return fileChooser.showOpenDialog(this.mainStage);
     }
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
+    }
+
+    @Override
+    public File getSaveFile(Set<String> supportedFormats) {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("Images Supported", supportedFormats.stream().map(String::toLowerCase).map(s -> "*." + s).toArray(String[]::new));
+        fileChooser.getExtensionFilters().add(extensionFilter);
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        return fileChooser.showSaveDialog(this.mainStage);
     }
 }

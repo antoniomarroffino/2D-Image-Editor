@@ -1,44 +1,45 @@
 package ch.supsi.imageEditor.backend.business.images;
 
-import ch.supsi.imageEditor.backend.dataaccess.images.ImageReaderDataAccess;
-import ch.supsi.imageEditor.backend.dataaccess.images.ImageReaderDataAccessInterface;
+import ch.supsi.imageEditor.backend.dataaccess.images.ImageDataAccess;
+import ch.supsi.imageEditor.backend.dataaccess.images.ImageDataAccessInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-public class ImageReaderFactory implements ImageReaderFactoryInterface {
-    private static ImageReaderFactory instance = null;
-    private final ImageReaderDataAccessInterface imageReaderDataAccess;
+public class ImageFactory implements ImageFactoryInterface {
+    private static ImageFactory instance = null;
+    private final ImageDataAccessInterface imageDataAccess;
 
-    private final Map<String, ImageReaderInterface> imageReaders;
+    private final Map<String, ImageInterface> imageReaders;
     private final Properties imageReaderProperties;
-    private ImageReaderInterface currentImageReader;
+    private ImageInterface currentImageReader;
     private AbstractImage currentImage;
 
-    private ImageReaderFactory() {
-        this.imageReaderDataAccess = ImageReaderDataAccess.getInstance();
-        this.imageReaderProperties = this.imageReaderDataAccess.getFormatReaderProperties();
+    private ImageFactory() {
+        this.imageDataAccess = ImageDataAccess.getInstance();
+        this.imageReaderProperties = this.imageDataAccess.getFormatReaderProperties();
 
         this.imageReaders = this.loadImageReadersMap();
         this.currentImage = null;
     }
 
-    public static ImageReaderFactory getInstance() {
-        return instance == null ? instance = new ImageReaderFactory() : instance;
+    public static ImageFactory getInstance() {
+        return instance == null ? instance = new ImageFactory() : instance;
     }
 
-    private Map<String, ImageReaderInterface> loadImageReadersMap() {
-        Map<String, ImageReaderInterface> imageReadersMap = new HashMap<>();
+    private Map<String, ImageInterface> loadImageReadersMap() {
+        Map<String, ImageInterface> imageReadersMap = new HashMap<>();
         for (String extension : this.imageReaderProperties.stringPropertyNames()) {
             String readerClassName = this.imageReaderProperties.getProperty(extension);
             try {
                 Class<?> readerClass = Class.forName(readerClassName);
-                ImageReaderInterface imageReader = (ImageReaderInterface) readerClass.getConstructor().newInstance();
+                ImageInterface imageReader = (ImageInterface) readerClass.getConstructor().newInstance();
                 imageReadersMap.put(extension, imageReader);
             } catch (Exception e) {
                 throw new RuntimeException("Error during load of image reader: " + extension);
@@ -77,5 +78,10 @@ public class ImageReaderFactory implements ImageReaderFactoryInterface {
     @Override
     public void setImage(AbstractImage image) {
         this.currentImage = image;
+    }
+
+    @Override
+    public void writeImage(AbstractImage image, File file) {
+        this.imageDataAccess.writeImage(image, file);
     }
 }

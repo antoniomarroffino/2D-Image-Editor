@@ -13,8 +13,8 @@ import ch.supsi.imageEditor.frontend.controller.operation.OperationController;
 import ch.supsi.imageEditor.frontend.controller.operation.OperationControllerInterface;
 import ch.supsi.imageEditor.frontend.controller.pipeline.PipelineController;
 import ch.supsi.imageEditor.frontend.controller.pipeline.PipelineControllerInterface;
-import ch.supsi.imageEditor.frontend.controller.saving.SavingController;
-import ch.supsi.imageEditor.frontend.controller.saving.SavingControllerInterface;
+import ch.supsi.imageEditor.frontend.controller.persisting.PersistImageController;
+import ch.supsi.imageEditor.frontend.controller.persisting.PersistImageControllerInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.AppModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModel;
@@ -71,7 +71,7 @@ public class MainFX extends Application {
     private final LanguageControllerInterface languageController;
     private final OperationControllerInterface operationController;
     private final PipelineControllerInterface pipelineController;
-    private final SavingControllerInterface savingController;
+    private final PersistImageControllerInterface persistImageController;
     private final ImageControllerInterface imageController;
 
     private final ResourceBundle resourceBundle;
@@ -92,7 +92,7 @@ public class MainFX extends Application {
         this.languageController = LanguageController.getInstance();
         this.operationController = OperationController.getInstance();
         this.pipelineController = PipelineController.getInstance();
-        this.savingController = SavingController.getInstance();
+        this.persistImageController = PersistImageController.getInstance();
         this.imageController = ImageController.getInstance();
 
         this.handleService.subscribe(EventOnApplication.ABOUT, this.appController::about);
@@ -101,7 +101,9 @@ public class MainFX extends Application {
         this.handleService.subscribe(EventOnApplication.RUN_PIPELINE, this.pipelineController::runPipeline);
         this.handleService.subscribe(EventOnApplication.DELETE_PIPELINE, this.pipelineController::deletePipeline);
         this.handleService.subscribe(EventOnApplication.CLICK_OPERATION, this.operationController::addOperationToPipeline);
-        this.handleService.subscribe(EventOnApplication.OPEN_IMAGE, this.savingController::openImage);
+        this.handleService.subscribe(EventOnApplication.OPEN_IMAGE, this.persistImageController::openImage);
+        this.handleService.subscribe(EventOnApplication.SAVE_IMAGE, this.persistImageController::saveImage);
+        this.handleService.subscribe(EventOnApplication.SAVE_IMAGE_AS, this.persistImageController::saveImageAs);
 
         this.resourceBundle = languageModel.getCurrentResourceBundle();
 
@@ -131,6 +133,7 @@ public class MainFX extends Application {
         this.languageController.initialize(listOfViews);
         this.imageController.initialize(listOfViews);
         this.pipelineController.initialize(listOfViews);
+        this.persistImageController.initialize(listOfViews);
 
         this.imageModel.setMaxWidthImage(ImageViewFXML.getWidthOfPane());
         this.imageModel.setMaxHeightImage(ImageViewFXML.getHeightOfPane());

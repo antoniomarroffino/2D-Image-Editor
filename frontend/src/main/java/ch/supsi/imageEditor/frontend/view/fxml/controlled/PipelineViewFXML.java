@@ -79,14 +79,18 @@ public class PipelineViewFXML implements ControlledFxView {
     public void initialize(HandleServiceInterface handleService, AbstractModel model) {
         this.handleService = handleService;
         this.pipelineModel = (PipelineModel) model;
-        fillMap();
-        this.playButton.setOnAction(event -> this.handleService.notify(EventOnApplication.RUN_PIPELINE, new ButtonAdapter((Button) event.getSource())));
-        this.deleteButton.setOnAction(event -> this.handleService.notify(EventOnApplication.DELETE_PIPELINE, new ButtonAdapter((Button) event.getSource())));
+        this.fillMap();
+        this.createBehaviour();
     }
 
     private void fillMap() {
         this.onEventDoActionMap.put(EventType.ADDED_OPERATION, this::addOperationToPipeline);
         this.onEventDoActionMap.put(EventType.CLEAR_PIPELINE, this::clearPipeline);
+    }
+
+    private void createBehaviour(){
+        this.playButton.setOnAction(event -> this.handleService.notify(EventOnApplication.RUN_PIPELINE, new ButtonAdapter((Button) event.getSource())));
+        this.deleteButton.setOnAction(event -> this.handleService.notify(EventOnApplication.DELETE_PIPELINE, new ButtonAdapter((Button) event.getSource())));
     }
 
     private void addOperationToPipeline() {
