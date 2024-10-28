@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="imageStackPane" prefHeight="574.0" prefWidth="500.0"
-           stylesheets="@style/dark-theme.css">
-    <AnchorPane prefHeight="574.0" prefWidth="500.0" styleClass="anchor-pane"
-                stylesheets="@style/dark-theme.css">
+<Pane xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/dark-theme.css">
+    <ScrollPane fx:id="imageScrollPane" prefHeight="574.0" prefWidth="500.0">
         <Label fx:id="placeHolderText" alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="29.0"
                prefHeight="515.0" prefWidth="429.0" style="-fx-text-fill: #666666;"
                text="Open an image to start editing..." textAlignment="CENTER">
@@ -15,5 +13,5 @@
                 <Font name="Curlz MT" size="30.0"/>
             </font>
         </Label>
-    </AnchorPane>
-</StackPane>
+    </ScrollPane>
+</Pane>

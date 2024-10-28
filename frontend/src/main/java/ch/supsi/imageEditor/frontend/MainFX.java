@@ -135,9 +135,6 @@ public class MainFX extends Application {
         this.pipelineController.initialize(listOfViews);
         this.persistImageController.initialize(listOfViews);
 
-        this.imageModel.setMaxWidthImage(ImageViewFXML.getWidthOfPane());
-        this.imageModel.setMaxHeightImage(ImageViewFXML.getHeightOfPane());
-
         //this.operationView.createSupportedOperationsButtons(this.operationModel.getSupportedOperations());
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());
         //this.menuBarView.createOpenRecentMenuItem(null);

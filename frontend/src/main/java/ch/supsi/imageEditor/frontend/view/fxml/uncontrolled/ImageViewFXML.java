@@ -6,11 +6,12 @@ import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.ScrollPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,11 +23,9 @@ public class ImageViewFXML implements UncontrolledFxView {
     private static final String PathResourceFXML = "/imagewindow.fxml";
     private static ImageViewFXML instance = null;
     private final Map<EventType, Runnable> onEventDoActionMap;
-    public double width;
-    public double height;
     private ImageModelInterface imageModel;
     @FXML
-    private StackPane imageStackPane;
+    private ScrollPane imageScrollPane;
     @FXML
     private Label placeHolderText;
 
@@ -48,25 +47,12 @@ public class ImageViewFXML implements UncontrolledFxView {
                 throw new RuntimeException(e);
             }
         }
-
         return instance;
-    }
-
-    public static double getWidthOfPane() {
-        if (instance != null)
-            return instance.width;
-        return 0;
-    }
-
-    public static double getHeightOfPane() {
-        if (instance != null)
-            return instance.height;
-        return 0;
     }
 
     @Override
     public Node getNode() {
-        return this.imageStackPane;
+        return this.imageScrollPane;
     }
 
     @Override
@@ -74,9 +60,6 @@ public class ImageViewFXML implements UncontrolledFxView {
         this.imageModel = (ImageModelInterface) model;
         this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::display);
         this.onEventDoActionMap.put(EventType.RUN_PIPELINE, this::display);
-
-        width = this.imageStackPane.getPrefWidth();
-        height = this.imageStackPane.getPrefHeight();
     }
 
     @Override
@@ -87,7 +70,7 @@ public class ImageViewFXML implements UncontrolledFxView {
     }
 
     private void display() {
-        imageStackPane.getChildren().add(getCanvasFromImage());
+        imageScrollPane.setContent(new Group(getCanvasFromImage()));
         placeHolderText.setVisible(false);
     }
 
