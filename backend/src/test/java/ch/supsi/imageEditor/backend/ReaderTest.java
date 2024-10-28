@@ -3,6 +3,7 @@ package ch.supsi.imageEditor.backend;
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.ImageReaderFactory;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
+import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,6 +38,8 @@ public class ReaderTest {
             assertEquals(4, image.getHeight());
         }catch(IOException | FormatNotSupportedException ignored){
             ;
+        } catch (ImageHeaderUncorrectException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -47,7 +50,7 @@ public class ReaderTest {
             AbstractImage image = this.factory.getImage();
             assertEquals(5, image.getWidth());
             assertEquals(5, image.getHeight());
-        }catch(IOException | FormatNotSupportedException ignored){
+        }catch(IOException | FormatNotSupportedException | ImageHeaderUncorrectException ignored){
             ;
         }
     }
@@ -59,7 +62,7 @@ public class ReaderTest {
             AbstractImage image = this.factory.getImage();
             assertEquals(3, image.getWidth());
             assertEquals(2, image.getHeight());
-        }catch(IOException | FormatNotSupportedException ignored){
+        }catch(IOException | FormatNotSupportedException | ImageHeaderUncorrectException ignored){
             ;
         }
     }
