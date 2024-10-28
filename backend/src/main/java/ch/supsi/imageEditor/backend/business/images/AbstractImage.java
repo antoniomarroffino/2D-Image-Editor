@@ -5,6 +5,7 @@ public abstract class AbstractImage {
     protected int width;
     protected int height;
     protected Pixel[][] pixel = null;
+    protected int maxIntensity;
 
     public String getFormat() {
         return format;
@@ -26,5 +27,9 @@ public abstract class AbstractImage {
         if(x < 0 || x >= this.width || y < 0 || y >= this.height)
             return null;
         return this.pixel[x][y];
+    }
+
+    public int getMaxIntensity() {
+        return this.maxIntensity;
     }
 }

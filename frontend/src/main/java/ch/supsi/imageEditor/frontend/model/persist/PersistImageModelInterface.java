@@ -15,4 +15,6 @@ public interface PersistImageModelInterface {
     boolean isAlreadySave();
 
     void loadImage(File openFile) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException;
+
+    void writeImage();
 }

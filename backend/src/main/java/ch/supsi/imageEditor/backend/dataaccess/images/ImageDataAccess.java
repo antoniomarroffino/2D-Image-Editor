@@ -40,6 +40,7 @@ public class ImageDataAccess implements ImageDataAccessInterface {
             writer.write(image.getFormat() + System.lineSeparator());
             writer.write("# Image edited by 2D Image Editor" + System.lineSeparator());
             writer.write(image.getWidth() + " " + image.getHeight() + System.lineSeparator());
+            writer.write(image.getFormat().equals("P1") ? "" : image.getMaxIntensity() + System.lineSeparator());
             Pixel[][] pixel = image.getPixel();
             for (int i = 0; i < image.getHeight(); i++)
                 for (int j = 0; j < image.getWidth(); j++)

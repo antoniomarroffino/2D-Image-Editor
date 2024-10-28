@@ -11,7 +11,7 @@ import java.util.Set;
 public interface ImageControllerInterface {
     void loadImage(String path) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException;
 
-    void writeImage(AbstractImage image, File file);
+    void writeImage(File file);
 
     AbstractImage getImage();
 

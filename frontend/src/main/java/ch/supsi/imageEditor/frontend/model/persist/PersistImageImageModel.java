@@ -46,4 +46,9 @@ public class PersistImageImageModel implements PersistImageModelInterface {
     public void loadImage(File openFile) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
         this.imageController.loadImage(openFile.getPath());
     }
+
+    @Override
+    public void writeImage() {
+        this.imageController.writeImage(this.currentSavingFile);
+    }
 }

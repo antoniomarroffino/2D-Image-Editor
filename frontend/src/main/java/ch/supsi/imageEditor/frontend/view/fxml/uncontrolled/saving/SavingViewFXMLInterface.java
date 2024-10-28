@@ -9,4 +9,6 @@ public interface SavingViewFXMLInterface {
     File getOpenFile(Set<String> supportedFormat);
 
     void setMainStage(Stage mainStage);
+
+    File getSaveFile(Set<String> supportedFormats);
 }
