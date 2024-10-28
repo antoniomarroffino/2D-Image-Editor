@@ -10,12 +10,13 @@ import java.util.Scanner;
 public abstract class AbstractPnmImage extends AbstractImage implements ImageReaderInterface {
     public void readHeader(Scanner scanner, String filepath) throws FormatNotSupportedException, ImageHeaderUncorrectException {
         String format = scanner.nextLine();
-        if (!format.equals("P1") && !format.equals("P2") && !format.equals("P3"))
-            throw new FormatNotSupportedException("Format " + format + " is not supported");
+        this.format = format.toUpperCase();
+        if (! this.format.equals("P1") && ! this.format.equals("P2") && ! this.format.equals("P3"))
+            throw new FormatNotSupportedException("Format " +  this.format + " is not supported");
 
         String extension = this.getFileExtension(filepath);
-        if ((format.equals("P1") && !extension.equals("PBM")) || (format.equals("P2") && !extension.equals("PGM")) || (format.equals("P3") && !extension.equals("PPM")))
-            throw new ImageHeaderUncorrectException(extension + " not correspond to " + format + " format in the image header");
+        if (( this.format.equals("P1") && !extension.equals("PBM")) || ( this.format.equals("P2") && !extension.equals("PGM")) || ( this.format.equals("P3") && !extension.equals("PPM")))
+            throw new ImageHeaderUncorrectException(extension + " not correspond to " +  this.format + " format in the image header");
 
         String line;
         do
@@ -23,8 +24,8 @@ public abstract class AbstractPnmImage extends AbstractImage implements ImageRea
         while (line.startsWith("#")); // Avoid comments
 
         String[] dimensions = line.split(" ");
-        width = Integer.parseInt(dimensions[0]);
-        height = Integer.parseInt(dimensions[1]);
+        this.width = Integer.parseInt(dimensions[0]);
+        this.height = Integer.parseInt(dimensions[1]);
     }
 
     @Override

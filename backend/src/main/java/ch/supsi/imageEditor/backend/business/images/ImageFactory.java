@@ -1,33 +1,34 @@
 package ch.supsi.imageEditor.backend.business.images;
 
-import ch.supsi.imageEditor.backend.dataaccess.images.ImageReaderDataAccess;
-import ch.supsi.imageEditor.backend.dataaccess.images.ImageReaderDataAccessInterface;
+import ch.supsi.imageEditor.backend.dataaccess.images.ImageDataAccess;
+import ch.supsi.imageEditor.backend.dataaccess.images.ImageDataAccessInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-public class ImageReaderFactory implements ImageReaderFactoryInterface {
-    private static ImageReaderFactory instance = null;
-    private final ImageReaderDataAccessInterface imageReaderDataAccess;
+public class ImageFactory implements ImageFactoryInterface {
+    private static ImageFactory instance = null;
+    private final ImageDataAccessInterface imageReaderDataAccess;
 
     private final Map<String, ImageReaderInterface> imageReaders;
     private final Properties imageReaderProperties;
     private ImageReaderInterface currentImageReader;
 
-    private ImageReaderFactory() {
-        this.imageReaderDataAccess = ImageReaderDataAccess.getInstance();
+    private ImageFactory() {
+        this.imageReaderDataAccess = ImageDataAccess.getInstance();
         this.imageReaderProperties = this.imageReaderDataAccess.getFormatReaderProperties();
 
         this.imageReaders = this.loadImageReadersMap();
     }
 
-    public static ImageReaderFactory getInstance() {
-        return instance == null ? instance = new ImageReaderFactory() : instance;
+    public static ImageFactory getInstance() {
+        return instance == null ? instance = new ImageFactory() : instance;
     }
 
     private Map<String, ImageReaderInterface> loadImageReadersMap() {
@@ -69,5 +70,10 @@ public class ImageReaderFactory implements ImageReaderFactoryInterface {
     @Override
     public AbstractImage getImage() {
         return this.currentImageReader.getImage();
+    }
+
+    @Override
+    public void writeImage(AbstractImage image, File file) {
+        this.imageReaderDataAccess.writeImage(image, file);
     }
 }
