@@ -39,8 +39,6 @@ public class ReaderTest {
             assertEquals(4, image.getHeight());
         } catch (IOException | FormatNotSupportedException | ImageHeaderUncorrectException ignored) {
             ;
-        } catch (ImageHeaderUncorrectException e) {
-            throw new RuntimeException(e);
         }
     }
 
