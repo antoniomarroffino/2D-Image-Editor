@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class PbmImageReader extends AbstractPnmImage {
     @Override
     public void read(String filePath) throws IOException, FormatNotSupportedException, ImageHeaderUncorrectException {
+        maxIntensity = 255;
         try (Scanner scanner = new Scanner(new FileReader(filePath))) {
             readHeader(scanner, filePath);
             pixel = new Pixel[height][width];

@@ -4,6 +4,7 @@ public abstract class AbstractImage {
     protected int width;
     protected int height;
     protected Pixel[][] pixel = null;
+    protected int maxIntensity;
 
     public int getWidth() {
         return width;
@@ -34,5 +35,13 @@ public abstract class AbstractImage {
 
     public void setPixel(Pixel[][] pixel) {
         this.pixel = pixel;
+    }
+
+    public void setMaxIntensity(int maxIntensity) {
+        this.maxIntensity = maxIntensity;
+    }
+
+    public int getMaxIntensity() {
+        return maxIntensity;
     }
 }
