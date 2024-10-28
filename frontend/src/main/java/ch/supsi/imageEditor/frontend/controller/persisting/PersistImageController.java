@@ -32,7 +32,6 @@ public class PersistImageController implements PersistImageControllerInterface, 
         this.pubSubModel = PubSubModel.getInstance();
         this.persistImageModel = PersistImageModel.getInstance();
         this.errorView = ErrorViewPopUp.getInstance();
-        this.pubSubModel.subscribe(EventType.RUN_PIPELINE, this);
         this.pubSubModel.subscribe(EventType.SAVE_IMAGE, this);
     }
 
