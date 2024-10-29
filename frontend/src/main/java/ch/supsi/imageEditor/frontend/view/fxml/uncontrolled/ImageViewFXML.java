@@ -77,10 +77,10 @@ public class ImageViewFXML implements UncontrolledFxView {
     private Canvas getCanvasFromImage() {
         int height = this.imageModel.getHeightImage();
         int width = this.imageModel.getWidthImage();
-        Canvas canvas = new Canvas(width, height);
+        Canvas canvas = new Canvas(height, width);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++) {
+        for (int x = 0; x < height; x++)
+            for (int y = 0; y < width; y++) {
                 gc.setFill(javafx.scene.paint.Color.rgb(this.imageModel.getPixelRed(x, y),
                         this.imageModel.getPixelGreen(x, y),
                         this.imageModel.getPixelBlue(x, y)));

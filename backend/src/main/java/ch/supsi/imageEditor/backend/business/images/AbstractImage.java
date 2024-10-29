@@ -24,9 +24,9 @@ public abstract class AbstractImage {
     }
 
     public Pixel getPixel(int x, int y) {
-        if (x < 0 || x >= this.width || y < 0 || y >= this.height)
+        if (x < 0 || x >= this.height || y < 0 || y >= this.width)
             return null;
-        return this.pixel[y][x];
+        return this.pixel[x][y];
     }
 
     public Pixel[][] getPixelMatrix() {

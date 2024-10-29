@@ -8,14 +8,13 @@ public class FlipSideToSide implements Operation {
     public AbstractImage doOperation(AbstractImage image) {
         int width = image.getWidth();
         int height = image.getHeight();
-        Pixel[][] pixels = image.getPixelMatrix();
-        for (int y = 0; y < height; y++)
-            for (int x = 0; x < width / 2; x++) {
-                Pixel temp = pixels[x][y];
-                pixels[x][y] = pixels[width - x - 1][y];
-                pixels[width - x - 1][y] = temp;
+        Pixel[][] flippedPixels = new Pixel[height][width];
+        for (int r = 0; r < height; r++)
+            for (int c = 0; c < width; c++) {
+                flippedPixels[r][width - 1 - c] = image.getPixel(r,c);
             }
-        image.setPixel(pixels);
+
+        image.setPixel(flippedPixels);
         return image;
     }
 }
