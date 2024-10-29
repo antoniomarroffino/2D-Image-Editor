@@ -19,7 +19,7 @@ public class PbmImage extends AbstractPnmImage {
             try {
                 for (int i = 0; i < this.height; i++)
                     for (int j = 0; j < this.width; j++)
-                        this.pixel[i][j] = new Pixel(scanner.nextInt() == 1 ? 0 : 255);
+                        this.pixel[i][j] = new Pixel(scanner.nextInt() == 1 ? 255 : 0);
             } catch (NoSuchElementException ignored) {
                 throw new ImageHeaderUncorrectException("The dimensions declared in the header don't match those of the image");
             }
