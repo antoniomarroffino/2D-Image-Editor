@@ -26,7 +26,7 @@ public abstract class AbstractImage {
     public Pixel getPixel(int x, int y) {
         if (x < 0 || x >= this.width || y < 0 || y >= this.height)
             return null;
-        return this.pixel[x][y];
+        return this.pixel[y][x];
     }
 
     public Pixel[][] getPixelMatrix() {
