@@ -11,7 +11,7 @@ public class FlipUpsideDown implements Operation {
         Pixel[][] flippedPixels = new Pixel[height][width];
         for (int r = 0; r < height; r++)
             for (int c = 0; c < width; c++) {
-                flippedPixels[height - 1 - r][c] = image.getPixel(r,c);
+                flippedPixels[height - 1 - r][c] = image.getPixel(r, c);
             }
 
         image.setPixel(flippedPixels);

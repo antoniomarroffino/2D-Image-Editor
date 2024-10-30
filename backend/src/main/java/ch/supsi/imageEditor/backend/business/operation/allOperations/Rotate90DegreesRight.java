@@ -10,8 +10,8 @@ public class Rotate90DegreesRight implements Operation {
         int newHeight = image.getWidth();
         Pixel[][] rotatedPixels = new Pixel[newHeight][newWidth];
         for (int r = 0; r < newWidth; r++) {
-            for (int c = 0;c < newHeight; c++) {
-                rotatedPixels[c][newWidth - r - 1] = image.getPixel(r,c);
+            for (int c = 0; c < newHeight; c++) {
+                rotatedPixels[c][newWidth - r - 1] = image.getPixel(r, c);
             }
         }
         image.setPixel(rotatedPixels);
