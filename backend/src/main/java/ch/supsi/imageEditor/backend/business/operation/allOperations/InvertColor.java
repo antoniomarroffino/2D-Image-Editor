@@ -11,9 +11,9 @@ public class InvertColor implements Operation {
         int height = image.getHeight();
         Pixel[][] pixels = image.getPixelMatrix();
 
-        for (int y = 0; y < height; y++)
-            for (int x = 0; x < width; x++) {
-                Pixel pixel = pixels[x][y];
+        for (int r = 0; r < height; r++)
+            for (int c = 0; c < width; c++) {
+                Pixel pixel = pixels[r][c];
                 pixel.setRed(255 - pixel.getRed());
                 pixel.setGreen(255 - pixel.getGreen());
                 pixel.setBlue(255 - pixel.getBlue());
