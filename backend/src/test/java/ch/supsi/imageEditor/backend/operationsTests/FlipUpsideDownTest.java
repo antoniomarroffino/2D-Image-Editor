@@ -2,21 +2,21 @@ package ch.supsi.imageEditor.backend.operationsTests;
 
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.ImageFactory;
-import ch.supsi.imageEditor.backend.business.operation.allOperations.FlipSideToSide;
+import ch.supsi.imageEditor.backend.business.operation.allOperations.FlipUpsideDown;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class FlipSideToSideTest {
+public class FlipUpsideDownTest {
     private final ImageFactory factory = ImageFactory.getInstance();
 
     @Test
-    public void testP1FlipSideToSide() {
+    public void testP1FlipUpsideDown() {
         try {
             this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P1/testImageP1.pbm");
             AbstractImage P1Image = this.factory.getImage();
-            this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P1/testImageP1flipSideToSide.pbm");
+            this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P1/testImageP1flipUpsideDown.pbm");
             AbstractImage expectedP1Image = this.factory.getImage();
-            AbstractImage flippedP1Image = new FlipSideToSide().doOperation(P1Image);
+            AbstractImage flippedP1Image = new FlipUpsideDown().doOperation(P1Image);
             Assertions.assertEquals(expectedP1Image, flippedP1Image);
         } catch (Exception e) {
             Assertions.fail("Test failed due to " + e.getMessage());
@@ -24,13 +24,13 @@ public class FlipSideToSideTest {
     }
 
     @Test
-    public void testP2FlipSideToSide() {
+    public void testP2FlipUpsideDown() {
         try {
             this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P2/testImageP2.pgm");
             AbstractImage P2Image = this.factory.getImage();
-            this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P2/testImageP2flipSideToSide.pgm");
+            this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P2/testImageP2flipUpsideDown.pgm");
             AbstractImage expectedP2Image = this.factory.getImage();
-            AbstractImage flippedP2Image = new FlipSideToSide().doOperation(P2Image);
+            AbstractImage flippedP2Image = new FlipUpsideDown().doOperation(P2Image);
             Assertions.assertEquals(expectedP2Image, flippedP2Image);
         } catch (Exception e) {
             Assertions.fail("Test failed due to " + e.getMessage());
@@ -38,13 +38,13 @@ public class FlipSideToSideTest {
     }
 
     @Test
-    public void testP3FlipSideToSide() {
+    public void testP3FlipUpsideDown() {
         try {
             this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P3/testImageP3.ppm");
             AbstractImage P3Image = this.factory.getImage();
-            this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P3/testImageP3flipSideToSide.ppm");
+            this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P3/testImageP3flipUpsideDown.ppm");
             AbstractImage expectedP3Image = this.factory.getImage();
-            AbstractImage flippedP3Image = new FlipSideToSide().doOperation(P3Image);
+            AbstractImage flippedP3Image = new FlipUpsideDown().doOperation(P3Image);
             Assertions.assertEquals(expectedP3Image, flippedP3Image);
         } catch (Exception e) {
             Assertions.fail("Test failed due to " + e.getMessage());
