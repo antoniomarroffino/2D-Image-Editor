@@ -3,7 +3,7 @@ package ch.supsi.imageEditor.backend.business.operation.allOperations;
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.Pixel;
 
-public class InvertColor implements Operation {
+public class InvertColors implements Operation {
 
     @Override
     public AbstractImage doOperation(AbstractImage image) {
