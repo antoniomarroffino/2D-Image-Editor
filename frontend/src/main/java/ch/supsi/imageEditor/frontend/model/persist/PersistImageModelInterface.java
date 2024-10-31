@@ -12,6 +12,8 @@ public interface PersistImageModelInterface {
 
     void setNewSavingFile(File openFile);
 
+    File getCurrentFile();
+
     boolean isAlreadySave();
 
     void setAlreadySave(boolean isAlreadySaved);

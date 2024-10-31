@@ -73,10 +73,12 @@ public class PersistImageController implements PersistImageControllerInterface, 
 
     private void loadImage(File openFile) {
         try {
-            this.persistImageModel.loadImage(openFile);
             this.persistImageModel.setNewSavingFile(openFile);
             this.persistImageModel.setAlreadySave(true);
+            this.persistImageModel.loadImage(openFile);
         } catch (FormatNotSupportedException | IOException | ImageHeaderUncorrectException e) {
+            this.persistImageModel.setNewSavingFile(null);
+            this.persistImageModel.setAlreadySave(false);
             this.errorView.showPopUpError(e.getClass().getSimpleName(), e.getMessage());
         }
     }

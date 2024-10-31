@@ -24,6 +24,8 @@ import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
+import ch.supsi.imageEditor.frontend.model.persist.PersistImageModel;
+import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModel;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.DataView;
@@ -56,6 +58,7 @@ public class MainFX extends Application {
     private final AbstractModel operationModel;
     private final PipelineModelInterface pipelineModel;
     private final ImageModelInterface imageModel;
+    private final PersistImageModelInterface persistImageModel;
 
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
@@ -84,6 +87,7 @@ public class MainFX extends Application {
         this.operationModel = OperationModel.getInstance();
         this.pipelineModel = PipelineModel.getInstance();
         this.imageModel = ImageModel.getInstance();
+        this.persistImageModel = PersistImageModel.getInstance();
 
 
         //CONTROLLERS
@@ -120,6 +124,7 @@ public class MainFX extends Application {
         //SCAFFOLDING of M-V-C
         this.menuBarView.initialize(this.handleService, this.appModel);
         this.operationView.initialize(this.handleService, this.operationModel);
+        this.currentInfoView.initialize((AbstractModel) this.persistImageModel);
         this.aboutView.initialize(this.aboutModel);
         this.infoBarView.initialize((AbstractModel) this.languageModel);
         this.pipelineView.initialize(this.handleService, (AbstractModel) this.pipelineModel);
