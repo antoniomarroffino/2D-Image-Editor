@@ -47,7 +47,7 @@ public class WriterTest {
                 + "5 5" + System.lineSeparator()
                 + "255" + System.lineSeparator()
                 + "0 50 100 150 200 50 100 150 200 255 100 150 200 255 200 150 200 255 200 150 200 255 200 150 100 ";
-        assertEquals(result.trim(), p2.toString().trim());
+        assertEquals(result, p2.toString());
     }
 
     @Test
@@ -57,6 +57,6 @@ public class WriterTest {
                 + "3 2" + System.lineSeparator()
                 + "255" + System.lineSeparator()
                 + "255 0 0 0 255 0 0 0 255 255 255 0 0 255 255 255 0 255 ";
-        assertEquals(result.trim(), p3.toString().trim());
+        assertEquals(result, p3.toString());
     }
 }
