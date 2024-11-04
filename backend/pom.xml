@@ -23,8 +23,8 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.11.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -34,6 +34,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.1</version>
+                <configuration>
+                    <reuseForks>false</reuseForks>
+                </configuration>
             </plugin>
         </plugins>
     </build>
