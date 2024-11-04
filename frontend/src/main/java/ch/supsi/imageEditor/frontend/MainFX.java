@@ -24,6 +24,8 @@ import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
+import ch.supsi.imageEditor.frontend.model.persist.PersistImageModel;
+import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
 import ch.supsi.imageEditor.frontend.model.persist.PersistImageModel;
 import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
@@ -60,7 +62,7 @@ public class MainFX extends Application {
     private final OperationModelInterface operationModel;
     private final PipelineModelInterface pipelineModel;
     private final ImageModelInterface imageModel;
-    private final PersistImageModelInterface persistModel;
+    private final PersistImageModelInterface persistImageModel;
 
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
@@ -89,7 +91,7 @@ public class MainFX extends Application {
         this.operationModel = OperationModel.getInstance();
         this.pipelineModel = PipelineModel.getInstance();
         this.imageModel = ImageModel.getInstance();
-        this.persistModel = PersistImageModel.getInstance();
+        this.persistImageModel = PersistImageModel.getInstance();
 
 
         //CONTROLLERS
@@ -127,8 +129,9 @@ public class MainFX extends Application {
         this.savingView = SavingViewFXML.getInstance(this.resourceBundle);
 
         //SCAFFOLDING of M-V-C
-        this.menuBarView.initialize(this.handleService, (AbstractModel) this.persistModel);
+        this.menuBarView.initialize(this.handleService, (AbstractModel) this.persistImageModel);
         this.operationView.initialize(this.handleService, (AbstractModel) this.operationModel);
+        this.currentInfoView.initialize((AbstractModel) this.persistImageModel);
         this.aboutView.initialize(this.aboutModel);
         this.infoBarView.initialize((AbstractModel) this.languageModel);
         this.pipelineView.initialize(this.handleService, (AbstractModel) this.pipelineModel);
@@ -146,7 +149,7 @@ public class MainFX extends Application {
 
         this.operationView.createSupportedOperationsButtons(this.operationModel.getSupportedOperations());
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());
-        this.menuBarView.createOpenRecentMenuItem(this.persistModel.getRecentFiles());
+        this.menuBarView.createOpenRecentMenuItem(this.persistImageModel.getRecentFiles());
     }
 
     public static void main(String[] args) {

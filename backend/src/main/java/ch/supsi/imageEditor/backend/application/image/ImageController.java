@@ -37,6 +37,10 @@ public class ImageController implements ImageControllerInterface {
     public void readImage(String filePath) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
         this.imageReaderFactory.readImage(filePath);
         this.notificationService.notify(EventType.OPEN_IMAGE);
+        if (!this.pipelineModel.getPipeline().isEmpty()) {
+            this.pipelineModel.cleanPipeline();
+            this.notificationService.notify(EventType.CLEAR_PIPELINE);
+        }
     }
 
     @Override

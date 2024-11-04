@@ -50,6 +50,11 @@ public class PersistImageModel extends AbstractModel implements PersistImageMode
     }
 
     @Override
+    public File getCurrentFile() {
+        return this.currentSavingFile;
+    }
+
+    @Override
     public boolean isAlreadySave() {
         return this.isAlreadySaved;
     }
