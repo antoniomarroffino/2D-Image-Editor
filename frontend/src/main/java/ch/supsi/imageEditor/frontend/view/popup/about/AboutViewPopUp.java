@@ -48,6 +48,7 @@ public class AboutViewPopUp implements AboutViewInterface {
         logoAppImageView.setFitWidth(LOGO_WIDTH);
 
         Region dialogPane = infoView.getDialogPane();
+        dialogPane.setId("aboutAlert");
         dialogPane.getStyleClass().add("custom-alert");
         Button okButton = (Button) infoView.getDialogPane().lookupButton(ButtonType.OK);
         okButton.setId("info-ok-button");
