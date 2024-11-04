@@ -72,7 +72,6 @@ public class ImageDataAccess implements ImageDataAccessInterface {
         } catch (IOException ignored) {
             ;
         }
-        Collections.reverse(recentFilesList);
         return recentFilesList;
     }
 

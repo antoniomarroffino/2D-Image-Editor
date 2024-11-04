@@ -94,7 +94,7 @@ public class OperationViewFXML implements OperationViewFXMLInterface {
     }
 
     @Override
-    public void createSupportedOperationsButtons() {
+    public void createSupportedOperationsButtons(Set<String> supportedOperations) {
         this.clearOperations();
         for (String supportedOperation : this.operationModel.getSupportedOperations()) {
             Button button = createButton(supportedOperation);

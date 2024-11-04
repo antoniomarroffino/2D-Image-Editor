@@ -8,7 +8,6 @@ import ch.supsi.imageEditor.frontend.model.AbstractModel;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -62,7 +61,7 @@ public class PersistImageModel extends AbstractModel implements PersistImageMode
 
     @Override
     public void loadImage(File openFile) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
-        this.imageController.loadImage(openFile.getAbsolutePath());
+        this.imageController.readImage(openFile.getAbsolutePath());
     }
 
     @Override

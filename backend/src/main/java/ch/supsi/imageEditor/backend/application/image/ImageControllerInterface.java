@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface ImageControllerInterface {
-    void loadImage(String path) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException;
+    void readImage(String path) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException;
 
     void writeImage(File file);
 

@@ -34,8 +34,8 @@ public class ImageController implements ImageControllerInterface {
     }
 
     @Override
-    public void loadImage(String filePath) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
-        this.imageReaderFactory.loadImage(filePath);
+    public void readImage(String filePath) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
+        this.imageReaderFactory.readImage(filePath);
         this.notificationService.notify(EventType.OPEN_IMAGE);
     }
 

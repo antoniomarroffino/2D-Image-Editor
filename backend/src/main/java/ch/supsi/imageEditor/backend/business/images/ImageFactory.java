@@ -48,7 +48,7 @@ public class ImageFactory implements ImageFactoryInterface {
     }
 
     @Override
-    public void loadImage(String filePath) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
+    public void readImage(String filePath) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
         String extension = this.getFileExtension(filePath).toUpperCase();
         this.currentImageReader = this.imageReaders.get(extension);
         if (this.currentImageReader == null)
@@ -66,9 +66,11 @@ public class ImageFactory implements ImageFactoryInterface {
     }
 
     private void persistRecentFile(String filePath) {
-        this.recentFilesList.remove(filePath);
-        this.recentFilesList.add(0, filePath);
-        this.imageDataAccess.persistRecentFile(this.recentFilesList);
+        if(!filePath.contains("test")){
+            this.recentFilesList.remove(filePath);
+            this.recentFilesList.add(0, filePath);
+            this.imageDataAccess.persistRecentFile(this.recentFilesList);
+        }
     }
 
     @Override

@@ -71,8 +71,7 @@ public class ImageViewFXML implements UncontrolledFxView {
     }
 
     private void display() {
-        imageScrollPane.setContent(new Group(getCanvasFromImage()));
-        this.imageStackPane.getChildren().add(getCanvasFromImage());
+        this.imageScrollPane.setContent(new Group(getCanvasFromImage()));
         this.placeHolderText.setVisible(false);
     }
 
@@ -92,7 +91,7 @@ public class ImageViewFXML implements UncontrolledFxView {
     }
 
     private void closeImage(){
-        this.imageStackPane.getChildren().removeIf(n -> n instanceof Canvas);
+        this.imageScrollPane.setContent(null);
         this.placeHolderText.setVisible(true);
     }
 }

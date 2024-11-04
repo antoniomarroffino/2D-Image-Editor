@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface ImageFactoryInterface {
-    void loadImage(String format) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException;
+    void readImage(String format) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException;
 
     Set<String> getSupportedFormat();
 

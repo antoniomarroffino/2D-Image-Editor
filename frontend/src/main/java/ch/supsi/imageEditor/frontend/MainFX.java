@@ -57,7 +57,7 @@ public class MainFX extends Application {
     private final AbstractModel appModel;
     private final AboutModelInterface aboutModel;
     private final LanguageModelInterface languageModel;
-    private final AbstractModel operationModel;
+    private final OperationModelInterface operationModel;
     private final PipelineModelInterface pipelineModel;
     private final ImageModelInterface imageModel;
     private final PersistImageModelInterface persistModel;
@@ -128,7 +128,7 @@ public class MainFX extends Application {
 
         //SCAFFOLDING of M-V-C
         this.menuBarView.initialize(this.handleService, (AbstractModel) this.persistModel);
-        this.operationView.initialize(this.handleService, this.operationModel);
+        this.operationView.initialize(this.handleService, (AbstractModel) this.operationModel);
         this.aboutView.initialize(this.aboutModel);
         this.infoBarView.initialize((AbstractModel) this.languageModel);
         this.pipelineView.initialize(this.handleService, (AbstractModel) this.pipelineModel);
@@ -144,7 +144,7 @@ public class MainFX extends Application {
         this.pipelineController.initialize(listOfViews);
         this.persistImageController.initialize(listOfViews);
 
-        //this.operationView.createSupportedOperationsButtons(this.operationModel.getSupportedOperations());
+        this.operationView.createSupportedOperationsButtons(this.operationModel.getSupportedOperations());
         this.menuBarView.createSupportedLanguagesMenuItem(this.languageModel.getSupportedLanguages());
         this.menuBarView.createOpenRecentMenuItem(this.persistModel.getRecentFiles());
     }
