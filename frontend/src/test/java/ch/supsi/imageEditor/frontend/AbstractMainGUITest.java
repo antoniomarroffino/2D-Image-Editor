@@ -7,8 +7,6 @@ import org.testfx.framework.junit5.ApplicationTest;
 import java.util.logging.Logger;
 
 class AbstractMainGUITest extends ApplicationTest {
-    protected static final int SLEEP_INTERVAL = 0;
-
     protected static final Logger LOGGER = Logger.getAnonymousLogger();
 
     protected int stepNo;
