@@ -5,6 +5,8 @@ import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 public interface ImageModelInterface {
     void loadCurrentImage();
 
+    void closeCurrentImage();
+
     AbstractImage getImage();
 
     int getWidthImage();

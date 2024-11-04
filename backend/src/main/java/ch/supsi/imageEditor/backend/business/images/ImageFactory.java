@@ -7,15 +7,13 @@ import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 public class ImageFactory implements ImageFactoryInterface {
     private static ImageFactory instance = null;
     private final ImageDataAccessInterface imageDataAccess;
 
+    private final List<String> recentFilesList;
     private final Map<String, ImageInterface> imageReaders;
     private final Properties imageReaderProperties;
     private ImageInterface currentImageReader;
@@ -25,6 +23,7 @@ public class ImageFactory implements ImageFactoryInterface {
         this.imageDataAccess = ImageDataAccess.getInstance();
         this.imageReaderProperties = this.imageDataAccess.getFormatReaderProperties();
 
+        this.recentFilesList = this.imageDataAccess.getRecentFiles();
         this.imageReaders = this.loadImageReadersMap();
         this.currentImage = null;
     }
@@ -49,13 +48,14 @@ public class ImageFactory implements ImageFactoryInterface {
     }
 
     @Override
-    public void readImage(String filePath) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
+    public void loadImage(String filePath) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
         String extension = this.getFileExtension(filePath).toUpperCase();
         this.currentImageReader = this.imageReaders.get(extension);
         if (this.currentImageReader == null)
             throw new FormatNotSupportedException("Format " + extension + " is not supported");
         this.currentImageReader.read(filePath);
         this.currentImage = this.currentImageReader.getImage();
+        this.persistRecentFile(filePath);
     }
 
     private String getFileExtension(String filePath) {
@@ -65,9 +65,20 @@ public class ImageFactory implements ImageFactoryInterface {
         return filePath.substring(lastDotIndex + 1);
     }
 
+    private void persistRecentFile(String filePath) {
+        this.recentFilesList.remove(filePath);
+        this.recentFilesList.add(0, filePath);
+        this.imageDataAccess.persistRecentFile(this.recentFilesList);
+    }
+
     @Override
     public Set<String> getSupportedFormat() {
         return Set.copyOf(this.imageReaders.keySet());
+    }
+
+    @Override
+    public List<String> getRecentFiles() {
+        return List.copyOf(this.recentFilesList);
     }
 
     @Override
@@ -83,5 +94,11 @@ public class ImageFactory implements ImageFactoryInterface {
     @Override
     public void writeImage(AbstractImage image, File file) {
         this.imageDataAccess.writeImage(image, file);
+    }
+
+    @Override
+    public void closeImage() {
+        this.currentImage = null;
+        this.currentImageReader = null;
     }
 }

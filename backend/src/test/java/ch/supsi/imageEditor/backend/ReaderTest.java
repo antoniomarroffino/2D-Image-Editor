@@ -43,7 +43,7 @@ public class ReaderTest {
     @Test
     public void testPBMReadImage() {
         try {
-            this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/dimensions/P1.pbm");
+            this.factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P1.pbm");
             AbstractImage image = this.factory.getImage();
             assertEquals(4, image.getWidth());
             assertEquals(4, image.getHeight());

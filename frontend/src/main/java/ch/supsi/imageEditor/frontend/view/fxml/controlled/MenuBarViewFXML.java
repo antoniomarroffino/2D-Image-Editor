@@ -5,6 +5,8 @@ import ch.supsi.imageEditor.frontend.adapter.MenuItemAdapter;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
+import ch.supsi.imageEditor.frontend.model.persist.PersistImageModel;
+import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,14 +17,12 @@ import javafx.scene.control.MenuItem;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     private static final String PathResourceFXML = "/menubar.fxml";
     private static MenuBarViewFXML instance = null;
+    private PersistImageModelInterface persistImageModel;
     private static ResourceBundle bundle;
     private final Map<EventType, Runnable> onEventDoActionMap;
     private HandleServiceInterface handleService;
@@ -86,12 +86,14 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     @Override
     public void initialize(HandleServiceInterface handleService, AbstractModel model) {
         this.handleService = handleService;
+        this.persistImageModel = (PersistImageModelInterface) model;
         this.fillMap();
         this.createBehaviour();
     }
 
     private void fillMap() {
         this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::enablePersistingButtons);
+        this.onEventDoActionMap.put(EventType.CLOSE_IMAGE, this::disablePersistingButtons);
     }
 
     private void createBehaviour() {
@@ -100,7 +102,8 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
         this.openMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.OPEN_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
         this.saveMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.SAVE_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
         this.saveAsMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.SAVE_IMAGE_AS, new MenuItemAdapter((MenuItem) event.getSource())));
-        this.quitMenuItem.setOnAction(actionEvent -> Platform.exit()); //TODO: controllare se si ha un'immagine caricata e se è già stata salvata
+        this.closeMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.CLOSE_IMAGE, new MenuItemAdapter((MenuItem) event.getSource())));
+        this.quitMenuItem.setOnAction(event -> this.handleService.notify(EventOnApplication.QUIT_APPLICATION, new MenuItemAdapter((MenuItem) event.getSource())));
     }
 
     @Override
@@ -111,9 +114,17 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     }
 
     private void enablePersistingButtons() {
+        this.openRecentMenu.getItems().clear();
+        this.createOpenRecentMenuItem(this.persistImageModel.getRecentFiles());
         this.saveMenuItem.setDisable(false);
         this.saveAsMenuItem.setDisable(false);
         this.closeMenuItem.setDisable(false);
+    }
+
+    private void disablePersistingButtons() {
+        this.saveMenuItem.setDisable(true);
+        this.saveAsMenuItem.setDisable(true);
+        this.closeMenuItem.setDisable(true);
     }
 
     @Override
@@ -129,14 +140,17 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     }
 
     @Override
-    public void createOpenRecentMenuItem(Set<String> recentFiles) {
-        for (String recentFile : recentFiles) {
-            MenuItem item = new MenuItem(recentFile);
-            item.setId(recentFile);
-            item.setMnemonicParsing(false);
-            //item.setText(bundle.getString("MenuBar." + supportedLanguage));
-            //item.setOnAction(event -> this.handleService.notify(EventOnApplication.CHANGE_LANGUAGE, new MenuItemAdapter((MenuItem) event.getSource())));
-            this.languageMenu.getItems().add(item);
-        }
+    public void createOpenRecentMenuItem(List<String> recentFiles) {
+        for (String recentFile : recentFiles)
+            this.openRecentMenu.getItems().add(getOpenRecentMenuItem(recentFile));
+    }
+
+    private MenuItem getOpenRecentMenuItem(String recentFile) {
+        MenuItem item = new MenuItem(recentFile);
+        item.setId(recentFile);
+        item.setText(recentFile);
+        item.setMnemonicParsing(false);
+        item.setOnAction(event -> this.handleService.notify(EventOnApplication.OPEN_RECENT, new MenuItemAdapter((MenuItem) event.getSource())));
+        return item;
     }
 }

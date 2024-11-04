@@ -25,6 +25,11 @@ public class ImageModel extends AbstractModel implements ImageModelInterface {
     }
 
     @Override
+    public void closeCurrentImage() {
+        this.currentImage = null;
+    }
+
+    @Override
     public AbstractImage getImage() {
         return this.currentImage;
     }

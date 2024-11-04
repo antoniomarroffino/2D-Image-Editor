@@ -8,19 +8,24 @@ import ch.supsi.imageEditor.frontend.model.pubsub.PubSubModel;
 import ch.supsi.imageEditor.frontend.model.pubsub.PubSubModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.DataView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ImageController implements ImageControllerInterface, EventListener {
     private static ImageController instance = null;
     private final PubSubModelInterface pubSubModel;
     private final ImageModelInterface imageModel;
     private List<DataView> views;
+    private final Map<EventType, Runnable> onEventDoActionMap;
 
     private ImageController() {
         this.pubSubModel = PubSubModel.getInstance();
         this.pubSubModel.subscribe(EventType.OPEN_IMAGE, this);
         this.pubSubModel.subscribe(EventType.RUN_PIPELINE, this);
+        this.pubSubModel.subscribe(EventType.CLOSE_IMAGE, this);
         this.imageModel = ImageModel.getInstance();
+        this.onEventDoActionMap = new HashMap<>();
     }
 
     public static ImageController getInstance() {
@@ -29,12 +34,25 @@ public class ImageController implements ImageControllerInterface, EventListener 
 
     public void initialize(List<DataView> views) {
         this.views = views;
+        this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::openImage);
+        this.onEventDoActionMap.put(EventType.CLOSE_IMAGE, this::closeImage);
     }
 
     @Override
     public void update(EventType eventType) {
-        this.imageModel.loadCurrentImage();
+        Runnable action = onEventDoActionMap.get(eventType);
+        if (action != null)
+            action.run();
+
         for (DataView view : this.views)
             view.update(eventType);
+    }
+
+    private void openImage() {
+        this.imageModel.loadCurrentImage();
+    }
+
+    private void closeImage() {
+        this.imageModel.closeCurrentImage();
     }
 }

@@ -4,6 +4,7 @@ import ch.supsi.imageEditor.backend.application.observer.EventListener;
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
+import ch.supsi.imageEditor.frontend.MainFX;
 import ch.supsi.imageEditor.frontend.adapter.Component;
 import ch.supsi.imageEditor.frontend.model.persist.PersistImageModel;
 import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
@@ -14,6 +15,7 @@ import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXM
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXMLInterface;
 import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewInterface;
 import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewPopUp;
+import javafx.application.Platform;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +28,8 @@ public class PersistImageController implements PersistImageControllerInterface, 
     private final SavingViewFXMLInterface savingViewFXML;
     private final ErrorViewInterface errorView;
     private List<DataView> views;
+
+    private String filePathOpenRecent;
 
     private PersistImageController() {
         this.savingViewFXML = SavingViewFXML.getInstance();
@@ -45,10 +49,32 @@ public class PersistImageController implements PersistImageControllerInterface, 
     }
 
     @Override
-    public void openImage(Component component) {
+    public void requestSaveBeforeOpen(Component component) {
+        if (this.persistImageModel.existCurrentFile() && !this.persistImageModel.isAlreadySave())
+            this.savingViewFXML.showSaveConfirmationPopup(this::save, this::openImage);
+        else
+            this.openImage();
+    }
+
+    private void openImage() {
         File openFile = this.savingViewFXML.getOpenFile(this.persistImageModel.getSupportedFormats());
         if (openFile != null)
             loadImage(openFile);
+    }
+
+    @Override
+    public void requestSaveBeforeOpenRecent(Component component) {
+        this.filePathOpenRecent = component.getId();
+        if (this.persistImageModel.existCurrentFile() && !this.persistImageModel.isAlreadySave())
+            this.savingViewFXML.showSaveConfirmationPopup(this::save, this::openRecentImage);
+        else
+            this.openRecentImage();
+    }
+
+    private void openRecentImage() {
+        File fileToOpen = new File(this.filePathOpenRecent);
+        if(fileToOpen.exists())
+            loadImage(fileToOpen);
     }
 
     @Override
@@ -73,12 +99,34 @@ public class PersistImageController implements PersistImageControllerInterface, 
 
     private void loadImage(File openFile) {
         try {
-            this.persistImageModel.loadImage(openFile);
             this.persistImageModel.setNewSavingFile(openFile);
             this.persistImageModel.setAlreadySave(true);
+            this.persistImageModel.loadImage(openFile);
         } catch (FormatNotSupportedException | IOException | ImageHeaderUncorrectException e) {
+            this.persistImageModel.setNewSavingFile(null);
+            this.persistImageModel.setAlreadySave(false);
             this.errorView.showPopUpError(e.getClass().getSimpleName(), e.getMessage());
         }
+    }
+
+    @Override
+    public void requestSaveBeforeClose(Component component) {
+        if (!this.persistImageModel.isAlreadySave())
+            this.savingViewFXML.showSaveConfirmationPopup(this::save, this::closeImage);
+        else
+            this.closeImage();
+    }
+
+    @Override
+    public void requestSaveBeforeQuit(Component component) {
+        if (this.persistImageModel.existCurrentFile() && ! this.persistImageModel.isAlreadySave())
+            this.savingViewFXML.showSaveConfirmationPopup(this::save, MainFX::closeApplication);
+        else
+            MainFX.closeApplication();
+    }
+
+    private void closeImage() {
+        this.persistImageModel.closeImage();
     }
 
     @Override
