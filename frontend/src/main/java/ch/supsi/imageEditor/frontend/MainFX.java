@@ -108,7 +108,7 @@ public class MainFX extends Application {
         this.handleService.subscribe(EventOnApplication.DELETE_PIPELINE, this.pipelineController::deletePipeline);
         this.handleService.subscribe(EventOnApplication.CLICK_OPERATION, this.operationController::addOperationToPipeline);
         this.handleService.subscribe(EventOnApplication.OPEN_IMAGE, this.persistImageController::requestSaveBeforeOpen);
-        this.handleService.subscribe(EventOnApplication.OPEN_RECENT, this.persistImageController::openRecentImage);
+        this.handleService.subscribe(EventOnApplication.OPEN_RECENT, this.persistImageController::requestSaveBeforeOpenRecent);
         this.handleService.subscribe(EventOnApplication.SAVE_IMAGE, this.persistImageController::saveImage);
         this.handleService.subscribe(EventOnApplication.SAVE_IMAGE_AS, this.persistImageController::saveImageAs);
         this.handleService.subscribe(EventOnApplication.CLOSE_IMAGE, this.persistImageController::requestSaveBeforeClose);

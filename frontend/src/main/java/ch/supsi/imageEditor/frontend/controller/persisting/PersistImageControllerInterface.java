@@ -10,7 +10,7 @@ public interface PersistImageControllerInterface {
 
     void requestSaveBeforeOpen(Component component);
 
-    void openRecentImage(Component component);
+    void requestSaveBeforeOpenRecent(Component component);
 
     void saveImage(Component component);
 

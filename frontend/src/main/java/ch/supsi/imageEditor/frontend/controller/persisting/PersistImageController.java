@@ -29,6 +29,8 @@ public class PersistImageController implements PersistImageControllerInterface, 
     private final ErrorViewInterface errorView;
     private List<DataView> views;
 
+    private String filePathOpenRecent;
+
     private PersistImageController() {
         this.savingViewFXML = SavingViewFXML.getInstance();
         this.pubSubModel = PubSubModel.getInstance();
@@ -48,7 +50,7 @@ public class PersistImageController implements PersistImageControllerInterface, 
 
     @Override
     public void requestSaveBeforeOpen(Component component) {
-        if (this.persistImageModel.existCurrentFile() && ! this.persistImageModel.isAlreadySave())
+        if (this.persistImageModel.existCurrentFile() && !this.persistImageModel.isAlreadySave())
             this.savingViewFXML.showSaveConfirmationPopup(this::save, this::openImage);
         else
             this.openImage();
@@ -61,9 +63,18 @@ public class PersistImageController implements PersistImageControllerInterface, 
     }
 
     @Override
-    public void openRecentImage(Component component) {
-        String path = component.getId();
-        System.out.println(path);
+    public void requestSaveBeforeOpenRecent(Component component) {
+        this.filePathOpenRecent = component.getId();
+        if (this.persistImageModel.existCurrentFile() && !this.persistImageModel.isAlreadySave())
+            this.savingViewFXML.showSaveConfirmationPopup(this::save, this::openRecentImage);
+        else
+            this.openRecentImage();
+    }
+
+    private void openRecentImage() {
+        File fileToOpen = new File(this.filePathOpenRecent);
+        if(fileToOpen.exists())
+            loadImage(fileToOpen);
     }
 
     @Override
@@ -93,7 +104,7 @@ public class PersistImageController implements PersistImageControllerInterface, 
             this.persistImageModel.loadImage(openFile);
         } catch (FormatNotSupportedException | IOException | ImageHeaderUncorrectException e) {
             this.persistImageModel.setNewSavingFile(null);
-            this.persistImageModel.setAlreadySave(false); //TODO RIVEDERE
+            this.persistImageModel.setAlreadySave(false);
             this.errorView.showPopUpError(e.getClass().getSimpleName(), e.getMessage());
         }
     }
