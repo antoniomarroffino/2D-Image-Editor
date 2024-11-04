@@ -86,7 +86,7 @@ public class CurrentInfoViewFXML implements UncontrolledFxView {
     private void fillMap() {
         this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::showDetails);
         this.onEventDoActionMap.put(EventType.SAVE_IMAGE, this::changeLastModifiedDate);
-        //this.onEventDoActionMap.put(EventType.CLOSE_IMAGE, this::hideDetails);
+        this.onEventDoActionMap.put(EventType.CLOSE_IMAGE, this::hideDetails);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ch.supsi.imageEditor.backend.operationsTests;
 
+import ch.supsi.imageEditor.backend.ImageFactoryTest;
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.ImageFactory;
 import ch.supsi.imageEditor.backend.business.operation.allOperations.FlipSideToSide;
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class InvertColorsTest {
 
-    private final ImageFactory factory = ImageFactory.getInstance();
+    private final ImageFactory factory = new ImageFactoryTest();
 
     @Test
     public void testP1InvertColors() {

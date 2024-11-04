@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="currentInfoPane" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="209.0" stylesheets="@style/dark-theme.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="currentInfoPane" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="209.0" stylesheets="@style/dark-theme.css" xmlns:fx="http://javafx.com/fxml/1">
     <Label alignment="CENTER" prefHeight="37.0" prefWidth="209.0" styleClass="custom-label" text="%CurrentInfo.title">
         <font>
             <Font name="Dubai Light" size="14.0" />

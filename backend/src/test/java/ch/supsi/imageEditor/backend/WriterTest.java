@@ -18,7 +18,7 @@ public class WriterTest {
 
     @BeforeEach
     public void setUp() {
-        ImageFactory factory = ImageFactory.getInstance();
+        ImageFactory factory = new ImageFactoryTest();
         try {
             factory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/dimensions/P1.pbm");
             p1 = factory.getImage();

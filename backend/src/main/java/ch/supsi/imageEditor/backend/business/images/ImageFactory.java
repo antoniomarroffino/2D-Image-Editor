@@ -14,12 +14,12 @@ public class ImageFactory implements ImageFactoryInterface {
     private final ImageDataAccessInterface imageDataAccess;
 
     private final List<String> recentFilesList;
-    private final Map<String, ImageInterface> imageReaders;
-    private final Properties imageReaderProperties;
-    private ImageInterface currentImageReader;
-    private AbstractImage currentImage;
+    protected final Map<String, ImageInterface> imageReaders;
+    protected final Properties imageReaderProperties;
+    protected ImageInterface currentImageReader;
+    protected AbstractImage currentImage;
 
-    private ImageFactory() {
+    protected ImageFactory() {
         this.imageDataAccess = ImageDataAccess.getInstance();
         this.imageReaderProperties = this.imageDataAccess.getFormatReaderProperties();
 
@@ -58,7 +58,7 @@ public class ImageFactory implements ImageFactoryInterface {
         this.persistRecentFile(filePath);
     }
 
-    private String getFileExtension(String filePath) {
+    protected String getFileExtension(String filePath) {
         int lastDotIndex = filePath.lastIndexOf('.');
         if (lastDotIndex == -1 || lastDotIndex == filePath.length() - 1)
             return "";
@@ -66,11 +66,9 @@ public class ImageFactory implements ImageFactoryInterface {
     }
 
     private void persistRecentFile(String filePath) {
-        if(!filePath.contains("test")){
-            this.recentFilesList.remove(filePath);
-            this.recentFilesList.add(0, filePath);
-            this.imageDataAccess.persistRecentFile(this.recentFilesList);
-        }
+        this.recentFilesList.remove(filePath);
+        this.recentFilesList.add(0, filePath);
+        this.imageDataAccess.persistRecentFile(this.recentFilesList);
     }
 
     @Override

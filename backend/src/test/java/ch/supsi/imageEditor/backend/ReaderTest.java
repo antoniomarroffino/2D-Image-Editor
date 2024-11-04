@@ -17,7 +17,7 @@ public class ReaderTest {
 
     @BeforeEach
     public void setUp() {
-        this.factory = ImageFactory.getInstance();
+        this.factory = new ImageFactoryTest();
     }
 
     @Test
