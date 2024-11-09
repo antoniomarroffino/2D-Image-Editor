@@ -10,10 +10,10 @@ public class LanguageDataAccess implements LanguageDataAccessInterface {
     private static final String userHomeDirectory = System.getProperty("user.home");
     private static final String preferencesDirectory = ".userpreferences";
     private static final String preferencesFile = "preferences.properties";
-    private static LanguageDataAccess instance;
+    protected static LanguageDataAccess instance;
     private Properties userPreferences;
 
-    private LanguageDataAccess() {
+    protected LanguageDataAccess() {
     }
 
     public static LanguageDataAccess getInstance() {
