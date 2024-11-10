@@ -6,11 +6,12 @@ import java.nio.file.Path;
 import java.util.Properties;
 
 public class LanguageDataAccess implements LanguageDataAccessInterface {
+    protected static LanguageDataAccess instance;
+
     private static final String defaultPreferencesPath = "/default-user-preferences.properties";
     private static final String userHomeDirectory = System.getProperty("user.home");
     private static final String preferencesDirectory = ".userpreferences";
     private static final String preferencesFile = "preferences.properties";
-    protected static LanguageDataAccess instance;
     private Properties userPreferences;
 
     protected LanguageDataAccess() {

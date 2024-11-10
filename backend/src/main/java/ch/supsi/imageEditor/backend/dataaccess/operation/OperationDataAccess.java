@@ -7,13 +7,14 @@ import java.util.Properties;
 import java.util.Set;
 
 public class OperationDataAccess implements OperationDataAccessInterface {
+    protected static OperationDataAccess instance;
+
     private static final String operationsFile = "/operations.properties";
     private static final String operationConcreteOperationPath = "/operation-concreteOperation.properties";
-    private static OperationDataAccess instance;
     private final Properties supportedOperationsProperties;
     private final Properties operationsProperties;
 
-    private OperationDataAccess() {
+    protected OperationDataAccess() {
         this.supportedOperationsProperties = this.getSupportedOperationsProperties();
         this.operationsProperties = this.getOperationsProperties();
     }

@@ -9,15 +9,16 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class ImageDataAccess implements ImageDataAccessInterface {
+    protected static ImageDataAccess instance = null;
+
     private static final String formatReaderPropertiesPath = "/format-reader.properties";
     private static final String userHomeDirectory = System.getProperty("user.home");
     private static final String preferencesDirectory = ".userpreferences";
     private static final String recentFiles = "recentFiles.txt";
     private final Path filePath;
-    private static ImageDataAccess instance = null;
     private final Properties formatReaderProperties;
 
-    private ImageDataAccess() {
+    protected ImageDataAccess() {
         this.formatReaderProperties = this.loadFormatReaderProperties();
         this.filePath = loadFilePath();
     }
