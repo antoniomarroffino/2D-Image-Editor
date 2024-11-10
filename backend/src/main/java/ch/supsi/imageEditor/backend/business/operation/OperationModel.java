@@ -9,13 +9,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class OperationModel implements OperationModelInterface {
-    private static OperationModel instance;
+    protected static OperationModel instance;
+
     private final OperationDataAccess operationDataAccess;
     private final Set<String> supportedOperations;
     private final Properties operationProperties;
     private final Map<String, Operation> operationsMap;
 
-    private OperationModel() {
+    protected OperationModel() {
         this.operationDataAccess = OperationDataAccess.getInstance();
         this.supportedOperations = this.operationDataAccess.getOperationsTag();
 

@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PipelineModel implements PipelineModelInterface {
-    private static PipelineModel instance;
-    private List<String> pipeline;
+    protected static PipelineModel instance;
 
-    private PipelineModel() {
+    private final List<String> pipeline;
+
+    protected PipelineModel() {
         this.pipeline = new ArrayList<>();
     }
 

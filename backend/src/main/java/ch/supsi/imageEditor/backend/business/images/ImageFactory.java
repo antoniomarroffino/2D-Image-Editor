@@ -10,7 +10,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class ImageFactory implements ImageFactoryInterface {
-    private static ImageFactory instance = null;
+    protected static ImageFactory instance = null;
+
     private final ImageDataAccessInterface imageDataAccess;
 
     private final List<String> recentFilesList;
