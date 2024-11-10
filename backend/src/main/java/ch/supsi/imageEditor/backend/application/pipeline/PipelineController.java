@@ -11,13 +11,14 @@ import ch.supsi.imageEditor.backend.business.pipeline.PipelineModel;
 import ch.supsi.imageEditor.backend.exception.OperationNotSupportedException;
 
 public class PipelineController implements PipelineControllerInterface {
-    private static PipelineController instance = null;
+    protected static PipelineController instance = null;
+
     private final PipelineModel pipelineModel;
     private final OperationModel operationModel;
     private final ImageFactoryInterface imageModel;
     private final NotificationServiceInterface notificationService;
 
-    private PipelineController() {
+    protected PipelineController() {
         this.pipelineModel = PipelineModel.getInstance();
         this.operationModel = OperationModel.getInstance();
         this.notificationService = NotificationService.getInstance();

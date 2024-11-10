@@ -5,11 +5,12 @@ import ch.supsi.imageEditor.backend.business.operation.OperationModel;
 import java.util.Set;
 
 public class OperationController implements OperationControllerInterface {
-    private static OperationController instance = null;
+    protected static OperationController instance = null;
+
     private final OperationModel operationModel;
     //private final NotificationServiceInterface notificationService;
 
-    private OperationController() {
+    protected OperationController() {
         this.operationModel = OperationModel.getInstance();
         //this.notificationService = NotificationService.getInstance();
     }

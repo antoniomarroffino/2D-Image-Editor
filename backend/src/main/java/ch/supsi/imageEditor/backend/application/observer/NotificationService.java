@@ -3,10 +3,11 @@ package ch.supsi.imageEditor.backend.application.observer;
 import java.util.*;
 
 public class NotificationService implements NotificationServiceInterface {
-    private static NotificationService instance = null;
+    protected static NotificationService instance = null;
+
     private final Map<EventType, List<EventListener>> subscribers;
 
-    private NotificationService() {
+    protected NotificationService() {
         this.subscribers = new HashMap<>();
         Arrays.stream(EventType.values()).forEach(event -> subscribers.put(event, new ArrayList<>()));
     }

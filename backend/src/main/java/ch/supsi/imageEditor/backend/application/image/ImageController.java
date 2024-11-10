@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Set;
 
 public class ImageController implements ImageControllerInterface {
-    private static ImageController instance = null;
+    protected static ImageController instance = null;
 
     private final ImageFactoryInterface imageReaderFactory;
     private final PipelineModelInterface pipelineModel;
     private final NotificationServiceInterface notificationService;
 
-    private ImageController() {
+    protected ImageController() {
         this.imageReaderFactory = ImageFactory.getInstance();
         this.pipelineModel = PipelineModel.getInstance();
         this.notificationService = NotificationService.getInstance();
