@@ -15,6 +15,7 @@ class OperationControllerTest {
     public void constructor() {
         OperationController operationController = new OperationController();
         Assertions.assertNotNull(operationController);
+        Assertions.assertNotNull(operationController.getOperationModel());
     }
 
     @Test
@@ -22,6 +23,7 @@ class OperationControllerTest {
         OperationController operationController = OperationController.getInstance();
         Assertions.assertNotNull(operationController);
         Assertions.assertNotNull(OperationController.instance);
+        Assertions.assertNotNull(operationController.getOperationModel());
     }
 
     @Test

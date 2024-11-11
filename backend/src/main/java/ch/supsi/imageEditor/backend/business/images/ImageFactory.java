@@ -13,7 +13,6 @@ public class ImageFactory implements ImageFactoryInterface {
     protected static ImageFactory instance = null;
 
     private final ImageDataAccessInterface imageDataAccess;
-
     private final List<String> recentFilesList;
     protected final Map<String, ImageInterface> imageReaders;
     protected final Properties imageReaderProperties;
@@ -23,15 +22,42 @@ public class ImageFactory implements ImageFactoryInterface {
     protected ImageFactory() {
         this.imageDataAccess = ImageDataAccess.getInstance();
         this.imageReaderProperties = this.imageDataAccess.getFormatReaderProperties();
-
         this.recentFilesList = this.imageDataAccess.getRecentFiles();
         this.imageReaders = this.loadImageReadersMap();
+        this.currentImageReader = null;
         this.currentImage = null;
     }
 
     public static ImageFactory getInstance() {
         return instance == null ? instance = new ImageFactory() : instance;
     }
+
+    ImageDataAccessInterface getImageDataAccess() {
+        return this.imageDataAccess;
+    }
+
+    List<String> getRecentFilesList() {
+        return this.recentFilesList;
+    }
+
+    Map<String, ImageInterface> getImageReaders() {
+        return this.imageReaders;
+    }
+
+    Properties getImageReaderProperties() {
+        return this.imageReaderProperties;
+    }
+
+    ImageInterface getCurrentImageReader() {
+        return this.currentImageReader;
+    }
+
+    AbstractImage getCurrentImage() {
+        return this.currentImage;
+    }
+
+
+
 
     private Map<String, ImageInterface> loadImageReadersMap() {
         Map<String, ImageInterface> imageReadersMap = new HashMap<>();

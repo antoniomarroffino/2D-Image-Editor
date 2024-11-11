@@ -14,6 +14,7 @@ class LanguageModelTest {
     public void constructor() {
         LanguageModel languageModel = new LanguageModel();
         Assertions.assertNotNull(languageModel);
+        Assertions.assertNotNull(languageModel.getLanguageDataAccess());
     }
 
     @Test
@@ -21,6 +22,7 @@ class LanguageModelTest {
         LanguageModel languageModel = LanguageModel.getInstance();
         Assertions.assertNotNull(languageModel);
         Assertions.assertNotNull(LanguageModel.instance);
+        Assertions.assertNotNull(languageModel.getLanguageDataAccess());
     }
 
     @Test

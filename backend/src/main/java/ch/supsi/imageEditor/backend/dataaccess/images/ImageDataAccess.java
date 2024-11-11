@@ -27,6 +27,10 @@ public class ImageDataAccess implements ImageDataAccessInterface {
         return instance == null ? instance = new ImageDataAccess() : instance;
     }
 
+    Path getFilePath() {
+        return this.filePath;
+    }
+
     private Path loadFilePath() {
         Path preferencesPath = Paths.get(userHomeDirectory, preferencesDirectory);
         try {

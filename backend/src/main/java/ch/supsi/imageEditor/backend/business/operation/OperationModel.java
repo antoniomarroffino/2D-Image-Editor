@@ -3,6 +3,7 @@ package ch.supsi.imageEditor.backend.business.operation;
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.operation.allOperations.Operation;
 import ch.supsi.imageEditor.backend.dataaccess.operation.OperationDataAccess;
+import ch.supsi.imageEditor.backend.dataaccess.operation.OperationDataAccessInterface;
 import ch.supsi.imageEditor.backend.exception.OperationNotSupportedException;
 
 import java.util.*;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 public class OperationModel implements OperationModelInterface {
     protected static OperationModel instance;
 
-    private final OperationDataAccess operationDataAccess;
+    private final OperationDataAccessInterface operationDataAccess;
     private final Set<String> supportedOperations;
     private final Properties operationProperties;
     private final Map<String, Operation> operationsMap;
@@ -19,13 +20,28 @@ public class OperationModel implements OperationModelInterface {
     protected OperationModel() {
         this.operationDataAccess = OperationDataAccess.getInstance();
         this.supportedOperations = this.operationDataAccess.getOperationsTag();
-
         this.operationProperties = this.operationDataAccess.getOperationProperties();
         this.operationsMap = this.loadOperationsMap();
     }
 
     public static OperationModel getInstance() {
         return instance == null ? instance = new OperationModel() : instance;
+    }
+
+    OperationDataAccessInterface getOperationDataAccess() {
+        return this.operationDataAccess;
+    }
+
+    Set<String> getSupportedOperations() {
+        return this.supportedOperations;
+    }
+
+    Properties getOperationProperties() {
+        return this.operationProperties;
+    }
+
+    Map<String, Operation> getOperationsMap() {
+        return this.operationsMap;
     }
 
     private Map<String, Operation> loadOperationsMap() {

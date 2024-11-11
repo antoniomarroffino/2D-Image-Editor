@@ -20,6 +20,14 @@ public class LanguageController implements LanguageControllerInterface {
         return instance == null ? instance = new LanguageController() : instance;
     }
 
+    LanguageModel getLanguageModel() {
+        return this.languageModel;
+    }
+
+    NotificationServiceInterface getNotificationService() {
+        return this.notificationService;
+    }
+
     @Override
     public String getCurrentLanguageTag() {
         return this.languageModel.getCurrentLanguageTag();

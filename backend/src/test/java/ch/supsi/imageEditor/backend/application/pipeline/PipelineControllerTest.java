@@ -15,6 +15,10 @@ class PipelineControllerTest {
     public void constructor() {
         PipelineController pipelineController = new PipelineController();
         Assertions.assertNotNull(pipelineController);
+        Assertions.assertNotNull(pipelineController.getImageModel());
+        Assertions.assertNotNull(pipelineController.getPipelineModel());
+        Assertions.assertNotNull(pipelineController.getOperationModel());
+        Assertions.assertNotNull(pipelineController.getNotificationService());
     }
 
     @Test
@@ -22,6 +26,10 @@ class PipelineControllerTest {
         PipelineController pipelineController = PipelineController.getInstance();
         Assertions.assertNotNull(pipelineController);
         Assertions.assertNotNull(PipelineController.instance);
+        Assertions.assertNotNull(pipelineController.getImageModel());
+        Assertions.assertNotNull(pipelineController.getPipelineModel());
+        Assertions.assertNotNull(pipelineController.getOperationModel());
+        Assertions.assertNotNull(pipelineController.getNotificationService());
     }
 
     @Test

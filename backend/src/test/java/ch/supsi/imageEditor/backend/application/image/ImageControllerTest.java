@@ -14,6 +14,9 @@ class ImageControllerTest {
     public void constructor() {
         ImageController imageController = new ImageController();
         Assertions.assertNotNull(imageController);
+        Assertions.assertNotNull(imageController.getImageReaderFactory());
+        Assertions.assertNotNull(imageController.getNotificationService());
+        Assertions.assertNotNull(imageController.getPipelineModel());
     }
 
     @Test
@@ -21,6 +24,9 @@ class ImageControllerTest {
         ImageController imageController = ImageController.getInstance();
         Assertions.assertNotNull(imageController);
         Assertions.assertNotNull(ImageController.instance);
+        Assertions.assertNotNull(imageController.getImageReaderFactory());
+        Assertions.assertNotNull(imageController.getNotificationService());
+        Assertions.assertNotNull(imageController.getPipelineModel());
     }
 
     @Test
@@ -29,4 +35,5 @@ class ImageControllerTest {
         ImageController imageController2 = ImageController.getInstance();
         Assertions.assertEquals(imageController1, imageController2);
     }
+
 }

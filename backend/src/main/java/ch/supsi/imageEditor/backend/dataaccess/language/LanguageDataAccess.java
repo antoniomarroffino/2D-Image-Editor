@@ -15,10 +15,15 @@ public class LanguageDataAccess implements LanguageDataAccessInterface {
     private Properties userPreferences;
 
     protected LanguageDataAccess() {
+        this.userPreferences = null;
     }
 
     public static LanguageDataAccess getInstance() {
         return instance == null ? instance = new LanguageDataAccess() : instance;
+    }
+
+    Properties getUserPreferences() {
+        return this.userPreferences;
     }
 
     @Override

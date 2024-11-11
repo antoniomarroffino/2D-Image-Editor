@@ -15,6 +15,10 @@ class OperationModelTest {
     public void constructor() {
         OperationModel operationModel = new OperationModel();
         Assertions.assertNotNull(operationModel);
+        Assertions.assertNotNull(operationModel.getOperationDataAccess());
+        Assertions.assertNotNull(operationModel.getSupportedOperations());
+        Assertions.assertNotNull(operationModel.getOperationsMap());
+        Assertions.assertNotNull(operationModel.getOperationProperties());
     }
 
     @Test
@@ -22,6 +26,10 @@ class OperationModelTest {
         OperationModel operationModel = OperationModel.getInstance();
         Assertions.assertNotNull(operationModel);
         Assertions.assertNotNull(OperationModel.instance);
+        Assertions.assertNotNull(operationModel.getOperationDataAccess());
+        Assertions.assertNotNull(operationModel.getSupportedOperations());
+        Assertions.assertNotNull(operationModel.getOperationsMap());
+        Assertions.assertNotNull(operationModel.getOperationProperties());
     }
 
     @Test

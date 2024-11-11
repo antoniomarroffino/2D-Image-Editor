@@ -15,6 +15,8 @@ class LanguageControllerTest {
     public void constructor() {
         LanguageController languageController = new LanguageController();
         Assertions.assertNotNull(languageController);
+        Assertions.assertNotNull(languageController.getLanguageModel());
+        Assertions.assertNotNull(languageController.getNotificationService());
     }
 
     @Test
@@ -22,6 +24,8 @@ class LanguageControllerTest {
         LanguageController languageController = LanguageController.getInstance();
         Assertions.assertNotNull(languageController);
         Assertions.assertNotNull(LanguageController.instance);
+        Assertions.assertNotNull(languageController.getLanguageModel());
+        Assertions.assertNotNull(languageController.getNotificationService());
     }
 
     @Test

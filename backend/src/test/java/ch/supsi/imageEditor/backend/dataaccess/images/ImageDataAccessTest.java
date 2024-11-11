@@ -14,6 +14,8 @@ class ImageDataAccessTest {
     public void constructor() {
         ImageDataAccess imageDataAccess = new ImageDataAccess();
         Assertions.assertNotNull(imageDataAccess);
+        Assertions.assertNotNull(imageDataAccess.getFilePath());
+        Assertions.assertNotNull(imageDataAccess.getFormatReaderProperties());
     }
 
     @Test
@@ -21,6 +23,8 @@ class ImageDataAccessTest {
         ImageDataAccess imageDataAccess = ImageDataAccess.getInstance();
         Assertions.assertNotNull(imageDataAccess);
         Assertions.assertNotNull(ImageDataAccess.instance);
+        Assertions.assertNotNull(imageDataAccess.getFilePath());
+        Assertions.assertNotNull(imageDataAccess.getFormatReaderProperties());
     }
 
     @Test

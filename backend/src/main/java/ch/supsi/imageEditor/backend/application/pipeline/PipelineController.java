@@ -29,6 +29,20 @@ public class PipelineController implements PipelineControllerInterface {
         return instance == null ? instance = new PipelineController() : instance;
     }
 
+    PipelineModel getPipelineModel() {
+        return this.pipelineModel;
+    }
+
+    OperationModel getOperationModel() {
+        return this.operationModel;
+    }
+    ImageFactoryInterface getImageModel() {
+        return this.imageModel;
+    }
+    NotificationServiceInterface getNotificationService() {
+        return this.notificationService;
+    }
+
     @Override
     public void addOperationToPipeline(String name) throws OperationNotSupportedException {
         this.operationModel.checkOperationExists(name);

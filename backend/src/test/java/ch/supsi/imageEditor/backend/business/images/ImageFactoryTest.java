@@ -15,6 +15,13 @@ class ImageFactoryTest {
     public void constructor() {
         ImageFactory imageFactory = new ImageFactory();
         Assertions.assertNotNull(imageFactory);
+        Assertions.assertNotNull(imageFactory.getImageDataAccess());
+        Assertions.assertNotNull(imageFactory.getImageReaders());
+        Assertions.assertNotNull(imageFactory.getImageReaderProperties());
+        Assertions.assertNotNull(imageFactory.getRecentFilesList());
+
+        Assertions.assertNull(imageFactory.getCurrentImage());
+        Assertions.assertNull(imageFactory.getCurrentImageReader());
     }
 
     @Test
@@ -22,6 +29,13 @@ class ImageFactoryTest {
         ImageFactory imageFactory = ImageFactory.getInstance();
         Assertions.assertNotNull(imageFactory);
         Assertions.assertNotNull(ImageFactory.instance);
+        Assertions.assertNotNull(imageFactory.getImageDataAccess());
+        Assertions.assertNotNull(imageFactory.getImageReaders());
+        Assertions.assertNotNull(imageFactory.getImageReaderProperties());
+        Assertions.assertNotNull(imageFactory.getRecentFilesList());
+
+        Assertions.assertNull(imageFactory.getCurrentImage());
+        Assertions.assertNull(imageFactory.getCurrentImageReader());
     }
 
     @Test

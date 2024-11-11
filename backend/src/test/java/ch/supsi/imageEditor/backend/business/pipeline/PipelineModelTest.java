@@ -15,6 +15,7 @@ class PipelineModelTest {
     public void constructor() {
         PipelineModel pipelineModel = new PipelineModel();
         Assertions.assertNotNull(pipelineModel);
+        Assertions.assertNotNull(pipelineModel.getPipeline());
     }
 
     @Test
@@ -22,6 +23,7 @@ class PipelineModelTest {
         PipelineModel pipelineModel = PipelineModel.getInstance();
         Assertions.assertNotNull(pipelineModel);
         Assertions.assertNotNull(PipelineModel.instance);
+        Assertions.assertNotNull(pipelineModel.getPipeline());
     }
 
     @Test

@@ -15,6 +15,7 @@ class NotificationServiceTest {
     public void constructor() {
         NotificationService notificationService = new NotificationService();
         Assertions.assertNotNull(notificationService);
+        Assertions.assertNotNull(notificationService.getSubscribers());
     }
 
     @Test
@@ -22,6 +23,7 @@ class NotificationServiceTest {
         NotificationService notificationService = NotificationService.getInstance();
         Assertions.assertNotNull(notificationService);
         Assertions.assertNotNull(NotificationService.instance);
+        Assertions.assertNotNull(notificationService.getSubscribers());
     }
 
     @Test

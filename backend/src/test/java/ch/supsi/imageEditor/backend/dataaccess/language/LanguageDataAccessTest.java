@@ -14,6 +14,7 @@ class LanguageDataAccessTest {
     public void constructor() {
         LanguageDataAccess languageDataAccess = new LanguageDataAccess();
         Assertions.assertNotNull(languageDataAccess);
+        Assertions.assertNull(languageDataAccess.getUserPreferences());
     }
 
     @Test
@@ -21,6 +22,7 @@ class LanguageDataAccessTest {
         LanguageDataAccess languageDataAccess = LanguageDataAccess.getInstance();
         Assertions.assertNotNull(languageDataAccess);
         Assertions.assertNotNull(LanguageDataAccess.instance);
+        Assertions.assertNull(languageDataAccess.getUserPreferences());
     }
 
     @Test

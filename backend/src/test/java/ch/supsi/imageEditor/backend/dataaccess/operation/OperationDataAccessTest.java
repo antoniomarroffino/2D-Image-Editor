@@ -14,6 +14,8 @@ class OperationDataAccessTest {
     public void constructor() {
         OperationDataAccess operationDataAccess = new OperationDataAccess();
         Assertions.assertNotNull(operationDataAccess);
+        Assertions.assertNotNull(operationDataAccess.getSupportedOperationsProperties());
+        Assertions.assertNotNull(operationDataAccess.getOperationsProperties());
     }
 
     @Test
@@ -21,6 +23,8 @@ class OperationDataAccessTest {
         OperationDataAccess operationDataAccess = OperationDataAccess.getInstance();
         Assertions.assertNotNull(operationDataAccess);
         Assertions.assertNotNull(OperationDataAccess.instance);
+        Assertions.assertNotNull(operationDataAccess.getSupportedOperationsProperties());
+        Assertions.assertNotNull(operationDataAccess.getOperationsProperties());
     }
 
     @Test

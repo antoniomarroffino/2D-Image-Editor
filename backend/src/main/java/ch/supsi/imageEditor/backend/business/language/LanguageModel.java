@@ -1,11 +1,12 @@
 package ch.supsi.imageEditor.backend.business.language;
 
 import ch.supsi.imageEditor.backend.dataaccess.language.LanguageDataAccess;
+import ch.supsi.imageEditor.backend.dataaccess.language.LanguageDataAccessInterface;
 
 public class LanguageModel implements LanguageModelInterface {
     protected static LanguageModel instance;
 
-    private final LanguageDataAccess languageDataAccess;
+    private final LanguageDataAccessInterface languageDataAccess;
 
     protected LanguageModel() {
         this.languageDataAccess = LanguageDataAccess.getInstance();
@@ -13,6 +14,10 @@ public class LanguageModel implements LanguageModelInterface {
 
     public static LanguageModel getInstance() {
         return instance == null ? instance = new LanguageModel() : instance;
+    }
+
+    LanguageDataAccessInterface getLanguageDataAccess() {
+        return languageDataAccess;
     }
 
     @Override

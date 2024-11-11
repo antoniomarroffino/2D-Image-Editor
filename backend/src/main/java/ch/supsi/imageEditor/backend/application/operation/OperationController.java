@@ -8,15 +8,17 @@ public class OperationController implements OperationControllerInterface {
     protected static OperationController instance = null;
 
     private final OperationModel operationModel;
-    //private final NotificationServiceInterface notificationService;
 
     protected OperationController() {
         this.operationModel = OperationModel.getInstance();
-        //this.notificationService = NotificationService.getInstance();
     }
 
     public static OperationController getInstance() {
         return instance == null ? instance = new OperationController() : instance;
+    }
+
+    OperationModel getOperationModel() {
+        return this.operationModel;
     }
 
     @Override
