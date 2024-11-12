@@ -37,7 +37,7 @@ public class LanguageDataAccess implements LanguageDataAccessInterface {
         }
 
         this.userPreferences = this.loadDefaultPreferences();
-        this.createUserPreferencesFile(userPreferences);
+        this.createUserPreferencesFile(this.userPreferences);
 
         return this.getLanguageTagFromProperties();
     }

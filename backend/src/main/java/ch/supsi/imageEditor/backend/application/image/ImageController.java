@@ -11,6 +11,7 @@ import ch.supsi.imageEditor.backend.business.pipeline.PipelineModelInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -27,6 +28,12 @@ public class ImageController implements ImageControllerInterface {
         this.imageReaderFactory = ImageFactory.getInstance();
         this.pipelineModel = PipelineModel.getInstance();
         this.notificationService = NotificationService.getInstance();
+    }
+
+    ImageController(ImageFactoryInterface imageReaderFactory, PipelineModelInterface pipelineModel, NotificationServiceInterface notificationService) {
+        this.imageReaderFactory = imageReaderFactory;
+        this.pipelineModel = pipelineModel;
+        this.notificationService = notificationService;
     }
 
     public static ImageController getInstance() {
