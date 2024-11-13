@@ -1,24 +1,15 @@
 package ch.supsi.imageEditor.frontend.view.fxml.controlled.menubar;
 
-import ch.supsi.imageEditor.frontend.view.fxml.InitializePlatform;
-import javafx.application.Platform;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.framework.junit5.ApplicationExtension;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-class MenuBarViewFXMLTest extends InitializePlatform {
+@ExtendWith(ApplicationExtension.class)
+class MenuBarViewFXMLTest {
     private ResourceBundle resourceBundle;
-
-    @BeforeAll
-    static void initJavaFX() {
-        InitializePlatform.initializedPlatform();
-    }
-
-    @AfterAll
-    static void destroyJavaFX() {
-        Platform.exit();
-    }
 
     @BeforeEach
     public void beforeEach() {

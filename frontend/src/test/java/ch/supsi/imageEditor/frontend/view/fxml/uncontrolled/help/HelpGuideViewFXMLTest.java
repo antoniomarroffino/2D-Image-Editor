@@ -1,21 +1,18 @@
 package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.help;
 
-import ch.supsi.imageEditor.frontend.view.fxml.InitializePlatform;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.framework.junit5.ApplicationExtension;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-class HelpGuideViewFXMLTest extends InitializePlatform {
+@ExtendWith(ApplicationExtension.class)
+class HelpGuideViewFXMLTest {
     private ResourceBundle resourceBundle;
-
-    @BeforeAll
-    static void initJavaFX() {
-        InitializePlatform.initializedPlatform();
-    }
 
     @BeforeEach
     public void beforeEach() {
