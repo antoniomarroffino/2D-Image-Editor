@@ -12,21 +12,21 @@ import java.util.*;
 public class LanguageModel extends AbstractModel implements LanguageModelInterface {
     private static final String languageBundlePath = "i18n.labels";
     private static final String supportedLanguagesPath = "/i18n/supported_languages.properties";
-    private static LanguageModel instance = null;
+    protected static LanguageModel instance = null;
     private final LanguageControllerInterface languageController;
     private final Map<String, String> supportedLanguagesKeyTag;
     private final Properties supportedLanguagesProperties;
     private final ResourceBundle resourceBundle;
     private String currentLanguageTag;
 
-    private LanguageModel() {
+    protected LanguageModel() {
         this.supportedLanguagesProperties = this.getSupportedLanguagesProperties();
         this.supportedLanguagesKeyTag = this.getSupportedLanguagesKeyTag();
         this.languageController = LanguageController.getInstance();
 
         String languageTag = this.languageController.getCurrentLanguageTag();
         checkLanguageTagSupported(languageTag);
-        resourceBundle = this.createCurrentResourceBundle();
+        this.resourceBundle = this.createCurrentResourceBundle();
     }
 
     public static LanguageModel getInstance() {
@@ -35,6 +35,14 @@ public class LanguageModel extends AbstractModel implements LanguageModelInterfa
 
     private ResourceBundle createCurrentResourceBundle() {
         return ResourceBundle.getBundle(languageBundlePath, Locale.forLanguageTag(this.currentLanguageTag));
+    }
+
+    LanguageControllerInterface getLanguageController() {
+        return this.languageController;
+    }
+
+    Properties getLanguagesProperties() {
+        return this.supportedLanguagesProperties;
     }
 
     @Override
@@ -62,7 +70,7 @@ public class LanguageModel extends AbstractModel implements LanguageModelInterfa
         return languageProperties;
     }
 
-    private Map<String, String> getSupportedLanguagesKeyTag() {
+    Map<String, String> getSupportedLanguagesKeyTag() {
         Map<String, String> languageKeyTag = new HashMap<>();
         for (String languageKey : this.supportedLanguagesProperties.keySet().stream().map(String::valueOf).toList())
             languageKeyTag.put(languageKey, this.supportedLanguagesProperties.getProperty(languageKey));

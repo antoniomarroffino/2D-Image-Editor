@@ -6,16 +6,16 @@ import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 
 public class ImageModel extends AbstractModel implements ImageModelInterface {
-    private static ImageModelInterface instance;
+    protected static ImageModel instance = null;
     private final ImageControllerInterface imageController;
     private AbstractImage currentImage;
 
-    private ImageModel() {
+    protected ImageModel() {
         this.imageController = ImageController.getInstance();
         this.currentImage = null;
     }
 
-    public static ImageModelInterface getInstance() {
+    public static ImageModel getInstance() {
         return instance == null ? instance = new ImageModel() : instance;
     }
 

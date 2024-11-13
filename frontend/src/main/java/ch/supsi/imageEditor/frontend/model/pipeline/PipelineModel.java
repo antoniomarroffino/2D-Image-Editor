@@ -5,16 +5,19 @@ import ch.supsi.imageEditor.backend.application.pipeline.PipelineControllerInter
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 
 public class PipelineModel extends AbstractModel implements PipelineModelInterface {
-    private static PipelineModel instance;
+    protected static PipelineModel instance;
     private final PipelineControllerInterface pipelineController;
 
-
-    private PipelineModel() {
+    protected PipelineModel() {
         this.pipelineController = PipelineController.getInstance();
     }
 
     public static PipelineModel getInstance() {
         return instance == null ? instance = new PipelineModel() : instance;
+    }
+
+    PipelineControllerInterface getPipelineController() {
+        return this.pipelineController;
     }
 
     @Override

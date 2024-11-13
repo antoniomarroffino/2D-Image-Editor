@@ -1,4 +1,6 @@
-package ch.supsi.imageEditor.frontend.view.fxml.controlled;
+package ch.supsi.imageEditor.frontend.view.fxml.controlled.menubar;
+
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.ControlledFxView;
 
 import java.util.List;
 import java.util.Set;

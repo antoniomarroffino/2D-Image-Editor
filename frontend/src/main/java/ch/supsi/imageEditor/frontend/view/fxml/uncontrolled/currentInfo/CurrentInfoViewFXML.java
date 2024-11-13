@@ -1,9 +1,10 @@
-package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
+package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.currentInfo;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
-import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.operation.OperationViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.UncontrolledFxView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -19,8 +20,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class CurrentInfoViewFXML implements UncontrolledFxView {
+    protected static CurrentInfoViewFXML instance = null;
     private static final String PathResourceFXML = "/currentinfo.fxml";
-    private static CurrentInfoViewFXML instance = null;
     private PersistImageModelInterface persistImageModel;
     private final Map<EventType, Runnable> onEventDoActionMap;
     private final SimpleDateFormat sdf;
@@ -45,7 +46,7 @@ public class CurrentInfoViewFXML implements UncontrolledFxView {
     @FXML
     private Label modificationDateLabel;
 
-    private CurrentInfoViewFXML() {
+    protected CurrentInfoViewFXML() {
         this.onEventDoActionMap = new HashMap<>();
         this.sdf = new SimpleDateFormat("dd/MM/yyyy");
     }
@@ -66,6 +67,14 @@ public class CurrentInfoViewFXML implements UncontrolledFxView {
         }
 
         return instance;
+    }
+
+    Map<EventType, Runnable> getOnEventDoActionMap() {
+        return this.onEventDoActionMap;
+    }
+
+    SimpleDateFormat getSdf() {
+        return this.sdf;
     }
 
     @Override

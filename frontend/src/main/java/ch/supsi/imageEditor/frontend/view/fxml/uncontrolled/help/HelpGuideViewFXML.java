@@ -1,6 +1,6 @@
-package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
+package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.help;
 
-import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.operation.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,9 +16,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class HelpGuideViewFXML implements HelpGuideViewFXMLInterface {
+    protected static HelpGuideViewFXML instance = null;
     private static final String PathResourceFXML = "/helpguide.fxml";
     private final static String PATH_LOGO_APP_IMAGE = "/images/logoApp.png";
-    private static HelpGuideViewFXML instance = null;
     private static ResourceBundle bundle;
 
     @FXML
@@ -27,7 +27,7 @@ public class HelpGuideViewFXML implements HelpGuideViewFXMLInterface {
     @FXML
     private Button buttonClose;
 
-    private HelpGuideViewFXML() {
+    protected HelpGuideViewFXML() {
     }
 
     public static HelpGuideViewFXML getInstance(ResourceBundle resourceBundle) {

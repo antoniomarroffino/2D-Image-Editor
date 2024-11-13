@@ -12,12 +12,12 @@ import ch.supsi.imageEditor.frontend.view.fxml.DataView;
 import java.util.List;
 
 public class LanguageController implements LanguageControllerInterface, EventListener {
-    private static LanguageController instance = null;
+    protected static LanguageController instance = null;
     private final LanguageModelInterface languageModel;
     private final PubSubModelInterface pubSubModel;
     private List<DataView> views;
 
-    private LanguageController() {
+    protected LanguageController() {
         this.languageModel = LanguageModel.getInstance();
         this.pubSubModel = PubSubModel.getInstance();
         this.pubSubModel.subscribe(EventType.CHANGE_LANGUAGE, this);
@@ -29,6 +29,14 @@ public class LanguageController implements LanguageControllerInterface, EventLis
 
     public void initialize(List<DataView> views) {
         this.views = views;
+    }
+
+    LanguageModelInterface getLanguageModel() {
+        return languageModel;
+    }
+
+    PubSubModelInterface getPubSubModel() {
+        return pubSubModel;
     }
 
     @Override

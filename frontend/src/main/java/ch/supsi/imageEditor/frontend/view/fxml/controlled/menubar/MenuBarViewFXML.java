@@ -1,13 +1,12 @@
-package ch.supsi.imageEditor.frontend.view.fxml.controlled;
+package ch.supsi.imageEditor.frontend.view.fxml.controlled.menubar;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.adapter.MenuItemAdapter;
 import ch.supsi.imageEditor.frontend.controller.observer.EventOnApplication;
 import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
-import ch.supsi.imageEditor.frontend.model.persist.PersistImageModel;
 import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
-import javafx.application.Platform;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.operation.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,8 +19,8 @@ import java.net.URL;
 import java.util.*;
 
 public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
+    protected static MenuBarViewFXML instance = null;
     private static final String PathResourceFXML = "/menubar.fxml";
-    private static MenuBarViewFXML instance = null;
     private PersistImageModelInterface persistImageModel;
     private static ResourceBundle bundle;
     private final Map<EventType, Runnable> onEventDoActionMap;
@@ -55,7 +54,7 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
     @FXML
     private MenuItem helpMenuItem;
 
-    private MenuBarViewFXML() {
+    protected MenuBarViewFXML() {
         this.onEventDoActionMap = new HashMap<>();
     }
 
@@ -76,6 +75,10 @@ public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
         }
 
         return instance;
+    }
+
+    Map<EventType, Runnable> getOnEventDoActionMap() {
+        return this.onEventDoActionMap;
     }
 
     @Override

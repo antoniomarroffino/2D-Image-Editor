@@ -1,9 +1,10 @@
-package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
+package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.image;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
-import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.operation.OperationViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.UncontrolledFxView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -20,8 +21,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ImageViewFXML implements UncontrolledFxView {
+    protected static ImageViewFXML instance = null;
     private static final String PathResourceFXML = "/imagewindow.fxml";
-    private static ImageViewFXML instance = null;
     private final Map<EventType, Runnable> onEventDoActionMap;
     private ImageModelInterface imageModel;
     @FXML
@@ -29,7 +30,7 @@ public class ImageViewFXML implements UncontrolledFxView {
     @FXML
     private Label placeHolderText;
 
-    private ImageViewFXML() {
+    protected ImageViewFXML() {
         this.onEventDoActionMap = new HashMap<>();
     }
 
@@ -48,6 +49,10 @@ public class ImageViewFXML implements UncontrolledFxView {
             }
         }
         return instance;
+    }
+
+    public Map<EventType, Runnable> getOnEventDoActionMap() {
+        return onEventDoActionMap;
     }
 
     @Override

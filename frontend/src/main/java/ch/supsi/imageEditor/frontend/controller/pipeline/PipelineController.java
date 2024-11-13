@@ -13,13 +13,13 @@ import ch.supsi.imageEditor.frontend.view.fxml.DataView;
 import java.util.List;
 
 public class PipelineController implements PipelineControllerInterface, EventListener {
-    private static PipelineController instance = null;
+    protected static PipelineController instance = null;
     private final PubSubModelInterface pubSubModel;
     private final PipelineModelInterface pipelineModel;
     private final PersistImageModel persistModel;
     private List<DataView> views;
 
-    private PipelineController() {
+    protected PipelineController() {
         this.pipelineModel = PipelineModel.getInstance();
         this.pubSubModel = PubSubModel.getInstance();
         this.persistModel = PersistImageModel.getInstance();
@@ -29,6 +29,18 @@ public class PipelineController implements PipelineControllerInterface, EventLis
 
     public static PipelineController getInstance() {
         return instance == null ? instance = new PipelineController() : instance;
+    }
+
+    PubSubModelInterface getPubSubModel() {
+        return pubSubModel;
+    }
+
+    PipelineModelInterface getPipelineModel() {
+        return pipelineModel;
+    }
+
+    PersistImageModel getPersistModel() {
+        return persistModel;
     }
 
     @Override

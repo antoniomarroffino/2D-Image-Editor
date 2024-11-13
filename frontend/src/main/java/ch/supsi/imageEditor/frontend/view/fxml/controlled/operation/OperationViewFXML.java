@@ -1,4 +1,4 @@
-package ch.supsi.imageEditor.frontend.view.fxml.controlled;
+package ch.supsi.imageEditor.frontend.view.fxml.controlled.operation;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.adapter.ButtonAdapter;
@@ -23,8 +23,8 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public class OperationViewFXML implements OperationViewFXMLInterface {
+    protected static OperationViewFXML instance = null;
     private static final String PathResourceFXML = "/operations.fxml";
-    private static OperationViewFXML instance = null;
     private static ResourceBundle bundle;
     private final Map<EventType, Runnable> onEventDoActionMap;
     private HandleServiceInterface handleService;
@@ -38,7 +38,7 @@ public class OperationViewFXML implements OperationViewFXMLInterface {
     @FXML
     private VBox operationVBox;
 
-    private OperationViewFXML() {
+    protected OperationViewFXML() {
         this.onEventDoActionMap = new HashMap<>();
     }
 
@@ -59,6 +59,10 @@ public class OperationViewFXML implements OperationViewFXMLInterface {
         }
 
         return instance;
+    }
+
+    Map<EventType, Runnable> getOnEventDoActionMap() {
+        return this.onEventDoActionMap;
     }
 
     @Override

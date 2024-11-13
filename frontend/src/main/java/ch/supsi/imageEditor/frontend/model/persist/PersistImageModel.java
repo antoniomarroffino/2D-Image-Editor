@@ -13,13 +13,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PersistImageModel extends AbstractModel implements PersistImageModelInterface {
-    private static PersistImageModel instance = null;
+    protected static PersistImageModel instance = null;
 
     private final ImageControllerInterface imageController;
     private File currentSavingFile;
     private boolean isAlreadySaved;
 
-    private PersistImageModel() {
+    protected PersistImageModel() {
         this.imageController = ImageController.getInstance();
         this.currentSavingFile = null;
         this.isAlreadySaved = false;
@@ -27,6 +27,10 @@ public class PersistImageModel extends AbstractModel implements PersistImageMode
 
     public static PersistImageModel getInstance() {
         return instance == null ? instance = new PersistImageModel() : instance;
+    }
+
+    ImageControllerInterface getImageController() {
+        return this.imageController;
     }
 
     @Override

@@ -1,9 +1,10 @@
-package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
+package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.infobar;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
-import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.operation.OperationViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.UncontrolledFxView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,9 +18,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class InfobarViewFXML implements UncontrolledFxView {
+    protected static InfobarViewFXML instance = null;
     private static final String PathResourceFXML = "/infobar.fxml";
     private static final Map<EventType, String> eventDescription;
-    private static InfobarViewFXML instance = null;
     private static LanguageModelInterface languageModel;
     private static ResourceBundle bundle;
 
@@ -32,7 +33,7 @@ public class InfobarViewFXML implements UncontrolledFxView {
     @FXML
     private TextArea infoBarTextArea;
 
-    private InfobarViewFXML() {
+    protected InfobarViewFXML() {
     }
 
     public static InfobarViewFXML getInstance(ResourceBundle resourceBundle) {

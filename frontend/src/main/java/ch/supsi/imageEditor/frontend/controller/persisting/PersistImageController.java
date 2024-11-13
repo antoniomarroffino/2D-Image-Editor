@@ -4,8 +4,9 @@ import ch.supsi.imageEditor.backend.application.observer.EventListener;
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
-import ch.supsi.imageEditor.frontend.MainFX;
 import ch.supsi.imageEditor.frontend.adapter.Component;
+import ch.supsi.imageEditor.frontend.model.exit.ExitModel;
+import ch.supsi.imageEditor.frontend.model.exit.ExitModelInterface;
 import ch.supsi.imageEditor.frontend.model.persist.PersistImageModel;
 import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.pubsub.PubSubModel;
@@ -15,32 +16,53 @@ import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXM
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXMLInterface;
 import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewInterface;
 import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewPopUp;
-import javafx.application.Platform;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 public class PersistImageController implements PersistImageControllerInterface, EventListener {
-    private static PersistImageController instance = null;
+    protected static PersistImageController instance = null;
     private final PersistImageModelInterface persistImageModel;
     private final PubSubModelInterface pubSubModel;
+    private final ExitModelInterface exitModel;
     private final SavingViewFXMLInterface savingViewFXML;
     private final ErrorViewInterface errorView;
     private List<DataView> views;
 
     private String filePathOpenRecent;
 
-    private PersistImageController() {
+    protected PersistImageController() {
         this.savingViewFXML = SavingViewFXML.getInstance();
         this.pubSubModel = PubSubModel.getInstance();
         this.persistImageModel = PersistImageModel.getInstance();
+        this.exitModel = ExitModel.getInstance();
         this.errorView = ErrorViewPopUp.getInstance();
         this.pubSubModel.subscribe(EventType.SAVE_IMAGE, this);
     }
 
     public static PersistImageController getInstance() {
         return instance == null ? instance = new PersistImageController() : instance;
+    }
+
+    PersistImageModelInterface getPersistImageModel() {
+        return this.persistImageModel;
+    }
+
+    PubSubModelInterface getPubSubModel() {
+        return this.pubSubModel;
+    }
+
+    ExitModelInterface getExitModel() {
+        return this.exitModel;
+    }
+
+    SavingViewFXMLInterface getSavingViewFXML() {
+        return this.savingViewFXML;
+    }
+
+    ErrorViewInterface getErrorView() {
+        return this.errorView;
     }
 
     @Override
@@ -73,7 +95,7 @@ public class PersistImageController implements PersistImageControllerInterface, 
 
     private void openRecentImage() {
         File fileToOpen = new File(this.filePathOpenRecent);
-        if(fileToOpen.exists())
+        if (fileToOpen.exists())
             loadImage(fileToOpen);
     }
 
@@ -119,10 +141,10 @@ public class PersistImageController implements PersistImageControllerInterface, 
 
     @Override
     public void requestSaveBeforeQuit(Component component) {
-        if (this.persistImageModel.existCurrentFile() && ! this.persistImageModel.isAlreadySave())
-            this.savingViewFXML.showSaveConfirmationPopup(this::save, MainFX::closeApplication);
+        if (this.persistImageModel.existCurrentFile() && !this.persistImageModel.isAlreadySave())
+            this.savingViewFXML.showSaveConfirmationPopup(this::save, this.exitModel::closeApplication);
         else
-            MainFX.closeApplication();
+            this.exitModel.closeApplication().run();
     }
 
     private void closeImage() {

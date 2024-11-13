@@ -1,4 +1,4 @@
-package ch.supsi.imageEditor.frontend.view.fxml.controlled;
+package ch.supsi.imageEditor.frontend.view.fxml.controlled.pipeline;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.frontend.adapter.ButtonAdapter;
@@ -7,6 +7,8 @@ import ch.supsi.imageEditor.frontend.controller.observer.HandleServiceInterface;
 import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModel;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModelInterface;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.ControlledFxView;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.operation.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -24,8 +26,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class PipelineViewFXML implements ControlledFxView {
+    protected static PipelineViewFXML instance = null;
     private static final String PathResourceFXML = "/pipeline.fxml";
-    private static PipelineViewFXML instance = null;
     private static ResourceBundle bundle;
     private final Map<EventType, Runnable> onEventDoActionMap;
     private int cntOperationInPipeline;
@@ -46,7 +48,7 @@ public class PipelineViewFXML implements ControlledFxView {
     @FXML
     private Button playButton;
 
-    private PipelineViewFXML() {
+    protected PipelineViewFXML() {
         this.onEventDoActionMap = new HashMap<>();
         this.cntOperationInPipeline = 0;
     }
@@ -68,6 +70,14 @@ public class PipelineViewFXML implements ControlledFxView {
         }
 
         return instance;
+    }
+
+    Map<EventType, Runnable> getOnEventDoActionMap() {
+        return this.onEventDoActionMap;
+    }
+
+    int getCntOperationInPipeline() {
+        return this.cntOperationInPipeline;
     }
 
     @Override

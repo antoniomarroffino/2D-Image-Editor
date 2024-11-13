@@ -8,16 +8,20 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class HandleService implements HandleServiceInterface {
-    private static HandleService instance = null;
+    protected static HandleService instance = null;
     private final Map<EventOnApplication, Consumer<Component>> subscribers;
 
-    private HandleService() {
+    protected HandleService() {
         this.subscribers = new HashMap<>();
         Arrays.stream(EventOnApplication.values()).forEach((event) -> this.subscribers.put(event, null));
     }
 
     public static HandleService getInstance() {
         return instance == null ? instance = new HandleService() : instance;
+    }
+
+    Map<EventOnApplication, Consumer<Component>> getSubscribers() {
+        return this.subscribers;
     }
 
     @Override

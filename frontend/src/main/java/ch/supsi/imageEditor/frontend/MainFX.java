@@ -19,13 +19,13 @@ import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import ch.supsi.imageEditor.frontend.model.AppModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModel;
 import ch.supsi.imageEditor.frontend.model.about.AboutModelInterface;
+import ch.supsi.imageEditor.frontend.model.exit.ExitModel;
+import ch.supsi.imageEditor.frontend.model.exit.ExitModelInterface;
 import ch.supsi.imageEditor.frontend.model.image.ImageModel;
 import ch.supsi.imageEditor.frontend.model.image.ImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModel;
 import ch.supsi.imageEditor.frontend.model.language.LanguageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModel;
-import ch.supsi.imageEditor.frontend.model.persist.PersistImageModel;
-import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
 import ch.supsi.imageEditor.frontend.model.operation.OperationModelInterface;
 import ch.supsi.imageEditor.frontend.model.persist.PersistImageModel;
 import ch.supsi.imageEditor.frontend.model.persist.PersistImageModelInterface;
@@ -33,16 +33,20 @@ import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModel;
 import ch.supsi.imageEditor.frontend.model.pipeline.PipelineModelInterface;
 import ch.supsi.imageEditor.frontend.view.fxml.DataView;
 import ch.supsi.imageEditor.frontend.view.fxml.controlled.*;
-import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.CurrentInfoViewFXML;
-import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.ImageViewFXML;
-import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.InfobarViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.menubar.MenuBarViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.menubar.MenuBarViewFXMLInterface;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.operation.OperationViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.operation.OperationViewFXMLInterface;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.pipeline.PipelineViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.currentInfo.CurrentInfoViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.image.ImageViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.infobar.InfobarViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.UncontrolledFxView;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXML;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXMLInterface;
 import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewInterface;
 import ch.supsi.imageEditor.frontend.view.popup.about.AboutViewPopUp;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -63,6 +67,7 @@ public class MainFX extends Application {
     private final PipelineModelInterface pipelineModel;
     private final ImageModelInterface imageModel;
     private final PersistImageModelInterface persistImageModel;
+    private final ExitModelInterface exitModel;
 
     private final MenuBarViewFXMLInterface menuBarView;
     private final UncontrolledFxView imageView;
@@ -92,7 +97,7 @@ public class MainFX extends Application {
         this.pipelineModel = PipelineModel.getInstance();
         this.imageModel = ImageModel.getInstance();
         this.persistImageModel = PersistImageModel.getInstance();
-
+        this.exitModel = ExitModel.getInstance();
 
         //CONTROLLERS
         this.handleService = HandleService.getInstance();
@@ -158,17 +163,10 @@ public class MainFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // handle the main window close request
-        // in real life, this event should not be dealt with here!
-        // it should actually be delegated to a suitable ExitController!
         primaryStage.setOnCloseRequest(
                 windowEvent -> {
-                    // consume the window event (the main window would be closed otherwise no matter what)
                     windowEvent.consume();
 
-                    // quit the app
-                    // replace this hard close
-                    // by delegating the work to a suitable controller
                     primaryStage.close();
                 }
         );
@@ -204,9 +202,6 @@ public class MainFX extends Application {
         primaryStage.show();
 
         this.savingView.setMainStage(primaryStage);
-    }
-
-    public static void closeApplication() {
-        Platform.exit();
+        this.exitModel.setStage(primaryStage);
     }
 }

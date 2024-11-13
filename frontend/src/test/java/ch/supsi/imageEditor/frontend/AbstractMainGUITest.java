@@ -6,7 +6,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import java.util.logging.Logger;
 
-class AbstractMainGUITest extends ApplicationTest {
+abstract class AbstractMainGUITest extends ApplicationTest {
     protected static final Logger LOGGER = Logger.getAnonymousLogger();
 
     protected int stepNo;

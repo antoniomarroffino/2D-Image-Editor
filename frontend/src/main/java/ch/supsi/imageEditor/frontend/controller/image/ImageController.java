@@ -13,19 +13,27 @@ import java.util.List;
 import java.util.Map;
 
 public class ImageController implements ImageControllerInterface, EventListener {
-    private static ImageController instance = null;
+    protected static ImageController instance = null;
     private final PubSubModelInterface pubSubModel;
     private final ImageModelInterface imageModel;
     private List<DataView> views;
     private final Map<EventType, Runnable> onEventDoActionMap;
 
-    private ImageController() {
+    {
         this.pubSubModel = PubSubModel.getInstance();
         this.pubSubModel.subscribe(EventType.OPEN_IMAGE, this);
         this.pubSubModel.subscribe(EventType.RUN_PIPELINE, this);
         this.pubSubModel.subscribe(EventType.CLOSE_IMAGE, this);
-        this.imageModel = ImageModel.getInstance();
         this.onEventDoActionMap = new HashMap<>();
+    }
+
+    protected ImageController() {
+        this.imageModel = ImageModel.getInstance();
+    }
+
+    ImageController(ImageModelInterface imageModel, List<DataView> views) {
+        this.imageModel = imageModel;
+        this.views = views;
     }
 
     public static ImageController getInstance() {
@@ -36,6 +44,18 @@ public class ImageController implements ImageControllerInterface, EventListener 
         this.views = views;
         this.onEventDoActionMap.put(EventType.OPEN_IMAGE, this::openImage);
         this.onEventDoActionMap.put(EventType.CLOSE_IMAGE, this::closeImage);
+    }
+
+    PubSubModelInterface getPubSubModel() {
+        return this.pubSubModel;
+    }
+
+    ImageModelInterface getImageModel() {
+        return this.imageModel;
+    }
+
+    Map<EventType, Runnable> getOnEventDoActionMap() {
+        return this.onEventDoActionMap;
     }
 
     @Override

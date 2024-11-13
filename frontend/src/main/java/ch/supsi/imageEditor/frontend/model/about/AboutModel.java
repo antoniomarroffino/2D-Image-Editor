@@ -10,10 +10,10 @@ import java.util.Properties;
 public class AboutModel extends AbstractModel implements AboutModelInterface {
     private final static String PATH_BUILD_PROPERTIES = "/build.properties";
     private final static String PATH_LOGO_APP_IMAGE = "/images/logoApp.png";
-    private static AboutModel instance;
+    protected static AboutModel instance = null;
     private final Properties buildProperties;
 
-    private AboutModel() {
+    protected AboutModel() {
         this.buildProperties = loadBuildProperties();
     }
 
@@ -30,6 +30,10 @@ public class AboutModel extends AbstractModel implements AboutModelInterface {
             throw new RuntimeException(e);
         }
         return properties;
+    }
+
+    Properties getBuildProperties() {
+        return this.buildProperties;
     }
 
     @Override

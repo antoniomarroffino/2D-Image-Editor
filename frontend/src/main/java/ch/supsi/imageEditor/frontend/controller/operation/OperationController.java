@@ -9,18 +9,25 @@ import ch.supsi.imageEditor.frontend.view.popup.error.ErrorViewPopUp;
 
 
 public class OperationController implements OperationControllerInterface {
-    private static OperationController instance = null;
+    protected static OperationController instance = null;
     private final OperationModelInterface operationModel;
     private final ErrorViewInterface errorView;
 
-
-    private OperationController() {
+    protected OperationController() {
         this.operationModel = OperationModel.getInstance();
         this.errorView = ErrorViewPopUp.getInstance();
     }
 
     public static OperationController getInstance() {
         return instance == null ? instance = new OperationController() : instance;
+    }
+
+    OperationModelInterface getOperationModel() {
+        return this.operationModel;
+    }
+
+    ErrorViewInterface getErrorView() {
+        return this.errorView;
     }
 
     @Override

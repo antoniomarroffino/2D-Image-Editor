@@ -10,12 +10,12 @@ import ch.supsi.imageEditor.frontend.model.AbstractModel;
 import java.util.Set;
 
 public class OperationModel extends AbstractModel implements OperationModelInterface {
-    private static OperationModel instance;
+    protected static OperationModel instance;
     private final OperationControllerInterface operationController;
     private final PipelineControllerInterface pipelineController;
     private final Set<String> operationsTag;
 
-    private OperationModel() {
+    protected OperationModel() {
         this.operationController = OperationController.getInstance();
         this.pipelineController = PipelineController.getInstance();
         this.operationsTag = this.operationController.getOperationsTag();
@@ -23,6 +23,18 @@ public class OperationModel extends AbstractModel implements OperationModelInter
 
     public static OperationModel getInstance() {
         return instance == null ? instance = new OperationModel() : instance;
+    }
+
+    OperationControllerInterface getOperationController() {
+        return this.operationController;
+    }
+
+    PipelineControllerInterface getPipelineController() {
+        return this.pipelineController;
+    }
+
+    Set<String> getOperationsTag() {
+        return this.operationsTag;
     }
 
     @Override

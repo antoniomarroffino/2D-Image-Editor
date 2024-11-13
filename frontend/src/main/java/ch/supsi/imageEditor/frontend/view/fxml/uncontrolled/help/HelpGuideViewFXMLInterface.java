@@ -1,4 +1,4 @@
-package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled;
+package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.help;
 
 public interface HelpGuideViewFXMLInterface {
     void showHelpInfo();

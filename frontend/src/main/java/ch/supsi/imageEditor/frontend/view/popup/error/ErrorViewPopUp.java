@@ -10,10 +10,10 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class ErrorViewPopUp implements ErrorViewInterface {
+    protected static ErrorViewPopUp instance = null;
     private final static String logoPath = "/images/logoApp.png";
-    private static ErrorViewPopUp instance = null;
 
-    private ErrorViewPopUp() {
+    protected ErrorViewPopUp() {
     }
 
     public static ErrorViewPopUp getInstance() {

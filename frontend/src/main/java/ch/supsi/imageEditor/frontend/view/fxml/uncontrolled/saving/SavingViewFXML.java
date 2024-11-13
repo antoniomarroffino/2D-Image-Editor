@@ -1,28 +1,25 @@
 package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving;
 
-import ch.supsi.imageEditor.frontend.view.fxml.controlled.OperationViewFXML;
+import ch.supsi.imageEditor.frontend.view.fxml.controlled.operation.OperationViewFXML;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 public class SavingViewFXML implements SavingViewFXMLInterface {
-    private static SavingViewFXML instance = null;
+    protected static SavingViewFXML instance = null;
     private static final String PathResourceFXML = "/saveConfirmation.fxml";
     private final static String PATH_LOGO_APP_IMAGE = "/images/logoApp.png";
     private Stage mainStage;
@@ -35,7 +32,7 @@ public class SavingViewFXML implements SavingViewFXMLInterface {
     @FXML
     private Button buttonNo;
 
-    private SavingViewFXML() {
+    protected SavingViewFXML() {
     }
 
     public static SavingViewFXML getInstance() {
