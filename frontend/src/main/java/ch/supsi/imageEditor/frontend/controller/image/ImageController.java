@@ -19,21 +19,13 @@ public class ImageController implements ImageControllerInterface, EventListener 
     private List<DataView> views;
     private final Map<EventType, Runnable> onEventDoActionMap;
 
-    {
+    protected ImageController() {
+        this.imageModel = ImageModel.getInstance();
         this.pubSubModel = PubSubModel.getInstance();
         this.pubSubModel.subscribe(EventType.OPEN_IMAGE, this);
         this.pubSubModel.subscribe(EventType.RUN_PIPELINE, this);
         this.pubSubModel.subscribe(EventType.CLOSE_IMAGE, this);
         this.onEventDoActionMap = new HashMap<>();
-    }
-
-    protected ImageController() {
-        this.imageModel = ImageModel.getInstance();
-    }
-
-    ImageController(ImageModelInterface imageModel, List<DataView> views) {
-        this.imageModel = imageModel;
-        this.views = views;
     }
 
     public static ImageController getInstance() {
