@@ -6,30 +6,24 @@ import ch.supsi.imageEditor.frontend.view.fxml.DataView;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
 class ImageControllerTest {
-    @Mock
-    private DataView dataViewMock1, dataViewMock2;
+    private final DataView dataViewMock1 = Mockito.mock(DataView.class);
+    private final DataView dataViewMock2 = Mockito.mock(DataView.class);
 
     private ImageController imageController;
 
     @BeforeEach
     public void beforeEach() {
         ImageController.instance = null;
-        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -60,16 +54,14 @@ class ImageControllerTest {
 
     @Test
     void testOpenImage() {
-        ImageModel mockImageModel = mock(ImageModel.class);
+        ImageModel mockImageModel = Mockito.mock(ImageModel.class);
         try (MockedStatic<ImageModel> imageModelStaticMock = Mockito.mockStatic(ImageModel.class)) {
             imageModelStaticMock.when(ImageModel::getInstance).thenReturn(mockImageModel);
             imageController = ImageController.getInstance();
 
-            List<DataView> views = Arrays.asList(dataViewMock1, dataViewMock2);
-            imageController.initialize(views);
+            imageController.initialize(Arrays.asList(dataViewMock1, dataViewMock2));
 
             imageController.update(EventType.OPEN_IMAGE);
-
             verify(mockImageModel, times(1)).loadCurrentImage();
             verify(dataViewMock1, times(1)).update(EventType.OPEN_IMAGE);
             verify(dataViewMock2, times(1)).update(EventType.OPEN_IMAGE);
@@ -78,16 +70,14 @@ class ImageControllerTest {
 
     @Test
     void testCloseImage() {
-        ImageModel mockImageModel = mock(ImageModel.class);
+        ImageModel mockImageModel = Mockito.mock(ImageModel.class);
         try (MockedStatic<ImageModel> imageModelStaticMock = Mockito.mockStatic(ImageModel.class)) {
             imageModelStaticMock.when(ImageModel::getInstance).thenReturn(mockImageModel);
             imageController = ImageController.getInstance();
 
-            List<DataView> views = Arrays.asList(dataViewMock1, dataViewMock2);
-            imageController.initialize(views);
+            imageController.initialize(Arrays.asList(dataViewMock1, dataViewMock2));
 
             imageController.update(EventType.CLOSE_IMAGE);
-
             verify(mockImageModel, times(1)).closeCurrentImage();
             verify(dataViewMock1, times(1)).update(EventType.CLOSE_IMAGE);
             verify(dataViewMock2, times(1)).update(EventType.CLOSE_IMAGE);
