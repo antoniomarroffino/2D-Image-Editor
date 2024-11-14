@@ -1,6 +1,8 @@
 package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.infobar;
 
+import javafx.embed.swing.JFXPanel;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +14,12 @@ import java.util.ResourceBundle;
 @ExtendWith(ApplicationExtension.class)
 class InfobarViewFXMLTest {
     private ResourceBundle resourceBundle;
+
+    @BeforeAll
+    public static void beforeClass() {
+        // initialize javafx toolkit
+        JFXPanel fxPanel = new JFXPanel();
+    }
 
     @BeforeEach
     public void beforeEach() {

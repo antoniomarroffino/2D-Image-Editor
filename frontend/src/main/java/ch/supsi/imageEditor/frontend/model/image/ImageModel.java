@@ -7,11 +7,11 @@ import ch.supsi.imageEditor.frontend.model.AbstractModel;
 
 public class ImageModel extends AbstractModel implements ImageModelInterface {
     protected static ImageModel instance = null;
-    private final ImageControllerInterface imageController;
+    private final ImageControllerInterface backendImageController;
     private AbstractImage currentImage;
 
     protected ImageModel() {
-        this.imageController = ImageController.getInstance();
+        this.backendImageController = ImageController.getInstance();
         this.currentImage = null;
     }
 
@@ -21,7 +21,7 @@ public class ImageModel extends AbstractModel implements ImageModelInterface {
 
     @Override
     public void loadCurrentImage() {
-        this.currentImage = this.imageController.getImage();
+        this.currentImage = this.backendImageController.getImage();
     }
 
     @Override

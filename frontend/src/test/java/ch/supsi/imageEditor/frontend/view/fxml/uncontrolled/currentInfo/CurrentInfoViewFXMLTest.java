@@ -1,6 +1,8 @@
 package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.currentInfo;
 
+import javafx.embed.swing.JFXPanel;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,9 +11,14 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-@ExtendWith(ApplicationExtension.class)
 class CurrentInfoViewFXMLTest {
     private ResourceBundle resourceBundle;
+
+    @BeforeAll
+    public static void beforeClass() {
+        // initialize javafx toolkit
+        JFXPanel fxPanel = new JFXPanel();
+    }
 
     @BeforeEach
     public void beforeEach() {
