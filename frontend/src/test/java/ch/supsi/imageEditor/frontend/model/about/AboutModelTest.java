@@ -4,25 +4,30 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Properties;
+
 public class AboutModelTest {
+    private AboutModel aboutModel;
+
     @BeforeEach
     public void beforeEach() {
         AboutModel.instance = null;
+        this.aboutModel = AboutModel.getInstance();
     }
 
     @Test
     public void constructor() {
-        AboutModel aboutModel = new AboutModel();
-        Assertions.assertNotNull(aboutModel);
-        Assertions.assertNotNull(aboutModel.getBuildProperties());
+        this.aboutModel = new AboutModel();
+        Assertions.assertNotNull(this.aboutModel);
+        Assertions.assertNotNull(this.aboutModel.getBuildProperties());
     }
 
     @Test
     public void instance() {
-        AboutModel aboutModel = AboutModel.getInstance();
-        Assertions.assertNotNull(aboutModel);
+        this.aboutModel = AboutModel.getInstance();
+        Assertions.assertNotNull(this.aboutModel);
         Assertions.assertNotNull(AboutModel.instance);
-        Assertions.assertNotNull(aboutModel.getBuildProperties());
+        Assertions.assertNotNull(this.aboutModel.getBuildProperties());
     }
 
     @Test
@@ -30,5 +35,40 @@ public class AboutModelTest {
         AboutModel aboutModel1 = AboutModel.getInstance();
         AboutModel aboutModel2 = AboutModel.getInstance();
         Assertions.assertEquals(aboutModel1, aboutModel2);
+    }
+
+
+    @Test
+    void getVersion() {
+        Properties properties = this.aboutModel.getBuildProperties();
+        Assertions.assertEquals(": " + properties.getProperty("build.version"), this.aboutModel.getVersion());
+    }
+
+    @Test
+    void getProjectName() {
+        Properties properties = this.aboutModel.getBuildProperties();
+        Assertions.assertEquals(": " + properties.getProperty("build.name"), this.aboutModel.getProjectName());
+    }
+
+    @Test
+    void getDevelopersName() {
+        Properties properties = this.aboutModel.getBuildProperties();
+        Assertions.assertEquals(": " + properties.getProperty("build.devs"), this.aboutModel.getDevelopersName());
+    }
+
+    @Test
+    void getBuiltDate() {
+        Properties properties = this.aboutModel.getBuildProperties();
+        Assertions.assertEquals(": " + properties.getProperty("build.timestamp"), this.aboutModel.getBuiltDate());
+    }
+
+    @Test
+    void getTitle() {
+        Assertions.assertEquals("2D Image Editor - About", this.aboutModel.getTitle());
+    }
+
+    @Test
+    void getHeaderText() {
+        Assertions.assertEquals(": " + System.lineSeparator() + "2D Image Editor", this.aboutModel.getHeaderText());
     }
 }

@@ -40,7 +40,7 @@ class HandleServiceTest {
     public void checkSingleton() {
         HandleService handleService1 = HandleService.getInstance();
         HandleService handleService2 = HandleService.getInstance();
-        assertEquals(handleService1, handleService2);
+        Assertions.assertEquals(handleService1, handleService2);
     }
 
     @Test
@@ -48,7 +48,7 @@ class HandleServiceTest {
         this.handleService = HandleService.getInstance();
         Consumer<Component> mockConsumer = Mockito.mock(Consumer.class);
         handleService.subscribe(EventOnApplication.CHANGE_LANGUAGE, mockConsumer);
-        assertEquals(mockConsumer, handleService.getSubscribers().get(EventOnApplication.CHANGE_LANGUAGE));
+        Assertions.assertEquals(mockConsumer, handleService.getSubscribers().get(EventOnApplication.CHANGE_LANGUAGE));
     }
 
     @Test
@@ -57,7 +57,7 @@ class HandleServiceTest {
         this.handleService = HandleService.getInstance();
         handleService.subscribe(EventOnApplication.CHANGE_LANGUAGE, mockConsumer);
         handleService.unsubscribe(EventOnApplication.CHANGE_LANGUAGE, mockConsumer);
-        assertNull(handleService.getSubscribers().get(EventOnApplication.CHANGE_LANGUAGE));
+        Assertions.assertNull(handleService.getSubscribers().get(EventOnApplication.CHANGE_LANGUAGE));
     }
 
     @Test

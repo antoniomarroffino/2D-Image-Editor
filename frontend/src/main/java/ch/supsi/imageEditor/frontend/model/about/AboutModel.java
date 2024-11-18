@@ -63,7 +63,7 @@ public class AboutModel extends AbstractModel implements AboutModelInterface {
 
     @Override
     public String getHeaderText() {
-        return ": \n" + "2D Image Editor";
+        return ": " + System.lineSeparator() + "2D Image Editor";
     }
 
     @Override

@@ -1,11 +1,19 @@
 package ch.supsi.imageEditor.backend.application.language;
 
+import ch.supsi.imageEditor.backend.application.observer.EventType;
+import ch.supsi.imageEditor.backend.application.observer.NotificationService;
+import ch.supsi.imageEditor.backend.business.language.LanguageModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
+import static org.mockito.Mockito.*;
 
 class LanguageControllerTest {
+    private LanguageController languageController;
+
     @BeforeEach
     public void beforeEach() {
         LanguageController.instance = null;
@@ -13,19 +21,19 @@ class LanguageControllerTest {
 
     @Test
     public void constructor() {
-        LanguageController languageController = new LanguageController();
-        Assertions.assertNotNull(languageController);
-        Assertions.assertNotNull(languageController.getLanguageModel());
-        Assertions.assertNotNull(languageController.getNotificationService());
+        this.languageController = new LanguageController();
+        Assertions.assertNotNull(this.languageController);
+        Assertions.assertNotNull(this.languageController.getLanguageModel());
+        Assertions.assertNotNull(this.languageController.getNotificationService());
     }
 
     @Test
     public void instance() {
-        LanguageController languageController = LanguageController.getInstance();
-        Assertions.assertNotNull(languageController);
+        languageController = LanguageController.getInstance();
+        Assertions.assertNotNull(this.languageController);
         Assertions.assertNotNull(LanguageController.instance);
-        Assertions.assertNotNull(languageController.getLanguageModel());
-        Assertions.assertNotNull(languageController.getNotificationService());
+        Assertions.assertNotNull(this.languageController.getLanguageModel());
+        Assertions.assertNotNull(this.languageController.getNotificationService());
     }
 
     @Test
@@ -33,5 +41,38 @@ class LanguageControllerTest {
         LanguageController languageController1 = LanguageController.getInstance();
         LanguageController languageController2 = LanguageController.getInstance();
         Assertions.assertEquals(languageController1, languageController2);
+    }
+
+    @Test
+    void testGetCurrentLanguageTag() {
+        LanguageModel mockLanguageModel = Mockito.mock(LanguageModel.class);
+        NotificationService mockNotificationService = Mockito.mock(NotificationService.class);
+        try (MockedStatic<LanguageModel> languageModelStaticMock = Mockito.mockStatic(LanguageModel.class);
+             MockedStatic<NotificationService> notificationServiceStaticMock = Mockito.mockStatic(NotificationService.class)) {
+            languageModelStaticMock.when(LanguageModel::getInstance).thenReturn(mockLanguageModel);
+            notificationServiceStaticMock.when(NotificationService::getInstance).thenReturn(mockNotificationService);
+            this.languageController = LanguageController.getInstance();
+
+            when(mockLanguageModel.getCurrentLanguageTag()).thenReturn("en");
+            Assertions.assertEquals("en", this.languageController.getCurrentLanguageTag());
+            verify(mockLanguageModel, times(1)).getCurrentLanguageTag();
+        }
+    }
+
+    @Test
+    void testChangeLanguageTag() {
+        LanguageModel mockLanguageModel = Mockito.mock(LanguageModel.class);
+        NotificationService mockNotificationService = Mockito.mock(NotificationService.class);
+        try (MockedStatic<LanguageModel> languageModelStaticMock = Mockito.mockStatic(LanguageModel.class);
+             MockedStatic<NotificationService> notificationServiceStaticMock = Mockito.mockStatic(NotificationService.class)) {
+            languageModelStaticMock.when(LanguageModel::getInstance).thenReturn(mockLanguageModel);
+            notificationServiceStaticMock.when(NotificationService::getInstance).thenReturn(mockNotificationService);
+            this.languageController = LanguageController.getInstance();
+
+            String newLanguageTag = "it";
+            this.languageController.changeLanguageTag(newLanguageTag);
+            verify(mockLanguageModel, times(1)).changeLanguage(newLanguageTag);
+            verify(mockNotificationService, times(1)).notify(EventType.CHANGE_LANGUAGE);
+        }
     }
 }
