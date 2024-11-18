@@ -8,8 +8,6 @@ import java.util.List;
 public interface PipelineControllerInterface {
     void initialize(List<DataView> views);
 
-    void addOperationToPipeline(Component node);
-
     void deletePipeline(Component node);
 
     void runPipeline(Component node);
