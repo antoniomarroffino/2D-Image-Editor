@@ -1,20 +1,16 @@
 package ch.supsi.imageEditor.backend.application.image;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
-import ch.supsi.imageEditor.backend.application.observer.NotificationServiceInterface;
-import ch.supsi.imageEditor.backend.business.images.ImageFactoryInterface;
-import ch.supsi.imageEditor.backend.business.pipeline.PipelineModelInterface;
+import ch.supsi.imageEditor.backend.application.observer.NotificationService;
+import ch.supsi.imageEditor.backend.business.images.ImageFactory;
+import ch.supsi.imageEditor.backend.business.pipeline.PipelineModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InOrder;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -23,23 +19,11 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 class ImageControllerTest {
 
-    @Mock
-    ImageFactoryInterface imageReaderFactoryMock;
-
-    @Mock
-    PipelineModelInterface pipelineModelMock;
-
-    @Mock
-    NotificationServiceInterface notificationServiceMock;
-
-    @InjectMocks
-    ImageController imageController;
+    private ImageController imageController;
 
     @BeforeEach
     public void beforeEach() {
         ImageController.instance = null;
-
-        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -70,74 +54,149 @@ class ImageControllerTest {
 
     @Test
     public void readImageTest() {
-        InOrder inOrder = inOrder(this.imageReaderFactoryMock, this.notificationServiceMock, this.pipelineModelMock);
-        try {
-            when(this.pipelineModelMock.getPipeline()).thenReturn(List.of());
-            this.imageController.readImage(anyString());
-            inOrder.verify(this.imageReaderFactoryMock).readImage(anyString());
-            inOrder.verify(this.notificationServiceMock).notify(EventType.OPEN_IMAGE);
-            verify(this.pipelineModelMock).getPipeline();
-            verify(this.pipelineModelMock, never()).cleanPipeline();
-            verify(this.notificationServiceMock, never()).notify(EventType.CLEAR_PIPELINE);
+        ImageFactory mockImageFactory = Mockito.mock(ImageFactory.class);
+        PipelineModel mockPipelineModel = Mockito.mock(PipelineModel.class);
+        NotificationService mockNotificationService = Mockito.mock(NotificationService.class);
 
-            when(this.pipelineModelMock.getPipeline()).thenReturn(List.of(""));
-            this.imageController.readImage(anyString());
-            inOrder.verify(this.imageReaderFactoryMock).readImage(anyString());
-            inOrder.verify(this.notificationServiceMock).notify(EventType.OPEN_IMAGE);
-            inOrder.verify(this.pipelineModelMock).getPipeline();
-            inOrder.verify(this.pipelineModelMock).cleanPipeline();
-            inOrder.verify(this.notificationServiceMock).notify(EventType.CLEAR_PIPELINE);
-        } catch (Exception ignored) {
-            ;
+        try (MockedStatic<ImageFactory> imageFactoryStaticMock = Mockito.mockStatic(ImageFactory.class);
+             MockedStatic<PipelineModel> pipelineModelStaticMock = Mockito.mockStatic(PipelineModel.class);
+             MockedStatic<NotificationService> notificationServiceStaticMock = Mockito.mockStatic(NotificationService.class)) {
+
+            imageFactoryStaticMock.when(ImageFactory::getInstance).thenReturn(mockImageFactory);
+            pipelineModelStaticMock.when(PipelineModel::getInstance).thenReturn(mockPipelineModel);
+            notificationServiceStaticMock.when(NotificationService::getInstance).thenReturn(mockNotificationService);
+            this.imageController = ImageController.getInstance();
+
+            InOrder inOrder = inOrder(mockImageFactory, mockNotificationService, mockPipelineModel);
+            try {
+                when(mockPipelineModel.getPipeline()).thenReturn(List.of());
+                this.imageController.readImage(anyString());
+                inOrder.verify(mockImageFactory).readImage(anyString());
+                inOrder.verify(mockNotificationService).notify(EventType.OPEN_IMAGE);
+                verify(mockPipelineModel).getPipeline();
+                verify(mockPipelineModel, never()).cleanPipeline();
+                verify(mockNotificationService, never()).notify(EventType.CLEAR_PIPELINE);
+
+                when(mockPipelineModel.getPipeline()).thenReturn(List.of(""));
+                this.imageController.readImage(anyString());
+                inOrder.verify(mockImageFactory).readImage(anyString());
+                inOrder.verify(mockNotificationService).notify(EventType.OPEN_IMAGE);
+                inOrder.verify(mockPipelineModel).getPipeline();
+                inOrder.verify(mockPipelineModel).cleanPipeline();
+                inOrder.verify(mockNotificationService).notify(EventType.CLEAR_PIPELINE);
+            } catch (Exception ignored) {
+                ;
+            }
         }
     }
 
     @Test
     public void writeImageTest() {
-        InOrder inOrder = inOrder(this.imageReaderFactoryMock, this.notificationServiceMock);
-        this.imageController.writeImage(null);
-        inOrder.verify(this.imageReaderFactoryMock).writeImage(null, null);
-        inOrder.verify(this.notificationServiceMock).notify(EventType.SAVE_IMAGE);
+        ImageFactory mockImageFactory = Mockito.mock(ImageFactory.class);
+        PipelineModel mockPipelineModel = Mockito.mock(PipelineModel.class);
+        NotificationService mockNotificationService = Mockito.mock(NotificationService.class);
 
+        try (MockedStatic<ImageFactory> imageFactoryStaticMock = Mockito.mockStatic(ImageFactory.class);
+             MockedStatic<PipelineModel> pipelineModelStaticMock = Mockito.mockStatic(PipelineModel.class);
+             MockedStatic<NotificationService> notificationServiceStaticMock = Mockito.mockStatic(NotificationService.class)) {
+
+            imageFactoryStaticMock.when(ImageFactory::getInstance).thenReturn(mockImageFactory);
+            pipelineModelStaticMock.when(PipelineModel::getInstance).thenReturn(mockPipelineModel);
+            notificationServiceStaticMock.when(NotificationService::getInstance).thenReturn(mockNotificationService);
+
+            this.imageController = ImageController.getInstance();
+
+            imageController.writeImage(null);
+
+            InOrder inOrder = inOrder(mockImageFactory, mockNotificationService);
+            inOrder.verify(mockImageFactory).writeImage(null, null);
+            inOrder.verify(mockNotificationService).notify(EventType.SAVE_IMAGE);
+        } catch (Exception e) {
+            Assertions.fail("Eccezione inaspettata: " + e.getMessage());
+        }
     }
+
 
     @Test
     public void getImageTest() {
-        this.imageController.getImage();
-        verify(this.imageReaderFactoryMock).getImage();
+        ImageFactory mockImageFactory = Mockito.mock(ImageFactory.class);
+        PipelineModel mockPipelineModel = Mockito.mock(PipelineModel.class);
+        NotificationService mockNotificationService = Mockito.mock(NotificationService.class);
+        try (MockedStatic<ImageFactory> imageFactoryStaticMock = Mockito.mockStatic(ImageFactory.class);
+             MockedStatic<PipelineModel> pipelineModelStaticMock = Mockito.mockStatic(PipelineModel.class);
+             MockedStatic<NotificationService> notificationServiceStaticMock = Mockito.mockStatic(NotificationService.class)) {
+
+            imageFactoryStaticMock.when(ImageFactory::getInstance).thenReturn(mockImageFactory);
+            pipelineModelStaticMock.when(PipelineModel::getInstance).thenReturn(mockPipelineModel);
+            notificationServiceStaticMock.when(NotificationService::getInstance).thenReturn(mockNotificationService);
+
+            this.imageController = ImageController.getInstance();
+
+            imageController.getImage();
+
+            verify(mockImageFactory).getImage();
+        } catch (Exception e) {
+            Assertions.fail("Eccezione inaspettata: " + e.getMessage());
+        }
     }
 
     @Test
     public void getSupportedFormatTest() {
-        this.imageController.getSupportedFormat();
-        verify(this.imageReaderFactoryMock).getSupportedFormat();
+        ImageFactory mockImageFactory = Mockito.mock(ImageFactory.class);
+        try (MockedStatic<ImageFactory> imageFactoryStaticMock = Mockito.mockStatic(ImageFactory.class)) {
+            imageFactoryStaticMock.when(ImageFactory::getInstance).thenReturn(mockImageFactory);
+            this.imageController = ImageController.getInstance();
+
+
+            this.imageController.getSupportedFormat();
+            verify(mockImageFactory).getSupportedFormat();
+        }
     }
 
     @Test
     public void getRecentFilesTest() {
-        this.imageController.getRecentFiles();
-        verify(this.imageReaderFactoryMock).getRecentFiles();
+        ImageFactory mockImageFactory = Mockito.mock(ImageFactory.class);
+        try (MockedStatic<ImageFactory> imageFactoryStaticMock = Mockito.mockStatic(ImageFactory.class)) {
+            imageFactoryStaticMock.when(ImageFactory::getInstance).thenReturn(mockImageFactory);
+            this.imageController = ImageController.getInstance();
+
+            this.imageController.getRecentFiles();
+            verify(mockImageFactory).getRecentFiles();
+        }
     }
 
     @Test
     public void closeImageTest() {
-        InOrder inOrder = inOrder(this.imageReaderFactoryMock, this.notificationServiceMock, this.pipelineModelMock);
-        when(this.pipelineModelMock.getPipeline()).thenReturn(List.of());
-        this.imageController.closeImage();
-        verify(this.pipelineModelMock).getPipeline();
-        verify(this.pipelineModelMock, never()).cleanPipeline();
-        verify(this.notificationServiceMock, never()).notify(EventType.CLEAR_PIPELINE);
-        inOrder.verify(imageReaderFactoryMock).closeImage();
-        inOrder.verify(this.notificationServiceMock).notify(EventType.CLOSE_IMAGE);
+        ImageFactory mockImageFactory = Mockito.mock(ImageFactory.class);
+        PipelineModel mockPipelineModel = Mockito.mock(PipelineModel.class);
+        NotificationService mockNotificationService = Mockito.mock(NotificationService.class);
 
-        when(this.pipelineModelMock.getPipeline()).thenReturn(List.of(""));
-        this.imageController.closeImage();
-        inOrder.verify(this.pipelineModelMock).getPipeline();
-        inOrder.verify(this.pipelineModelMock).cleanPipeline();
-        inOrder.verify(this.notificationServiceMock).notify(EventType.CLEAR_PIPELINE);
-        inOrder.verify(imageReaderFactoryMock).closeImage();
-        inOrder.verify(this.notificationServiceMock).notify(EventType.CLOSE_IMAGE);
+        try (MockedStatic<ImageFactory> imageFactoryStaticMock = Mockito.mockStatic(ImageFactory.class);
+             MockedStatic<PipelineModel> pipelineModelStaticMock = Mockito.mockStatic(PipelineModel.class);
+             MockedStatic<NotificationService> notificationServiceStaticMock = Mockito.mockStatic(NotificationService.class)) {
 
+            imageFactoryStaticMock.when(ImageFactory::getInstance).thenReturn(mockImageFactory);
+            pipelineModelStaticMock.when(PipelineModel::getInstance).thenReturn(mockPipelineModel);
+            notificationServiceStaticMock.when(NotificationService::getInstance).thenReturn(mockNotificationService);
+            this.imageController = ImageController.getInstance();
+
+            InOrder inOrder = inOrder(mockImageFactory, mockNotificationService, mockPipelineModel);
+            when(mockPipelineModel.getPipeline()).thenReturn(List.of());
+            this.imageController.closeImage();
+            verify(mockPipelineModel).getPipeline();
+            verify(mockPipelineModel, never()).cleanPipeline();
+            verify(mockNotificationService, never()).notify(EventType.CLEAR_PIPELINE);
+            inOrder.verify(mockImageFactory).closeImage();
+            inOrder.verify(mockNotificationService).notify(EventType.CLOSE_IMAGE);
+
+            when(mockPipelineModel.getPipeline()).thenReturn(List.of(""));
+            this.imageController.closeImage();
+            inOrder.verify(mockPipelineModel).getPipeline();
+            inOrder.verify(mockPipelineModel).cleanPipeline();
+            inOrder.verify(mockNotificationService).notify(EventType.CLEAR_PIPELINE);
+            inOrder.verify(mockImageFactory).closeImage();
+            inOrder.verify(mockNotificationService).notify(EventType.CLOSE_IMAGE);
+        }
     }
 
 }

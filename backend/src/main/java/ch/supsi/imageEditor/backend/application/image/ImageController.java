@@ -30,12 +30,6 @@ public class ImageController implements ImageControllerInterface {
         this.notificationService = NotificationService.getInstance();
     }
 
-    ImageController(ImageFactoryInterface imageReaderFactory, PipelineModelInterface pipelineModel, NotificationServiceInterface notificationService) {
-        this.imageReaderFactory = imageReaderFactory;
-        this.pipelineModel = pipelineModel;
-        this.notificationService = notificationService;
-    }
-
     public static ImageController getInstance() {
         return instance == null ? instance = new ImageController() : instance;
     }
