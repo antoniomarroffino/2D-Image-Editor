@@ -49,12 +49,7 @@ public class PipelineController implements PipelineControllerInterface, EventLis
     }
 
     @Override
-    public void addOperationToPipeline(Component node) {
-        System.out.println(node.getId());
-    }
-
-    @Override
-    public void deletePipeline(Component node) { //TODO: controllare il Component
+    public void deletePipeline(Component node) {
         this.pipelineModel.deletePipeline();
     }
 
