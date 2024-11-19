@@ -2,8 +2,11 @@ package ch.supsi.imageEditor.backend.application.image;
 
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.application.observer.NotificationService;
+import ch.supsi.imageEditor.backend.application.observer.NotificationServiceInterface;
 import ch.supsi.imageEditor.backend.business.images.ImageFactory;
+import ch.supsi.imageEditor.backend.business.images.ImageFactoryInterface;
 import ch.supsi.imageEditor.backend.business.pipeline.PipelineModel;
+import ch.supsi.imageEditor.backend.business.pipeline.PipelineModelInterface;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,13 +19,21 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 class ImageControllerTest {
-
+    @Mock
+    ImageFactoryInterface mockImageFactory;
+    @Mock
+    PipelineModelInterface mockPipelineModel;
+    @Mock
+    NotificationServiceInterface mockNotificationService;
+    @InjectMocks
     private ImageController imageController;
 
     @BeforeEach
     public void beforeEach() {
         ImageController.instance = null;
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -53,7 +64,7 @@ class ImageControllerTest {
 
     @Test
     public void readImageTest() {
-        ImageFactory mockImageFactory = Mockito.mock(ImageFactory.class);
+        /*ImageFactory mockImageFactory = Mockito.mock(ImageFactory.class);
         PipelineModel mockPipelineModel = Mockito.mock(PipelineModel.class);
         NotificationService mockNotificationService = Mockito.mock(NotificationService.class);
 
@@ -86,6 +97,27 @@ class ImageControllerTest {
             } catch (Exception ignored) {
                 ;
             }
+        }*/
+
+        InOrder inOrder = inOrder(mockImageFactory, mockNotificationService, mockPipelineModel);
+        try {
+            when(mockPipelineModel.getPipeline()).thenReturn(List.of());
+            this.imageController.readImage(anyString());
+            inOrder.verify(mockImageFactory).readImage(anyString());
+            inOrder.verify(mockNotificationService).notify(EventType.OPEN_IMAGE);
+            verify(mockPipelineModel).getPipeline();
+            verify(mockPipelineModel, never()).cleanPipeline();
+            verify(mockNotificationService, never()).notify(EventType.CLEAR_PIPELINE);
+
+            when(mockPipelineModel.getPipeline()).thenReturn(List.of(""));
+            this.imageController.readImage(anyString());
+            inOrder.verify(mockImageFactory).readImage(anyString());
+            inOrder.verify(mockNotificationService).notify(EventType.OPEN_IMAGE);
+            inOrder.verify(mockPipelineModel).getPipeline();
+            inOrder.verify(mockPipelineModel).cleanPipeline();
+            inOrder.verify(mockNotificationService).notify(EventType.CLEAR_PIPELINE);
+        } catch (Exception ignored) {
+            ignored.printStackTrace();
         }
     }
 
