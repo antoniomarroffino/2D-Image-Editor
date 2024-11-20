@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 class MenuBarViewFXMLTest {
     private ResourceBundle resourceBundle;
+    private MenuBarViewFXML menuBarViewFXML;
 
     @BeforeAll
     public static void beforeClass() {
@@ -26,17 +27,17 @@ class MenuBarViewFXMLTest {
 
     @Test
     public void constructor() {
-        MenuBarViewFXML menuBarViewFXML = new MenuBarViewFXML();
-        Assertions.assertNotNull(menuBarViewFXML);
-        Assertions.assertNotNull(menuBarViewFXML.getOnEventDoActionMap());
+        this.menuBarViewFXML = new MenuBarViewFXML();
+        Assertions.assertNotNull(this.menuBarViewFXML);
+        Assertions.assertNotNull(this.menuBarViewFXML.getOnEventDoActionMap());
     }
 
     @Test
     public void instance() {
-        MenuBarViewFXML menuBarViewFXML = MenuBarViewFXML.getInstance(this.resourceBundle);
-        Assertions.assertNotNull(menuBarViewFXML);
+        menuBarViewFXML = MenuBarViewFXML.getInstance(this.resourceBundle);
+        Assertions.assertNotNull(this.menuBarViewFXML);
         Assertions.assertNotNull(MenuBarViewFXML.instance);
-        Assertions.assertNotNull(menuBarViewFXML.getOnEventDoActionMap());
+        Assertions.assertNotNull(this.menuBarViewFXML.getOnEventDoActionMap());
     }
 
     @Test
