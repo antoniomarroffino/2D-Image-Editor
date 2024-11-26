@@ -1,5 +1,6 @@
 package ch.supsi.imageEditor.backend.business.images;
 
+import ch.supsi.imageEditor.backend.business.images.export.ExportStrategy;
 import ch.supsi.imageEditor.backend.dataaccess.images.ImageDataAccess;
 import ch.supsi.imageEditor.backend.dataaccess.images.ImageDataAccessInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
@@ -15,16 +16,20 @@ public class ImageFactory implements ImageFactoryInterface {
 
     private final List<String> recentFilesList;
     protected final Map<String, ImageInterface> imageReaders;
+    protected final Map<String, ExportStrategy> exportStrategies;
     protected final Properties imageReaderProperties;
+    protected final Properties imageExporterProperties;
     protected ImageInterface currentImageReader;
     protected AbstractImage currentImage;
 
     protected ImageFactory() {
         this.imageDataAccess = ImageDataAccess.getInstance();
         this.imageReaderProperties = this.imageDataAccess.getFormatReaderProperties();
+        this.imageExporterProperties = this.imageDataAccess.getFormatExporterProperties();
 
         this.recentFilesList = this.imageDataAccess.getRecentFiles();
         this.imageReaders = this.loadImageReadersMap();
+        this.exportStrategies = this.loadImageExportersMap();
         this.currentImage = null;
     }
 
@@ -45,6 +50,21 @@ public class ImageFactory implements ImageFactoryInterface {
             }
         }
         return imageReadersMap;
+    }
+
+    private Map<String, ExportStrategy> loadImageExportersMap() {
+        Map<String, ExportStrategy> exportStrategyMap = new HashMap<>();
+        for (String extension : this.imageExporterProperties.stringPropertyNames()) {
+            String exporterClassName = this.imageExporterProperties.getProperty(extension);
+            try {
+                Class<?> exporterClass = Class.forName(exporterClassName);
+                ExportStrategy imageExporter = (ExportStrategy) exporterClass.getConstructor().newInstance();
+                exportStrategyMap.put(extension, imageExporter);
+            } catch (Exception e) {
+                throw new RuntimeException("Error during load of image exporter: " + extension);
+            }
+        }
+        return exportStrategyMap;
     }
 
     @Override

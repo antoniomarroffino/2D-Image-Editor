@@ -75,6 +75,11 @@ public class PersistImageModel extends AbstractModel implements PersistImageMode
     }
 
     @Override
+    public void writeImageAs(File destinationFile) {
+        this.imageController.writeImage(destinationFile);
+    }
+
+    @Override
     public void closeImage() {
         this.currentSavingFile = null;
         this.isAlreadySaved = false;

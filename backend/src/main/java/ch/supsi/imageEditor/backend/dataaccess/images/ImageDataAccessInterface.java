@@ -5,10 +5,11 @@ import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import java.io.File;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 public interface ImageDataAccessInterface {
     Properties getFormatReaderProperties();
+
+    Properties getFormatExporterProperties();
 
     void writeImage(AbstractImage image, File file);
 

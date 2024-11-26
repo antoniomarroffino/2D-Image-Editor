@@ -86,10 +86,8 @@ public class PersistImageController implements PersistImageControllerInterface, 
     @Override
     public void saveImageAs(Component component) {
         File saveImageFile = this.savingViewFXML.getSaveFile(this.persistImageModel.getSupportedFormats());
-        if (saveImageFile != null) {
-            this.persistImageModel.setNewSavingFile(saveImageFile);
-            save();
-        }
+        if (saveImageFile != null)
+            this.persistImageModel.writeImageAs(saveImageFile);
     }
 
     private void save() {

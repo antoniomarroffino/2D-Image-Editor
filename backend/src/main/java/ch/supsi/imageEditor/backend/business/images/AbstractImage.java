@@ -1,5 +1,7 @@
 package ch.supsi.imageEditor.backend.business.images;
 
+import ch.supsi.imageEditor.backend.business.images.export.ExportStrategy;
+
 public abstract class AbstractImage {
     protected String format;
     protected int width;
@@ -39,6 +41,14 @@ public abstract class AbstractImage {
 
     public int getMaxIntensity() {
         return maxIntensity;
+    }
+
+    public void setMaxIntensity(int maxIntensity) {
+        this.maxIntensity = maxIntensity;
+    }
+
+    public AbstractImage export(ExportStrategy strategy) {
+        return strategy.export(this);
     }
 
     @Override

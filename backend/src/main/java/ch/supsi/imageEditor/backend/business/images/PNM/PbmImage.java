@@ -10,6 +10,10 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class PbmImage extends AbstractPnmImage {
+    public PbmImage() {
+        format = "P1";
+    }
+
     @Override
     public void read(String filePath) throws IOException, FormatNotSupportedException, ImageHeaderUncorrectException {
         try (Scanner scanner = new Scanner(new FileReader(filePath))) {

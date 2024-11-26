@@ -27,5 +27,7 @@ public interface PersistImageModelInterface {
 
     void writeImage();
 
+    void writeImageAs(File destinationFile);
+
     void closeImage();
 }
