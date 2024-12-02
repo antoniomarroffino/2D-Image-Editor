@@ -1,18 +1,33 @@
 package ch.supsi.imageEditor.frontend;
 
+import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXML;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeAll;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.testfx.framework.junit5.ApplicationTest;
 
+import java.io.File;
 import java.util.logging.Logger;
 
-abstract class AbstractMainGUITest extends ApplicationTest {
-    protected static final Logger LOGGER = Logger.getAnonymousLogger();
+import static org.mockito.ArgumentMatchers.anySet;
+import static org.mockito.Mockito.when;
 
+public abstract class AbstractMainGUITest extends ApplicationTest {
+    protected static final Logger LOGGER = Logger.getAnonymousLogger();
     protected int stepNo;
+    protected static SavingViewFXML mockSavingView;
 
     @BeforeAll
     public static void setupSpec() {
+        mockSavingView = Mockito.mock(SavingViewFXML.class);
+        try (MockedStatic<SavingViewFXML> savingStaticMock = Mockito.mockStatic(SavingViewFXML.class)) {
+            savingStaticMock.when(SavingViewFXML::getInstance).thenReturn(mockSavingView);
+
+            when(mockSavingView.getOpenFile(anySet())).thenReturn(
+                    new File("./src/test/java/ch/supsi/imageEditor/frontend/P3.ppm"));
+        }
+
         if (Boolean.getBoolean("headless")) {
             System.setProperty("testfx.robot", "glass");
             System.setProperty("testfx.headless", "true");

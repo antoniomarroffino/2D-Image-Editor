@@ -39,10 +39,8 @@ public class SavingViewFXML implements SavingViewFXMLInterface {
         return instance == null ? instance = new SavingViewFXML() : instance;
     }
 
-    public static SavingViewFXML getInstance(ResourceBundle resourceBundle) {
-        if (instance == null) {
-            instance = new SavingViewFXML();
-        }
+    @Override
+    public void initialize(ResourceBundle resourceBundle) {
         try {
             URL fxmlUrl = OperationViewFXML.class.getResource(PathResourceFXML);
             if (fxmlUrl != null) {
@@ -54,7 +52,6 @@ public class SavingViewFXML implements SavingViewFXMLInterface {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return instance;
     }
 
     @Override

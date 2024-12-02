@@ -131,7 +131,8 @@ public class MainFX extends Application {
         this.pipelineView = PipelineViewFXML.getInstance(this.resourceBundle);
         this.infoBarView = InfobarViewFXML.getInstance(this.resourceBundle);
         this.aboutView = AboutViewPopUp.getInstance(this.resourceBundle);
-        this.savingView = SavingViewFXML.getInstance(this.resourceBundle);
+        this.savingView = SavingViewFXML.getInstance();
+        savingView.initialize(this.resourceBundle);
 
         //SCAFFOLDING of M-V-C
         this.menuBarView.initialize(this.handleService, (AbstractModel) this.persistImageModel);
