@@ -18,8 +18,6 @@ public class TestProgramFunctionality extends AbstractMainGUITest {
             clickOn("#fileMenu");
             clickOn("#openMenuItem");
 
-            sleep(3000);
-
             verifyThat("#infoBarTextArea", TextInputControlMatchers.hasText(
                     "Image is loaded correctly")
             );
