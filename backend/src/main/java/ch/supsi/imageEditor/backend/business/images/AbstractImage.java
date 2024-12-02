@@ -1,6 +1,6 @@
 package ch.supsi.imageEditor.backend.business.images;
 
-import ch.supsi.imageEditor.backend.business.images.export.ExportStrategy;
+import java.util.List;
 
 public abstract class AbstractImage {
     protected String format;
@@ -8,6 +8,12 @@ public abstract class AbstractImage {
     protected int height;
     protected Pixel[][] pixel = null;
     protected int maxIntensity;
+    protected List<String> downExport;
+    protected List<String> upExport;
+
+    public String getFormat() {
+        return format;
+    }
 
     public int getWidth() {
         return this.width;
@@ -47,8 +53,12 @@ public abstract class AbstractImage {
         this.maxIntensity = maxIntensity;
     }
 
-    public AbstractImage export(ExportStrategy strategy) {
-        return strategy.export(this);
+    public List<String> getUpExport() {
+        return upExport;
+    }
+
+    public List<String> getDownExport() {
+        return downExport;
     }
 
     @Override

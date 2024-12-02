@@ -21,5 +21,7 @@ public interface ImageFactoryInterface {
 
     void writeImage(AbstractImage image, File file);
 
+    void writeImage(AbstractImage image, File sourceFile, File destinationFile);
+
     void closeImage();
 }

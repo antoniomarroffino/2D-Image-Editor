@@ -6,12 +6,15 @@ import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class PpmImage extends AbstractPnmImage {
     public PpmImage() {
         format = "P3";
+        downExport = null;
+        upExport = List.of("PGM");
     }
 
     @Override

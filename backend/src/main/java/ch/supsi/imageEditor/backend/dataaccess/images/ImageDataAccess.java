@@ -1,11 +1,6 @@
 package ch.supsi.imageEditor.backend.dataaccess.images;
 
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
-import ch.supsi.imageEditor.backend.business.images.PNM.PbmImage;
-import ch.supsi.imageEditor.backend.business.images.PNM.PgmImage;
-import ch.supsi.imageEditor.backend.business.images.PNM.PpmImage;
-import ch.supsi.imageEditor.backend.business.images.export.ExportToPgmStrategy;
-import ch.supsi.imageEditor.backend.business.images.export.ExportToPpmStrategy;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -27,8 +22,8 @@ public class ImageDataAccess implements ImageDataAccessInterface {
     private final Properties formatExporterProperties;
 
     private ImageDataAccess() {
-        this.formatReaderProperties = this.loadFormatReaderProperties();
-        this.formatExporterProperties = this.loadFormatExporterProperties();
+        this.formatReaderProperties = this.loadProperties(formatReaderPropertiesPath);
+        this.formatExporterProperties = this.loadProperties(formatExporterPropertiesPath);
         this.filePath = loadFilePath();
     }
 
@@ -47,26 +42,15 @@ public class ImageDataAccess implements ImageDataAccessInterface {
         return preferencesPath.resolve(recentFiles);
     }
 
-    private Properties loadFormatReaderProperties() {
-        Properties defaultPreferences = new Properties();
+    private Properties loadProperties(String fileName) {
+        Properties properties = new Properties();
         try {
-            InputStream defaultPreferencesStream = this.getClass().getResourceAsStream(formatReaderPropertiesPath);
-            defaultPreferences.load(defaultPreferencesStream);
+            InputStream inputStream = this.getClass().getResourceAsStream(fileName);
+            properties.load(inputStream);
         } catch (IOException ignored) {
             ;
         }
-        return defaultPreferences;
-    }
-
-    private Properties loadFormatExporterProperties() {
-        Properties defaultPreferences = new Properties();
-        try {
-            InputStream defaultPreferencesStream = this.getClass().getResourceAsStream(formatExporterPropertiesPath);
-            defaultPreferences.load(defaultPreferencesStream);
-        } catch (IOException ignored) {
-            ;
-        }
-        return defaultPreferences;
+        return properties;
     }
 
     @Override
@@ -89,22 +73,7 @@ public class ImageDataAccess implements ImageDataAccessInterface {
     @Override
     public void writeImage(AbstractImage image, File file) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            if (image instanceof PbmImage)
-                if (getFileExtension(file.getPath()).equals("pbm"))
-                    writer.write(image.toString());
-            if (image instanceof PgmImage)
-                if (getFileExtension(file.getPath()).equals("pbm"))
-                    writer.write(image.export(new ExportToPgmStrategy()).toString());
-                else
-                    writer.write(image.toString());
-            if (image instanceof PpmImage)
-                if (getFileExtension(file.getPath()).equals("pbm")) {
-                    image = image.export(new ExportToPpmStrategy());
-                    writer.write(image.export(new ExportToPgmStrategy()).toString());
-                } else if (getFileExtension(file.getPath()).equals("pgm"))
-                    writer.write(image.export(new ExportToPpmStrategy()).toString());
-                else
-                    writer.write(image.toString());
+            writer.write(image.toString());
         } catch (IOException ignored) {
             ;
         }

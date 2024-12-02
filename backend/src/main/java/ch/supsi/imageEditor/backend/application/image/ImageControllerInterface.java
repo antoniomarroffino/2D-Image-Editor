@@ -14,6 +14,8 @@ public interface ImageControllerInterface {
 
     void writeImage(File file);
 
+    void writeImage(File sourceFile, File destinationfile);
+
     AbstractImage getImage();
 
     Set<String> getSupportedFormat();
