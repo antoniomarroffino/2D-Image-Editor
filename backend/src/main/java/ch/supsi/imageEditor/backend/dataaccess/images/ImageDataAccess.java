@@ -82,7 +82,6 @@ public class ImageDataAccess implements ImageDataAccessInterface {
 
     @Override
     public void persistRecentFile(List<String> recentFiles) {
-        System.out.println(recentFiles);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.filePath.toFile()))) {
             for (String recentFile : recentFiles) {
                 writer.write(recentFile);
