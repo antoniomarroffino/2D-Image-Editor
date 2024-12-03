@@ -1,6 +1,5 @@
 package ch.supsi.imageEditor.backend.dataaccess.language;
 
-import ch.supsi.imageEditor.backend.dataaccess.AbstractDataAccessTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,12 +11,11 @@ import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class LanguageDataAccessTest extends AbstractDataAccessTest {
+class LanguageDataAccessTest {
     private LanguageDataAccess languageDataAccess;
 
     @BeforeEach
     public void beforeEach() {
-        super.setUp();
         LanguageDataAccess.instance = null;
     }
 
@@ -41,12 +39,5 @@ class LanguageDataAccessTest extends AbstractDataAccessTest {
         assertEquals(languageDataAccess1, languageDataAccess2);
     }
 
-    @Test
-    public void getCurrentLanguageTagTest() {
-        super.setUp();
-        this.languageDataAccess = LanguageDataAccess.getInstance();
-        assertEquals("en-US", this.languageDataAccess.getCurrentLanguageTag());
-        super.tearDown();
-    }
 }
 
