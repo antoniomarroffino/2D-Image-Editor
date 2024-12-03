@@ -4,11 +4,12 @@ import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.application.observer.NotificationService;
 import ch.supsi.imageEditor.backend.application.observer.NotificationServiceInterface;
 import ch.supsi.imageEditor.backend.business.language.LanguageModel;
+import ch.supsi.imageEditor.backend.business.language.LanguageModelInterface;
 
 public class LanguageController implements LanguageControllerInterface {
     protected static LanguageController instance = null;
 
-    private final LanguageModel languageModel;
+    private final LanguageModelInterface languageModel;
     private final NotificationServiceInterface notificationService;
 
     protected LanguageController() {
@@ -18,14 +19,6 @@ public class LanguageController implements LanguageControllerInterface {
 
     public static LanguageController getInstance() {
         return instance == null ? instance = new LanguageController() : instance;
-    }
-
-    LanguageModel getLanguageModel() {
-        return this.languageModel;
-    }
-
-    NotificationServiceInterface getNotificationService() {
-        return this.notificationService;
     }
 
     @Override

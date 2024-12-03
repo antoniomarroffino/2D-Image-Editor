@@ -6,21 +6,27 @@ import ch.supsi.imageEditor.backend.application.observer.NotificationServiceInte
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.ImageFactory;
 import ch.supsi.imageEditor.backend.business.images.ImageFactoryInterface;
+import ch.supsi.imageEditor.backend.business.operation.AvailableOperationModel;
+import ch.supsi.imageEditor.backend.business.operation.AvailableOperationModelInterface;
 import ch.supsi.imageEditor.backend.business.operation.OperationModel;
+import ch.supsi.imageEditor.backend.business.operation.OperationModelInterface;
 import ch.supsi.imageEditor.backend.business.pipeline.PipelineModel;
+import ch.supsi.imageEditor.backend.business.pipeline.PipelineModelInterface;
 import ch.supsi.imageEditor.backend.exception.OperationNotSupportedException;
 
 public class PipelineController implements PipelineControllerInterface {
     protected static PipelineController instance = null;
 
-    private final PipelineModel pipelineModel;
-    private final OperationModel operationModel;
+    private final PipelineModelInterface pipelineModel;
+    private final OperationModelInterface operationModel;
+    private final AvailableOperationModelInterface availableOperationModel;
     private final ImageFactoryInterface imageModel;
     private final NotificationServiceInterface notificationService;
 
     protected PipelineController() {
         this.pipelineModel = PipelineModel.getInstance();
         this.operationModel = OperationModel.getInstance();
+        this.availableOperationModel = AvailableOperationModel.getInstance();
         this.notificationService = NotificationService.getInstance();
         this.imageModel = ImageFactory.getInstance();
     }
@@ -29,23 +35,9 @@ public class PipelineController implements PipelineControllerInterface {
         return instance == null ? instance = new PipelineController() : instance;
     }
 
-    PipelineModel getPipelineModel() {
-        return this.pipelineModel;
-    }
-
-    OperationModel getOperationModel() {
-        return this.operationModel;
-    }
-    ImageFactoryInterface getImageModel() {
-        return this.imageModel;
-    }
-    NotificationServiceInterface getNotificationService() {
-        return this.notificationService;
-    }
-
     @Override
     public void addOperationToPipeline(String name) throws OperationNotSupportedException {
-        this.operationModel.checkOperationExists(name);
+        this.availableOperationModel.checkOperationExists(name);
         this.pipelineModel.addOperationToPipeline(name);
         this.notificationService.notify(EventType.ADDED_OPERATION);
     }
@@ -63,7 +55,7 @@ public class PipelineController implements PipelineControllerInterface {
 
     @Override
     public void runPipeline() {
-        AbstractImage imageAfterOperations = this.operationModel.executeOperations(this.pipelineModel.getPipeline(), this.imageModel.getImage());
+        AbstractImage imageAfterOperations = this.operationModel.executeOperations(this.pipelineModel.getPipeline(), this.imageModel.getImage(), this.availableOperationModel.getAvailableOperations());
         this.imageModel.setImage(imageAfterOperations);
         this.notificationService.notify(EventType.RUN_PIPELINE);
         this.pipelineModel.cleanPipeline();

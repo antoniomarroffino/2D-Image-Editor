@@ -1,9 +1,7 @@
 package ch.supsi.imageEditor.backend.application.language;
 
-import ch.supsi.imageEditor.backend.application.image.ImageController;
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.application.observer.NotificationService;
-import ch.supsi.imageEditor.backend.application.observer.NotificationServiceInterface;
 import ch.supsi.imageEditor.backend.business.language.LanguageModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,8 +25,6 @@ class LanguageControllerTest {
     public void constructor() {
         LanguageController languageController = new LanguageController();
         Assertions.assertNotNull(languageController);
-        Assertions.assertNotNull(languageController.getLanguageModel());
-        Assertions.assertNotNull(languageController.getNotificationService());
     }
 
     @Test
@@ -36,8 +32,6 @@ class LanguageControllerTest {
         LanguageController languageController = LanguageController.getInstance();
         Assertions.assertNotNull(languageController);
         Assertions.assertNotNull(LanguageController.instance);
-        Assertions.assertNotNull(languageController.getLanguageModel());
-        Assertions.assertNotNull(languageController.getNotificationService());
     }
 
     @Test

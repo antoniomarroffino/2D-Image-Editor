@@ -3,7 +3,16 @@ package ch.supsi.imageEditor.backend.dataaccess.language;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Comparator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class LanguageDataAccessTest {
+    private LanguageDataAccess languageDataAccess;
 
     @BeforeEach
     public void beforeEach() {
@@ -14,7 +23,6 @@ class LanguageDataAccessTest {
     public void constructor() {
         LanguageDataAccess languageDataAccess = new LanguageDataAccess();
         Assertions.assertNotNull(languageDataAccess);
-        Assertions.assertNull(languageDataAccess.getUserPreferences());
     }
 
     @Test
@@ -22,18 +30,14 @@ class LanguageDataAccessTest {
         LanguageDataAccess languageDataAccess = LanguageDataAccess.getInstance();
         Assertions.assertNotNull(languageDataAccess);
         Assertions.assertNotNull(LanguageDataAccess.instance);
-        Assertions.assertNull(languageDataAccess.getUserPreferences());
     }
 
     @Test
     public void checkSingleton() {
         LanguageDataAccess languageDataAccess1 = LanguageDataAccess.getInstance();
         LanguageDataAccess languageDataAccess2 = LanguageDataAccess.getInstance();
-        Assertions.assertEquals(languageDataAccess1, languageDataAccess2);
+        assertEquals(languageDataAccess1, languageDataAccess2);
     }
+
 }
 
-/*
-Istanza protetta all'interno della classe, al posto che privata, così da poter assegnare null
-Costruttore protected al posto che private
- */

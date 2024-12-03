@@ -37,10 +37,6 @@ public abstract class AbstractImage {
         this.pixel = pixel;
     }
 
-    public int getMaxIntensity() {
-        return maxIntensity;
-    }
-
     @Override
     public String toString() {
         return this.format + System.lineSeparator() +

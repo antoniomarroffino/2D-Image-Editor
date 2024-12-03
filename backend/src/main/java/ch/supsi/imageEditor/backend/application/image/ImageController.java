@@ -34,18 +34,6 @@ public class ImageController implements ImageControllerInterface {
         return instance == null ? instance = new ImageController() : instance;
     }
 
-    ImageFactoryInterface getImageReaderFactory() {
-        return this.imageReaderFactory;
-    }
-
-    PipelineModelInterface getPipelineModel() {
-        return this.pipelineModel;
-    }
-
-    NotificationServiceInterface getNotificationService() {
-        return this.notificationService;
-    }
-
     @Override
     public void readImage(String filePath) throws FormatNotSupportedException, IOException, ImageHeaderUncorrectException {
         this.imageReaderFactory.readImage(filePath);

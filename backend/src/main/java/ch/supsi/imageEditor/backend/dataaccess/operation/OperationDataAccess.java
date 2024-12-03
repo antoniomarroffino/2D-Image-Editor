@@ -27,7 +27,7 @@ public class OperationDataAccess implements OperationDataAccessInterface {
     }
 
 
-    Properties getSupportedOperationsProperties() {
+    private Properties getSupportedOperationsProperties() {
         Properties defaultPreferences = new Properties();
         try {
             InputStream defaultPreferencesStream = this.getClass().getResourceAsStream(operationsFile);
@@ -38,7 +38,7 @@ public class OperationDataAccess implements OperationDataAccessInterface {
         return defaultPreferences;
     }
 
-    Properties getOperationsProperties() {
+    private Properties getOperationsProperties() {
         Properties defaultPreferences = new Properties();
         try {
             InputStream defaultPreferencesStream = this.getClass().getResourceAsStream(operationConcreteOperationPath);

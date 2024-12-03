@@ -1,9 +1,8 @@
-package ch.supsi.imageEditor.backend.operationsTests;
+package ch.supsi.imageEditor.backend.business.operation.allOperations;
 
 import ch.supsi.imageEditor.backend.ImageFactoryTest;
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.ImageFactory;
-import ch.supsi.imageEditor.backend.business.operation.allOperations.Rotate90DegreesLeft;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

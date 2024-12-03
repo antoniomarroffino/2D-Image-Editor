@@ -6,7 +6,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 public class ImageDataAccess implements ImageDataAccessInterface {
     protected static ImageDataAccess instance = null;
@@ -17,22 +19,20 @@ public class ImageDataAccess implements ImageDataAccessInterface {
     private static final String recentFiles = "recentFiles.txt";
     private final Path filePath;
     private final Properties formatReaderProperties;
+    private final Path preferencesPath;
 
     protected ImageDataAccess() {
         this.formatReaderProperties = this.loadFormatReaderProperties();
-        this.filePath = loadFilePath();
+        this.preferencesPath = Paths.get(userHomeDirectory, preferencesDirectory);
+        this.filePath = loadFilePath(preferencesPath);
     }
 
     public static ImageDataAccess getInstance() {
         return instance == null ? instance = new ImageDataAccess() : instance;
     }
 
-    Path getFilePath() {
-        return this.filePath;
-    }
 
-    private Path loadFilePath() {
-        Path preferencesPath = Paths.get(userHomeDirectory, preferencesDirectory);
+    private Path loadFilePath(Path preferencesPath) {
         try {
             if (!Files.exists(preferencesPath))
                 Files.createDirectories(preferencesPath);
@@ -84,7 +84,7 @@ public class ImageDataAccess implements ImageDataAccessInterface {
     public void persistRecentFile(List<String> recentFiles) {
         System.out.println(recentFiles);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.filePath.toFile()))) {
-            for (String recentFile : recentFiles){
+            for (String recentFile : recentFiles) {
                 writer.write(recentFile);
                 writer.newLine();
             }

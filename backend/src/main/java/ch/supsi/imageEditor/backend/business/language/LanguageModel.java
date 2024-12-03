@@ -16,10 +16,6 @@ public class LanguageModel implements LanguageModelInterface {
         return instance == null ? instance = new LanguageModel() : instance;
     }
 
-    LanguageDataAccessInterface getLanguageDataAccess() {
-        return languageDataAccess;
-    }
-
     @Override
     public String getCurrentLanguageTag() {
         return this.languageDataAccess.getCurrentLanguageTag();

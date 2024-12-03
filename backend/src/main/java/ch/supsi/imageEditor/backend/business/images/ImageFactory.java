@@ -7,6 +7,7 @@ import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class ImageFactory implements ImageFactoryInterface {
@@ -32,33 +33,6 @@ public class ImageFactory implements ImageFactoryInterface {
         return instance == null ? instance = new ImageFactory() : instance;
     }
 
-    ImageDataAccessInterface getImageDataAccess() {
-        return this.imageDataAccess;
-    }
-
-    List<String> getRecentFilesList() {
-        return this.recentFilesList;
-    }
-
-    Map<String, ImageInterface> getImageReaders() {
-        return this.imageReaders;
-    }
-
-    Properties getImageReaderProperties() {
-        return this.imageReaderProperties;
-    }
-
-    ImageInterface getCurrentImageReader() {
-        return this.currentImageReader;
-    }
-
-    AbstractImage getCurrentImage() {
-        return this.currentImage;
-    }
-
-
-
-
     private Map<String, ImageInterface> loadImageReadersMap() {
         Map<String, ImageInterface> imageReadersMap = new HashMap<>();
         for (String extension : this.imageReaderProperties.stringPropertyNames()) {
@@ -67,8 +41,9 @@ public class ImageFactory implements ImageFactoryInterface {
                 Class<?> readerClass = Class.forName(readerClassName);
                 ImageInterface imageReader = (ImageInterface) readerClass.getConstructor().newInstance();
                 imageReadersMap.put(extension, imageReader);
-            } catch (Exception e) {
-                throw new RuntimeException("Error during load of image reader: " + extension);
+            } catch (InvocationTargetException | ClassNotFoundException | InstantiationException |
+                     IllegalAccessException | NoSuchMethodException ignored) {
+                ;
             }
         }
         return imageReadersMap;

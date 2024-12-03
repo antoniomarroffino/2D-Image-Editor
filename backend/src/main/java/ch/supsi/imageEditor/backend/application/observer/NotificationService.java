@@ -16,10 +16,6 @@ public class NotificationService implements NotificationServiceInterface {
         return instance == null ? instance = new NotificationService() : instance;
     }
 
-    Map<EventType, List<EventListener>> getSubscribers() {
-        return this.subscribers;
-    }
-
     @Override
     public void subscribe(EventType eventType, EventListener listener) {
         this.subscribers.get(eventType).add(listener);

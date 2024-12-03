@@ -1,6 +1,6 @@
 package ch.supsi.imageEditor.backend.application.operation;
 
-import ch.supsi.imageEditor.backend.business.operation.OperationModel;
+import ch.supsi.imageEditor.backend.business.operation.AvailableOperationModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import org.mockito.Mockito;
 
 import java.util.Set;
 
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
@@ -26,7 +25,6 @@ class OperationControllerTest {
     public void constructor() {
         OperationController operationController = new OperationController();
         Assertions.assertNotNull(operationController);
-        Assertions.assertNotNull(operationController.getOperationModel());
     }
 
     @Test
@@ -34,7 +32,6 @@ class OperationControllerTest {
         OperationController operationController = OperationController.getInstance();
         Assertions.assertNotNull(operationController);
         Assertions.assertNotNull(OperationController.instance);
-        Assertions.assertNotNull(operationController.getOperationModel());
     }
 
     @Test
@@ -46,15 +43,14 @@ class OperationControllerTest {
 
     @Test
     public void getOperationsTagTest() {
-        OperationModel mockOperationModel = Mockito.mock(OperationModel.class);
-        Set<String> mockOperationsTag = Set.of("rotate", "resize", "crop");
-        when(mockOperationModel.getOperationsTag()).thenReturn(mockOperationsTag);
-        try (MockedStatic<OperationModel> operationModelStaticMock = Mockito.mockStatic(OperationModel.class)) {
-            operationModelStaticMock.when(OperationModel::getInstance).thenReturn(mockOperationModel);
+        AvailableOperationModel mockAvailableOperationModel = Mockito.mock(AvailableOperationModel.class);
+        Set<String> mockOperationsTag = Set.of("rotate-90-left", "rotate-90-right");
+        when(mockAvailableOperationModel.getOperationsTag()).thenReturn(mockOperationsTag);
+        try (MockedStatic<AvailableOperationModel> mockedStatic = Mockito.mockStatic(AvailableOperationModel.class)) {
+            mockedStatic.when(AvailableOperationModel::getInstance).thenReturn(mockAvailableOperationModel);
             this.operationController = OperationController.getInstance();
             Set<String> operationsTag = this.operationController.getOperationsTag();
             Assertions.assertEquals(mockOperationsTag, operationsTag);
-            verify(mockOperationModel).getOperationsTag();
         }
     }
 }

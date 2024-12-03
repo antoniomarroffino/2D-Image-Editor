@@ -22,10 +22,6 @@ public class LanguageDataAccess implements LanguageDataAccessInterface {
         return instance == null ? instance = new LanguageDataAccess() : instance;
     }
 
-    Properties getUserPreferences() {
-        return this.userPreferences;
-    }
-
     @Override
     public String getCurrentLanguageTag() {
         if (this.userPreferences != null)

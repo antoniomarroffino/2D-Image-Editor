@@ -4,12 +4,11 @@ import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.ImageFactory;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
 
 public class WriterTest {
     private AbstractImage p1;
@@ -37,7 +36,7 @@ public class WriterTest {
                 + "# Image edited by 2D Image Editor" + System.lineSeparator()
                 + "4 4" + System.lineSeparator()
                 + "0 1 0 1 1 0 1 0 0 1 0 1 1 0 1 0 ";
-        assertEquals(result, p1.toString());
+        Assertions.assertEquals(result, p1.toString());
     }
 
     @Test
@@ -47,7 +46,7 @@ public class WriterTest {
                 + "5 5" + System.lineSeparator()
                 + "255" + System.lineSeparator()
                 + "0 50 100 150 200 50 100 150 200 255 100 150 200 255 200 150 200 255 200 150 200 255 200 150 100 ";
-        assertEquals(result, p2.toString());
+        Assertions.assertEquals(result, p2.toString());
     }
 
     @Test
@@ -57,6 +56,6 @@ public class WriterTest {
                 + "3 2" + System.lineSeparator()
                 + "255" + System.lineSeparator()
                 + "255 0 0 0 255 0 0 0 255 255 255 0 0 255 255 255 0 255 ";
-        assertEquals(result, p3.toString());
+        Assertions.assertEquals(result, p3.toString());
     }
 }

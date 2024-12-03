@@ -5,6 +5,7 @@ import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.application.observer.NotificationService;
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
 import ch.supsi.imageEditor.backend.business.images.ImageFactory;
+import ch.supsi.imageEditor.backend.business.operation.AvailableOperationModel;
 import ch.supsi.imageEditor.backend.business.operation.OperationModel;
 import ch.supsi.imageEditor.backend.business.pipeline.PipelineModel;
 import ch.supsi.imageEditor.backend.exception.OperationNotSupportedException;
@@ -25,10 +26,6 @@ class PipelineControllerTest {
     public void constructor() {
         PipelineController pipelineController = new PipelineController();
         Assertions.assertNotNull(pipelineController);
-        Assertions.assertNotNull(pipelineController.getImageModel());
-        Assertions.assertNotNull(pipelineController.getPipelineModel());
-        Assertions.assertNotNull(pipelineController.getOperationModel());
-        Assertions.assertNotNull(pipelineController.getNotificationService());
     }
 
     @Test
@@ -36,10 +33,6 @@ class PipelineControllerTest {
         PipelineController pipelineController = PipelineController.getInstance();
         Assertions.assertNotNull(pipelineController);
         Assertions.assertNotNull(PipelineController.instance);
-        Assertions.assertNotNull(pipelineController.getImageModel());
-        Assertions.assertNotNull(pipelineController.getPipelineModel());
-        Assertions.assertNotNull(pipelineController.getOperationModel());
-        Assertions.assertNotNull(pipelineController.getNotificationService());
     }
 
     @Test
@@ -52,32 +45,28 @@ class PipelineControllerTest {
     @Test
     void testAddOperationToPipeline() throws OperationNotSupportedException {
         String operationName = "resize";
-
-        // Mock static methods for PipelineModel, OperationModel, and NotificationService
         try (MockedStatic<PipelineModel> pipelineModelMocked = mockStatic(PipelineModel.class);
              MockedStatic<OperationModel> operationModelMocked = mockStatic(OperationModel.class);
+             MockedStatic<AvailableOperationModel> availableOperationModelMocked = mockStatic(AvailableOperationModel.class);
              MockedStatic<NotificationService> notificationServiceMocked = mockStatic(NotificationService.class)) {
 
-            // Mock the static getInstance methods to return mocked instances
             PipelineModel mockPipelineModel = mock(PipelineModel.class);
             OperationModel mockOperationModel = mock(OperationModel.class);
+            AvailableOperationModel mockAvailableOperationModel = mock(AvailableOperationModel.class);
             NotificationService mockNotificationService = mock(NotificationService.class);
 
-            // Define behavior for the mocked static methods
             pipelineModelMocked.when(PipelineModel::getInstance).thenReturn(mockPipelineModel);
             operationModelMocked.when(OperationModel::getInstance).thenReturn(mockOperationModel);
+            availableOperationModelMocked.when(AvailableOperationModel::getInstance).thenReturn(mockAvailableOperationModel);
             notificationServiceMocked.when(NotificationService::getInstance).thenReturn(mockNotificationService);
 
-            // Mock behavior of the operation model
-            doNothing().when(mockOperationModel).checkOperationExists(operationName);
+            doNothing().when(mockAvailableOperationModel).checkOperationExists(operationName);
             doNothing().when(mockPipelineModel).addOperationToPipeline(operationName);
 
-            // Act: Call the method under test
             PipelineController pipelineController = PipelineController.getInstance();
             pipelineController.addOperationToPipeline(operationName);
 
-            // Assert: Verify that the methods were called
-            verify(mockOperationModel).checkOperationExists(operationName);
+            verify(mockAvailableOperationModel).checkOperationExists(operationName);
             verify(mockPipelineModel).addOperationToPipeline(operationName);
             verify(mockNotificationService).notify(EventType.ADDED_OPERATION);
         }
@@ -133,12 +122,12 @@ class PipelineControllerTest {
             when(mockImageFactory.getImage()).thenReturn(mockImage);
 
             pipelineModelMocked.when(mockPipelineModel::getPipeline).thenReturn(null);
-            when(mockOperationModel.executeOperations(any(), any())).thenReturn(mockImage);
+            when(mockOperationModel.executeOperations(any(), any(), any())).thenReturn(mockImage);
 
             PipelineController pipelineController = PipelineController.getInstance();
             pipelineController.runPipeline();
 
-            verify(mockOperationModel).executeOperations(any(), any());
+            verify(mockOperationModel).executeOperations(any(), any(), any());
             verify(mockImageFactory).setImage(mockImage);
             verify(mockNotificationService, times(2)).notify(any(EventType.class));
             verify(mockPipelineModel).cleanPipeline();
