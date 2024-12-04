@@ -23,7 +23,7 @@ public class ImageDataAccess implements ImageDataAccessInterface {
     private final Properties formatExporterProperties;
     private final Path preferencesPath;
 
-    private ImageDataAccess() {
+    protected ImageDataAccess() {
         this.formatReaderProperties = this.loadProperties(formatReaderPropertiesPath);
         this.formatExporterProperties = this.loadProperties(formatExporterPropertiesPath);
         this.preferencesPath = Paths.get(userHomeDirectory, preferencesDirectory);
@@ -34,7 +34,6 @@ public class ImageDataAccess implements ImageDataAccessInterface {
         return instance == null ? instance = new ImageDataAccess() : instance;
     }
 
-
     private Path loadFilePath(Path preferencesPath) {
         try {
             if (!Files.exists(preferencesPath))
@@ -43,17 +42,6 @@ public class ImageDataAccess implements ImageDataAccessInterface {
             ;
         }
         return preferencesPath.resolve(recentFiles);
-    }
-
-    private Properties loadFormatReaderProperties() {
-        Properties defaultPreferences = new Properties();
-        try {
-            InputStream defaultPreferencesStream = this.getClass().getResourceAsStream(formatReaderPropertiesPath);
-            defaultPreferences.load(defaultPreferencesStream);
-        } catch (IOException ignored) {
-            ;
-        }
-        return defaultPreferences;
     }
 
     private Properties loadProperties(String fileName) {
@@ -75,13 +63,6 @@ public class ImageDataAccess implements ImageDataAccessInterface {
     @Override
     public Properties getFormatExporterProperties() {
         return this.formatExporterProperties;
-    }
-
-    protected String getFileExtension(String filePath) {
-        int lastDotIndex = filePath.lastIndexOf('.');
-        if (lastDotIndex == -1 || lastDotIndex == filePath.length() - 1)
-            return "";
-        return filePath.substring(lastDotIndex + 1);
     }
 
     @Override
