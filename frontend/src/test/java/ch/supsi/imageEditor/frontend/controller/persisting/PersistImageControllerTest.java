@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -133,6 +134,11 @@ class PersistImageControllerTest {
             persistImageModelStaticMock.when(PersistImageModel::getInstance).thenReturn(mockPersistImageModel);
             persistImageController = PersistImageController.getInstance();
 
+            Mockito.when(mockPersistImageModel.isAlreadySave()).thenReturn(true);
+            persistImageController.saveImage(Mockito.mock(Component.class));
+            verify(mockPersistImageModel, times(0)).writeImage();
+            verify(mockPersistImageModel, times(0)).setAlreadySave(true);
+
             Mockito.when(mockPersistImageModel.isAlreadySave()).thenReturn(false);
             persistImageController.saveImage(Mockito.mock(Component.class));
             verify(mockPersistImageModel, times(1)).writeImage();
@@ -157,6 +163,13 @@ class PersistImageControllerTest {
             verify(mockPersistImageModel, times(1)).setNewSavingFile(mockFile);
             verify(mockPersistImageModel, times(1)).writeImage();
             verify(mockPersistImageModel, times(1)).setAlreadySave(true);
+
+            Mockito.clearInvocations(mockPersistImageModel);
+
+            Mockito.when(mockSavingView.getSaveFile(any())).thenReturn(null);
+            persistImageController.saveImageAs(Mockito.mock(Component.class));
+            verify(mockPersistImageModel, times(0)).setNewSavingFile(mockFile);
+
         }
     }
 

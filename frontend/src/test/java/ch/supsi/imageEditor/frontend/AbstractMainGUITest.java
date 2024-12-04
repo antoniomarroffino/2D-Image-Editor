@@ -17,6 +17,8 @@ import static org.mockito.Mockito.when;
 public abstract class AbstractMainGUITest extends ApplicationTest {
     protected static final Logger LOGGER = Logger.getAnonymousLogger();
     protected int stepNo;
+    protected File file = new File("./src/test/java/ch/supsi/imageEditor/frontend/P3.ppm");
+    protected SavingViewFXML mockedSavingViewFXML = mock(SavingViewFXML.class);
 
     @BeforeAll
     public static void setupSpec() {
@@ -38,8 +40,8 @@ public abstract class AbstractMainGUITest extends ApplicationTest {
 
     public void start(final Stage stage) throws Exception {
         try (MockedStatic<SavingViewFXML> mockedStaticSavingViewFxml = Mockito.mockStatic(SavingViewFXML.class)) {
-            SavingViewFXML mockedSavingViewFXML = mock(SavingViewFXML.class);
-            when(mockedSavingViewFXML.getOpenFile(anySet())).thenReturn(new File("./src/test/java/ch/supsi/imageEditor/frontend/P3.ppm"));
+            when(mockedSavingViewFXML.getOpenFile(anySet())).thenReturn(file);
+            when(mockedSavingViewFXML.getSaveFile(anySet())).thenReturn(new File("./src/test/java/ch/supsi/imageEditor/frontend/P1.pbm"));
             mockedStaticSavingViewFxml.when(SavingViewFXML::getInstance).thenReturn(mockedSavingViewFXML);
 
             final MainFX main = new MainFX();
