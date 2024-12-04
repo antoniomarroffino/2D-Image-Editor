@@ -160,16 +160,13 @@ class PersistImageControllerTest {
             persistImageController = PersistImageController.getInstance();
 
             persistImageController.saveImageAs(Mockito.mock(Component.class));
-            verify(mockPersistImageModel, times(1)).setNewSavingFile(mockFile);
-            verify(mockPersistImageModel, times(1)).writeImage();
-            verify(mockPersistImageModel, times(1)).setAlreadySave(true);
+            verify(mockPersistImageModel, times(1)).writeImageAs(mockFile);
 
             Mockito.clearInvocations(mockPersistImageModel);
 
             Mockito.when(mockSavingView.getSaveFile(any())).thenReturn(null);
             persistImageController.saveImageAs(Mockito.mock(Component.class));
             verify(mockPersistImageModel, times(0)).setNewSavingFile(mockFile);
-
         }
     }
 
