@@ -6,10 +6,17 @@ import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class PgmImage extends AbstractPnmImage {
+    public PgmImage() {
+        format = "P2";
+        upExport = List.of("PBM");
+        downExport = List.of("PPM");
+    }
+
     @Override
     public void read(String filePath) throws IOException, FormatNotSupportedException, ImageHeaderUncorrectException {
         try (Scanner scanner = new Scanner(new FileReader(filePath))) {

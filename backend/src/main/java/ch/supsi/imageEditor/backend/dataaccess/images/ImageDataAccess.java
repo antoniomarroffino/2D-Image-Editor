@@ -14,15 +14,18 @@ public class ImageDataAccess implements ImageDataAccessInterface {
     protected static ImageDataAccess instance = null;
 
     private static final String formatReaderPropertiesPath = "/format-reader.properties";
+    private static final String formatExporterPropertiesPath = "/format-exporter.properties";
     private static final String userHomeDirectory = System.getProperty("user.home");
     private static final String preferencesDirectory = ".userpreferences";
     private static final String recentFiles = "recentFiles.txt";
     private final Path filePath;
     private final Properties formatReaderProperties;
+    private final Properties formatExporterProperties;
     private final Path preferencesPath;
 
-    protected ImageDataAccess() {
-        this.formatReaderProperties = this.loadFormatReaderProperties();
+    private ImageDataAccess() {
+        this.formatReaderProperties = this.loadProperties(formatReaderPropertiesPath);
+        this.formatExporterProperties = this.loadProperties(formatExporterPropertiesPath);
         this.preferencesPath = Paths.get(userHomeDirectory, preferencesDirectory);
         this.filePath = loadFilePath(preferencesPath);
     }
@@ -53,8 +56,32 @@ public class ImageDataAccess implements ImageDataAccessInterface {
         return defaultPreferences;
     }
 
+    private Properties loadProperties(String fileName) {
+        Properties properties = new Properties();
+        try {
+            InputStream inputStream = this.getClass().getResourceAsStream(fileName);
+            properties.load(inputStream);
+        } catch (IOException ignored) {
+            ;
+        }
+        return properties;
+    }
+
+    @Override
     public Properties getFormatReaderProperties() {
         return this.formatReaderProperties;
+    }
+
+    @Override
+    public Properties getFormatExporterProperties() {
+        return this.formatExporterProperties;
+    }
+
+    protected String getFileExtension(String filePath) {
+        int lastDotIndex = filePath.lastIndexOf('.');
+        if (lastDotIndex == -1 || lastDotIndex == filePath.length() - 1)
+            return "";
+        return filePath.substring(lastDotIndex + 1);
     }
 
     @Override

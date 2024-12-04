@@ -1,11 +1,19 @@
 package ch.supsi.imageEditor.backend.business.images;
 
+import java.util.List;
+
 public abstract class AbstractImage {
     protected String format;
     protected int width;
     protected int height;
     protected Pixel[][] pixel = null;
     protected int maxIntensity;
+    protected List<String> downExport;
+    protected List<String> upExport;
+
+    public String getFormat() {
+        return format;
+    }
 
     public int getWidth() {
         return this.width;
@@ -35,6 +43,10 @@ public abstract class AbstractImage {
 
     public void setPixel(Pixel[][] pixel) {
         this.pixel = pixel;
+    }
+
+    public void setMaxIntensity(int maxIntensity) {
+        this.maxIntensity = maxIntensity;
     }
 
     @Override
