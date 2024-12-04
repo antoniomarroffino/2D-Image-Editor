@@ -86,6 +86,7 @@ class ImageFactoryTest {
             imageDataAccessStaticMock.when(ImageDataAccess::getInstance).thenReturn(mockImageDataAccess);
             when(mockImageDataAccess.getRecentFiles()).thenReturn(list);
             when(mockImageDataAccess.getFormatReaderProperties()).thenReturn(new Properties());
+            when(mockImageDataAccess.getFormatExporterProperties()).thenReturn(new Properties());
             this.imageFactory = ImageFactory.getInstance();
         }
 
@@ -126,6 +127,7 @@ class ImageFactoryTest {
         try (MockedStatic<ImageDataAccess> imageDataAccessStaticMock = Mockito.mockStatic(ImageDataAccess.class)) {
             imageDataAccessStaticMock.when(ImageDataAccess::getInstance).thenReturn(mockImageDataAccess);
             when(mockImageDataAccess.getFormatReaderProperties()).thenReturn(new Properties());
+            when(mockImageDataAccess.getFormatExporterProperties()).thenReturn(new Properties());
             doNothing().when(mockImageDataAccess).writeImage(image,file);
             this.imageFactory = ImageFactory.getInstance();
             this.imageFactory.writeImage(image,file);
