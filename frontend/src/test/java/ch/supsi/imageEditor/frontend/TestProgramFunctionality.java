@@ -15,13 +15,14 @@ public class TestProgramFunctionality extends AbstractMainGUITest {
 
     @Test
     public void walkThrough() {
-//        changeLanguage();
-//        openImage();
-//        imageInfo();
-//        pipeline();
-//        savingImage();
-//        closingImage();
-//        closingImageConfirm();
+        changeLanguage();
+        openImage();
+        imageInfo();
+        //openRecentImage();
+        pipeline();
+        savingImage();
+        closingImage();
+        //closingImageConfirm();
         export();
     }
 
@@ -62,6 +63,14 @@ public class TestProgramFunctionality extends AbstractMainGUITest {
             label = lookup("#modificationDateLabel").query();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Assertions.assertEquals("Modification date: " + sdf.format(file.lastModified()), label.getText());
+        });
+    }
+
+    private void openRecentImage() {
+        step("Open Recent Image", () -> {
+            clickOn("#fileMenu");
+            clickOn("#openRecentMenu");
+            clickOn("#" + file.getAbsolutePath());
         });
     }
 
@@ -151,6 +160,7 @@ public class TestProgramFunctionality extends AbstractMainGUITest {
             infoBarMessages.insert(0, "Image is loaded correctly\n\n");
             infoBarMessages.insert(0, "Image saved correctly\n\n");
             verifyThat("#infoBarTextArea", TextInputControlMatchers.hasText(infoBarMessages.toString()));
+            fileExported.delete();
         });
     }
 }
