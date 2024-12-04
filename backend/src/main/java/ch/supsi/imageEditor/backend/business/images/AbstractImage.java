@@ -45,8 +45,20 @@ public abstract class AbstractImage {
         this.pixel = pixel;
     }
 
+    public int getMaxIntensity() {
+        return maxIntensity;
+    }
+
     public void setMaxIntensity(int maxIntensity) {
         this.maxIntensity = maxIntensity;
+    }
+
+    public List<String> getUpExport() {
+        return upExport;
+    }
+
+    public List<String> getDownExport() {
+        return downExport;
     }
 
     @Override
