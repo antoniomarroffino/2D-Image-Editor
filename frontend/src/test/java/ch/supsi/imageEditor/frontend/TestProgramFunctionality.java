@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 
 import static org.testfx.api.FxAssert.verifyThat;
@@ -18,11 +19,10 @@ public class TestProgramFunctionality extends AbstractMainGUITest {
         changeLanguage();
         openImage();
         imageInfo();
-        //openRecentImage();
+        openRecentImage();
         pipeline();
         savingImage();
         closingImage();
-        //closingImageConfirm();
         export();
     }
 
@@ -70,7 +70,9 @@ public class TestProgramFunctionality extends AbstractMainGUITest {
         step("Open Recent Image", () -> {
             clickOn("#fileMenu");
             clickOn("#openRecentMenu");
-            clickOn("#" + file.getAbsolutePath());
+            clickOn(Path.of(file.getAbsolutePath()).toString());
+            infoBarMessages.insert(0, "Image is loaded correctly\n\n");
+            verifyThat("#infoBarTextArea", TextInputControlMatchers.hasText(infoBarMessages.toString()));
         });
     }
 
@@ -105,7 +107,6 @@ public class TestProgramFunctionality extends AbstractMainGUITest {
             clickOn("#negative");
             infoBarMessages.insert(0, "Operation is added to pipeline correctly\n\n");
             verifyThat("#infoBarTextArea", TextInputControlMatchers.hasText(infoBarMessages.toString()));
-
             clickOn("#playButton");
             infoBarMessages.insert(0, "Pipeline is executed\n\n");
             infoBarMessages.insert(0, "Pipeline is now clear\n\n");
@@ -133,21 +134,6 @@ public class TestProgramFunctionality extends AbstractMainGUITest {
             clickOn("#closeMenuItem");
             infoBarMessages.insert(0, "Image is closed correctly\n\n");
             verifyThat("#infoBarTextArea", TextInputControlMatchers.hasText(infoBarMessages.toString()));
-        });
-    }
-
-    private void closingImageConfirm() {
-        step("Closing Image Confirmation", () -> {
-            clickOn("#fileMenu");
-            clickOn("#openMenuItem");
-            clickOn("#negative");
-            clickOn("#playButton");
-            clickOn("#fileMenu");
-            clickOn("#closeMenuItem");
-            //VBox vbox = lookup("#confirmationVBox").query();
-            //Assertions.assertTrue(vbox.isVisible());
-            //clickOn("#buttonNo");
-            sleep(5000);
         });
     }
 
