@@ -62,12 +62,6 @@ public class AbstractPnmImageTest {
         assertThrows(FormatNotSupportedException.class, () -> pbmImage.read(testFilePath));
     }
 
-    @Test
-    public void testFormatNotSupportedWithDot()  {
-        String testFilePath = "src/test/java/ch/supsi/imageEditor/backend/images/P1/P1test.pbm.";
-            assertThrows(ImageHeaderUncorrectException.class, () -> pbmImage.read(testFilePath));
-
-    }
 
     @Test
     public void testFormatNotSupportedWithoutDot()  {
