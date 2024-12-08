@@ -1,0 +1,164 @@
+.root {
+    -fx-background-color: #2b2b2b;
+}
+
+.label, .button, .text-field {
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-background-color: #3c3f41;
+    -fx-border-color: #555555;
+}
+
+.text-field {
+    -fx-background-color: #3c3f41;
+    -fx-border-color: #555555;
+}
+
+.menu-bar {
+    -fx-background-color: #2b2b2b;
+}
+
+.custom-alert, .dialog-pane, .content {
+    -fx-background-color: #2b2b2b;
+}
+
+.custom-alert .header-panel {
+    -fx-background-color: #2b2b2b;
+    -fx-border-color: #555555;
+    -fx-border-width: 0 0 2px 0;
+}
+
+.tool-bar {
+    -fx-background-color: #2b2b2b;
+}
+
+.scroll-pane {
+    -fx-background: #2b2b2b;
+    -fx-background-insets: 0;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #555555;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #555555;
+}
+
+.scroll-bar {
+    -fx-background-color: #3c3f41;
+}
+
+.menu-bar {
+    -fx-background-color: #2b2b2b;
+    -fx-border-color: #3c3f41;
+}
+
+.menu-bar .label {
+    -fx-text-fill: white;
+}
+
+.menu {
+    -fx-background-color: #2b2b2b;
+}
+
+.menu-item {
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: white;
+}
+
+.menu-item:hover {
+    -fx-background-color: #555555;
+}
+
+.anchor-pane {
+    -fx-background-color: #2b2b2b;
+    -fx-border-color: #555555;
+    -fx-border-width: 1;
+    -fx-padding: 10;
+}
+
+.custom-label-currentInfo {
+    -fx-background-color: #333333;
+}
+
+.custom-label {
+    -fx-background-color: #333333;
+    -fx-border-color: #4f4f4f;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-style: solid;
+}
+
+.text-area {
+    -fx-background-color: #333333;
+    -fx-text-fill: white;
+}
+
+.text-area .content {
+    -fx-background-color: #333333;
+}
+
+#currentInfoPane {
+    -fx-background: #333333;
+    -fx-background-insets: 0;
+}
+
+#playButton:hover {
+    -fx-background-color: #00d100;
+}
+
+#deleteButton:hover {
+    -fx-background-color: red;
+}
+
+.operation-button:hover {
+    -fx-background-color: #1e7bc3;
+    -fx-cursor: hand;
+}
+
+#buttonClose:hover {
+    -fx-background-color: red;
+    -fx-cursor: hand;
+}
+
+#error-ok-button:hover {
+    -fx-background-color: #0078D7;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+#info-ok-button:hover {
+    -fx-background-color: #0078D7;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+#buttonYes:hover, #buttonNo:hover {
+    -fx-background-color: #0078D7;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.helpTitle {
+    -fx-font-size: 16px;
+}
+
+.helpParagraph {
+    -fx-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10 0 10 10;
+}
+
+.text-bold {
+    -fx-font-weight: bold;
+}
+
+.dotPoint {
+    -fx-padding: 0 0 0 10;
+}
+
+.operation-label {
+    -fx-background-color: #1e7bc3;
+}

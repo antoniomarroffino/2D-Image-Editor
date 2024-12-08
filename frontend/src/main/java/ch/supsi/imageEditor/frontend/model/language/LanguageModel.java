@@ -1,0 +1,105 @@
+package ch.supsi.imageEditor.frontend.model.language;
+
+import ch.supsi.imageEditor.backend.application.language.LanguageController;
+import ch.supsi.imageEditor.backend.application.language.LanguageControllerInterface;
+import ch.supsi.imageEditor.frontend.exception.LanguageNotSupportedException;
+import ch.supsi.imageEditor.frontend.model.AbstractModel;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+
+public class LanguageModel extends AbstractModel implements LanguageModelInterface {
+    private static final String languageBundlePath = "i18n.labels";
+    private static final String supportedLanguagesPath = "/i18n/supported_languages.properties";
+    protected static LanguageModel instance = null;
+    private final LanguageControllerInterface languageController;
+    private final Map<String, String> supportedLanguagesKeyTag;
+    private final Properties supportedLanguagesProperties;
+    private final ResourceBundle resourceBundle;
+    private String currentLanguageTag;
+
+    protected LanguageModel() {
+        this.supportedLanguagesProperties = this.getSupportedLanguagesProperties();
+        this.supportedLanguagesKeyTag = this.getSupportedLanguagesKeyTag();
+        this.languageController = LanguageController.getInstance();
+
+        String languageTag = this.languageController.getCurrentLanguageTag();
+        checkLanguageTagSupported(languageTag);
+        this.resourceBundle = this.createCurrentResourceBundle();
+    }
+
+    public static LanguageModel getInstance() {
+        return instance == null ? instance = new LanguageModel() : instance;
+    }
+
+    private ResourceBundle createCurrentResourceBundle() {
+        return ResourceBundle.getBundle(languageBundlePath, Locale.forLanguageTag(this.currentLanguageTag));
+    }
+
+    LanguageControllerInterface getLanguageController() {
+        return this.languageController;
+    }
+
+    Properties getLanguagesProperties() {
+        return this.supportedLanguagesProperties;
+    }
+
+    @Override
+    public ResourceBundle getCurrentResourceBundle() {
+        return this.resourceBundle;
+    }
+
+    @Override
+    public String getCurrentLanguage() {
+        return this.supportedLanguagesKeyTag.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().equals(this.currentLanguageTag))
+                .map(Map.Entry::getKey)
+                .findFirst().orElseThrow();
+    }
+
+    private Properties getSupportedLanguagesProperties() {
+        Properties languageProperties = new Properties();
+        try {
+            InputStream supportedLanguageTagsStream = this.getClass().getResourceAsStream(supportedLanguagesPath);
+            languageProperties.load(supportedLanguageTagsStream);
+        } catch (IOException e) {
+            System.err.println("ERROR: Unable to load supported languages properties from " + supportedLanguagesPath);
+        }
+        return languageProperties;
+    }
+
+    Map<String, String> getSupportedLanguagesKeyTag() {
+        Map<String, String> languageKeyTag = new HashMap<>();
+        for (String languageKey : this.supportedLanguagesProperties.keySet().stream().map(String::valueOf).toList())
+            languageKeyTag.put(languageKey, this.supportedLanguagesProperties.getProperty(languageKey));
+        return languageKeyTag;
+    }
+
+    private void checkLanguageTagSupported(String languageTag) {
+        try {
+            if (!this.supportedLanguagesKeyTag.containsValue(languageTag)) {
+                this.currentLanguageTag = this.supportedLanguagesKeyTag.values().stream().findFirst().orElseThrow();
+                throw new LanguageNotSupportedException("Language tag " + languageTag + " not supported!\nEnglish is set as default language.");
+            } else
+                this.currentLanguageTag = languageTag;
+        } catch (LanguageNotSupportedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public Set<String> getSupportedLanguages() {
+        return new HashSet<>(this.supportedLanguagesKeyTag.keySet());
+    }
+
+    @Override
+    public void changeLanguage(String languageKey) {
+        String languageTag = this.supportedLanguagesKeyTag.get(languageKey);
+        if (languageTag != null && !languageTag.equals(this.currentLanguageTag)) {
+            this.languageController.changeLanguageTag(languageTag);
+            this.currentLanguageTag = languageTag;
+        }
+    }
+}

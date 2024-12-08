@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="helpGuideAnchorPane" prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@style/dark-theme.css">
+    <Label contentDisplay="CENTER" layoutX="235.0" prefHeight="42.0" prefWidth="130.0" text="Help guide"
+           textAlignment="CENTER">
+        <font>
+            <Font name="System Bold" size="24.0"/>
+        </font>
+    </Label>
+    <Button fx:id="buttonClose" layoutX="266.0" layoutY="350.0" mnemonicParsing="false" prefHeight="42.0"
+            prefWidth="67.0" text="Close" textAlignment="CENTER">
+        <textFill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                <stops>
+                    <Stop>
+                        <color>
+                            <Color/>
+                        </color>
+                    </Stop>
+                    <Stop offset="1.0">
+                        <color>
+                            <Color red="1.0" green="1.0" blue="1.0"/>
+                        </color>
+                    </Stop>
+                </stops>
+            </RadialGradient>
+        </textFill>
+    </Button>
+    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutY="42.0" prefHeight="300"
+                prefWidth="600.0">
+        <VBox prefWidth="600.0" spacing="5" styleClass="helpParagraph">
+            <Label styleClass="helpTitle, text-bold" text="%HelpGuide.title"/>
+            <Label text="%HelpGuide.description" wrapText="true" minHeight="40"/>
+
+            <Label styleClass="text-bold" text="%HelpGuide.menuFile"/>
+            <Label styleClass="dotPoint" text="%HelpGuide.open"/>
+            <Label styleClass="dotPoint" text="%HelpGuide.recentFiles"/>
+            <Label styleClass="dotPoint" text="%HelpGuide.save"/>
+            <Label styleClass="dotPoint" text="%HelpGuide.saveAs"/>
+            <Label styleClass="dotPoint" text="%HelpGuide.close"/>
+            <Label styleClass="dotPoint" text="%HelpGuide.exit"/>
+
+            <Label styleClass="text-bold" text="%HelpGuide.menuEdit"/>
+            <Label styleClass="dotPoint" text="%HelpGuide.language" wrapText="true" minHeight="40"/>
+
+            <Label styleClass="text-bold" text="%HelpGuide.menuHelp"/>
+            <Label styleClass="dotPoint" text="%HelpGuide.info" wrapText="true" minHeight="40"/>
+
+            <Label styleClass="text-bold" text="%HelpGuide.editOperations"/>
+            <Label styleClass="dotPoint" text="%HelpGuide.editingInfo" wrapText="true" minHeight="40"/>
+
+            <Label styleClass="text-bold" text="%HelpGuide.pipeline"/>
+            <Label styleClass="dotPoint" text="%HelpGuide.pipelineInfo" wrapText="true" minHeight="40"/>
+
+            <Label styleClass="text-bold" text="%HelpGuide.infobar"/>
+            <Label styleClass="dotPoint" text="%HelpGuide.infobarInfo"/>
+
+            <Label styleClass="text-bold" text="%HelpGuide.imageInfo"/>
+            <Label styleClass="dotPoint" text="%HelpGuide.imageInfoDetails" wrapText="true" minHeight="60"/>
+        </VBox>
+    </ScrollPane>
+</AnchorPane>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<Pane xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style/dark-theme.css">
+    <ScrollPane fx:id="imageScrollPane" prefHeight="574.0" prefWidth="500.0">
+        <Label fx:id="placeHolderText" alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="29.0"
+               prefHeight="571.0" prefWidth="497.0" style="-fx-text-fill: #666666;" text="%ImageWindow.startText"
+               textAlignment="CENTER">
+            <font>
+                <Font name="Curlz MT" size="30.0"/>
+            </font>
+        </Label>
+    </ScrollPane>
+</Pane>
