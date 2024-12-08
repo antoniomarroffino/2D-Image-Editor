@@ -75,9 +75,9 @@ public class AvailableOperationModelTest {
     }
 
     @Test
-    public void getOperationsTagTest(){
+    public void getOperationsTagTest() {
         this.availableOperationModel = AvailableOperationModel.getInstance();
-        Set<String> supportedOperationsExpected = Set.of("rotate-90-right", "rotate-90-left","flip-side-to-side","flip-upside-down","negative");
+        Set<String> supportedOperationsExpected = Set.of("rotate-90-right", "rotate-90-left", "flip-side-to-side", "flip-upside-down", "negative");
         Set<String> supportedOperations = this.availableOperationModel.getOperationsTag();
         Assertions.assertEquals(supportedOperationsExpected, supportedOperations);
     }

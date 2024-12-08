@@ -26,8 +26,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class PipelineViewFXML implements ControlledFxView {
-    protected static PipelineViewFXML instance = null;
     private static final String PathResourceFXML = "/pipeline.fxml";
+    protected static PipelineViewFXML instance = null;
     private static ResourceBundle bundle;
     private final Map<EventType, Runnable> onEventDoActionMap;
     private int cntOperationInPipeline;

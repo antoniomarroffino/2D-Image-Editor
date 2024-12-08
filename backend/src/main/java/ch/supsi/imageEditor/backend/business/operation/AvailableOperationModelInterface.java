@@ -8,6 +8,8 @@ import java.util.Set;
 
 public interface AvailableOperationModelInterface {
     Map<String, Operation> getAvailableOperations();
+
     Set<String> getOperationsTag();
+
     void checkOperationExists(String operation) throws OperationNotSupportedException;
 }

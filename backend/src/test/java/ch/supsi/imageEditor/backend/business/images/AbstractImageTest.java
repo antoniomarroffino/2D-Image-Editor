@@ -11,20 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AbstractImageTest {
 
-    private static class ConcreteImage extends AbstractImage {
-        public ConcreteImage(int width, int height) {
-            this.width = width;
-            this.height = height;
-            this.pixel = new Pixel[height][width];
-
-            for (int i = 0; i < height; i++) {
-                for (int j = 0; j < width; j++) {
-                    this.pixel[i][j] = new Pixel(0);
-                }
-            }
-        }
-    }
-
     private ConcreteImage image;
 
     @BeforeEach
@@ -104,7 +90,7 @@ public class AbstractImageTest {
     }
 
     @Test
-    public void getPixelTest(){
+    public void getPixelTest() {
         Pixel pixel = image.getPixel(2, 2);
         assertNotNull(pixel);
     }
@@ -140,8 +126,8 @@ public class AbstractImageTest {
     }
 
     @Test
-    public void maxIntensityTest(){
-        int maxIntensity= 255;
+    public void maxIntensityTest() {
+        int maxIntensity = 255;
         image.setMaxIntensity(maxIntensity);
         Assertions.assertEquals(maxIntensity, image.getMaxIntensity(), "Expected the max intensity to equal to 255");
     }
@@ -166,5 +152,19 @@ public class AbstractImageTest {
         image.downExport = downExport;
         assertNotNull(image.getDownExport(), "Expected downExport list to not be null");
         assertEquals(downExport, image.getDownExport(), "Expected downExport list to match the mocked data");
+    }
+
+    private static class ConcreteImage extends AbstractImage {
+        public ConcreteImage(int width, int height) {
+            this.width = width;
+            this.height = height;
+            this.pixel = new Pixel[height][width];
+
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    this.pixel[i][j] = new Pixel(0);
+                }
+            }
+        }
     }
 }

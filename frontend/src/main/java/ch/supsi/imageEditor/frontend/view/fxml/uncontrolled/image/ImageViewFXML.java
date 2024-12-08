@@ -21,8 +21,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ImageViewFXML implements UncontrolledFxView {
-    protected static ImageViewFXML instance = null;
     private static final String PathResourceFXML = "/imagewindow.fxml";
+    protected static ImageViewFXML instance = null;
     private final Map<EventType, Runnable> onEventDoActionMap;
     private ImageModelInterface imageModel;
     @FXML
@@ -95,7 +95,7 @@ public class ImageViewFXML implements UncontrolledFxView {
         return canvas;
     }
 
-    private void closeImage(){
+    private void closeImage() {
         this.imageScrollPane.setContent(null);
         this.placeHolderText.setVisible(true);
     }

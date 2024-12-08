@@ -16,6 +16,7 @@ import static org.mockito.Mockito.when;
 class LanguageControllerTest {
 
     private LanguageController languageController;
+
     @BeforeEach
     public void beforeEach() {
         LanguageController.instance = null;

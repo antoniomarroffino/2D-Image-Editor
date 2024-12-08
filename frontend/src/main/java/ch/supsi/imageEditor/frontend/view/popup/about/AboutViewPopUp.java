@@ -13,9 +13,9 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AboutViewPopUp implements AboutViewInterface {
-    protected static AboutViewPopUp instance = null;
     private static final int LOGO_HEIGHT = 75;
     private static final int LOGO_WIDTH = 75;
+    protected static AboutViewPopUp instance = null;
     private static ResourceBundle resourceBundle;
     private AboutModelInterface aboutModel;
 

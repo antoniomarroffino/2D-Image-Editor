@@ -70,6 +70,7 @@ class ImageFactoryTest {
         String resultEmpty = this.imageFactory.getFileExtension("nonsonounpercorsovalido");
         assertEquals("", resultEmpty);
     }
+
     @Test
     public void testGetSupportedFormat() {
         Set<String> expectedFormats = Set.of("PBM", "PGM", "PPM");
@@ -128,11 +129,11 @@ class ImageFactoryTest {
             imageDataAccessStaticMock.when(ImageDataAccess::getInstance).thenReturn(mockImageDataAccess);
             when(mockImageDataAccess.getFormatReaderProperties()).thenReturn(new Properties());
             when(mockImageDataAccess.getFormatExporterProperties()).thenReturn(new Properties());
-            doNothing().when(mockImageDataAccess).writeImage(image,file);
+            doNothing().when(mockImageDataAccess).writeImage(image, file);
             this.imageFactory = ImageFactory.getInstance();
-            this.imageFactory.writeImage(image,file);
+            this.imageFactory.writeImage(image, file);
         }
-        verify(mockImageDataAccess,times(1)).writeImage(image,file);
+        verify(mockImageDataAccess, times(1)).writeImage(image, file);
     }
 
     @Test
@@ -148,7 +149,7 @@ class ImageFactoryTest {
             imageDataAccessStaticMock.when(ImageDataAccess::getInstance).thenReturn(mockImageDataAccess);
             when(mockImageDataAccess.getFormatReaderProperties()).thenReturn(new Properties());
             when(mockImageDataAccess.getFormatExporterProperties()).thenReturn(new Properties());
-            doNothing().when(imageFactorySpy).writeImage(any(),any());
+            doNothing().when(imageFactorySpy).writeImage(any(), any());
             doReturn("PGM").when(imageFactorySpy).getFileExtension("sourceImage.PGM");
             doReturn("PGM").when(imageFactorySpy).getFileExtension("destinationImage.PGM");
             imageFactorySpy.writeImage(image, sourceFile, destinationFile);
@@ -169,7 +170,7 @@ class ImageFactoryTest {
             imageDataAccessStaticMock.when(ImageDataAccess::getInstance).thenReturn(mockImageDataAccess);
             when(mockImageDataAccess.getFormatReaderProperties()).thenReturn(new Properties());
             when(mockImageDataAccess.getFormatExporterProperties()).thenReturn(new Properties());
-            doNothing().when(imageFactorySpy).writeImage(any(),any());
+            doNothing().when(imageFactorySpy).writeImage(any(), any());
             doReturn("PGM").when(imageFactorySpy).getFileExtension("sourceImage.PGM");
             doReturn("PPM").when(imageFactorySpy).getFileExtension("destinationImage.PPM");
             imageFactorySpy.writeImage(image, sourceFile, destinationFile);
@@ -190,7 +191,7 @@ class ImageFactoryTest {
             imageDataAccessStaticMock.when(ImageDataAccess::getInstance).thenReturn(mockImageDataAccess);
             when(mockImageDataAccess.getFormatReaderProperties()).thenReturn(new Properties());
             when(mockImageDataAccess.getFormatExporterProperties()).thenReturn(new Properties());
-            doNothing().when(imageFactorySpy).writeImage(any(),any());
+            doNothing().when(imageFactorySpy).writeImage(any(), any());
             doReturn("PPM").when(imageFactorySpy).getFileExtension("sourceImage.PPM");
             doReturn("PBM").when(imageFactorySpy).getFileExtension("destinationImage.PBM");
             imageFactorySpy.writeImage(image, sourceFile, destinationFile);

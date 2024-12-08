@@ -12,6 +12,7 @@ public class OperationModel implements OperationModelInterface {
     protected OperationModel() {
 
     }
+
     public static OperationModel getInstance() {
         return instance == null ? instance = new OperationModel() : instance;
     }

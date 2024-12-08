@@ -20,12 +20,11 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class CurrentInfoViewFXML implements UncontrolledFxView {
-    protected static CurrentInfoViewFXML instance = null;
     private static final String PathResourceFXML = "/currentinfo.fxml";
-    private PersistImageModelInterface persistImageModel;
+    protected static CurrentInfoViewFXML instance = null;
     private final Map<EventType, Runnable> onEventDoActionMap;
     private final SimpleDateFormat sdf;
-
+    private PersistImageModelInterface persistImageModel;
     private String nameLabelDefaultText;
     private String formatLabelDefaultText;
     private String dimensionLabelDefaultText;

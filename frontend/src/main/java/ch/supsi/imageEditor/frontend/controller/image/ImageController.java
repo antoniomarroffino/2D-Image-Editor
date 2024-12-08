@@ -16,8 +16,8 @@ public class ImageController implements ImageControllerInterface, EventListener 
     protected static ImageController instance = null;
     private final PubSubModelInterface pubSubModel;
     private final ImageModelInterface imageModel;
-    private List<DataView> views;
     private final Map<EventType, Runnable> onEventDoActionMap;
+    private List<DataView> views;
 
     protected ImageController() {
         this.imageModel = ImageModel.getInstance();

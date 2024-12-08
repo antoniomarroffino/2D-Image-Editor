@@ -19,11 +19,11 @@ import java.net.URL;
 import java.util.*;
 
 public class MenuBarViewFXML implements MenuBarViewFXMLInterface {
-    protected static MenuBarViewFXML instance = null;
     private static final String PathResourceFXML = "/menubar.fxml";
-    private PersistImageModelInterface persistImageModel;
+    protected static MenuBarViewFXML instance = null;
     private static ResourceBundle bundle;
     private final Map<EventType, Runnable> onEventDoActionMap;
+    private PersistImageModelInterface persistImageModel;
     private HandleServiceInterface handleService;
     @FXML
     private MenuBar menuBar;

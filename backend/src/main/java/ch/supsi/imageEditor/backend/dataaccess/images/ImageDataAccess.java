@@ -11,13 +11,12 @@ import java.util.List;
 import java.util.Properties;
 
 public class ImageDataAccess implements ImageDataAccessInterface {
-    protected static ImageDataAccess instance = null;
-
     private static final String formatReaderPropertiesPath = "/format-reader.properties";
     private static final String formatExporterPropertiesPath = "/format-exporter.properties";
     private static final String userHomeDirectory = System.getProperty("user.home");
     private static final String preferencesDirectory = ".userpreferences";
     private static final String recentFiles = "recentFiles.txt";
+    protected static ImageDataAccess instance = null;
     private final Path filePath;
     private final Properties formatReaderProperties;
     private final Properties formatExporterProperties;

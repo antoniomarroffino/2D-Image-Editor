@@ -19,12 +19,11 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public class SavingViewFXML implements SavingViewFXMLInterface {
-    protected static SavingViewFXML instance = null;
     private static final String PathResourceFXML = "/saveConfirmation.fxml";
     private final static String PATH_LOGO_APP_IMAGE = "/images/logoApp.png";
-    private Stage mainStage;
+    protected static SavingViewFXML instance = null;
     private static ResourceBundle bundle;
-
+    private Stage mainStage;
     @FXML
     private VBox confirmationVBox;
     @FXML

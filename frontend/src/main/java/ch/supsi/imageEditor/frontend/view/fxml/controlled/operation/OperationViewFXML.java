@@ -23,8 +23,8 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public class OperationViewFXML implements OperationViewFXMLInterface {
-    protected static OperationViewFXML instance = null;
     private static final String PathResourceFXML = "/operations.fxml";
+    protected static OperationViewFXML instance = null;
     private static ResourceBundle bundle;
     private final Map<EventType, Runnable> onEventDoActionMap;
     private HandleServiceInterface handleService;
@@ -89,11 +89,11 @@ public class OperationViewFXML implements OperationViewFXMLInterface {
             action.run();
     }
 
-    private void disableOperationsButton(){
+    private void disableOperationsButton() {
         this.operationVBox.getChildren().forEach(op -> op.setDisable(true));
     }
 
-    private void enableOperationsButton(){
+    private void enableOperationsButton() {
         this.operationVBox.getChildren().forEach(op -> op.setDisable(false));
     }
 

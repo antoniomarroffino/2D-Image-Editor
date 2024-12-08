@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class OperationDataAccessTest {
     private OperationDataAccess operationDataAccess;
+
     @BeforeEach
     public void beforeEach() {
         OperationDataAccess.instance = null;
@@ -42,6 +43,6 @@ class OperationDataAccessTest {
         Properties operationProperties = operationDataAccess.getOperationProperties();
         Assertions.assertNotNull(operationProperties, "Le proprietà delle operazioni non devono essere null");
         //Assertions.assertEquals("ConcreteOperation", operationProperties.getProperty("rotate-90-left"),
-               // "Il valore dell'operazione 'operation-name' non è quello previsto");
+        // "Il valore dell'operazione 'operation-name' non è quello previsto");
     }
 }

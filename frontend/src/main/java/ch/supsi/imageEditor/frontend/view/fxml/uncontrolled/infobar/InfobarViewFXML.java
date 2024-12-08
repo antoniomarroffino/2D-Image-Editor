@@ -18,9 +18,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class InfobarViewFXML implements UncontrolledFxView {
-    protected static InfobarViewFXML instance = null;
     private static final String PathResourceFXML = "/infobar.fxml";
     private static final Map<EventType, String> eventDescription;
+    protected static InfobarViewFXML instance = null;
     private static LanguageModelInterface languageModel;
     private static ResourceBundle bundle;
 
