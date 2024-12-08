@@ -1,8 +1,11 @@
 package ch.supsi.imageEditor.backend.business.images;
 
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -134,5 +137,34 @@ public class AbstractImageTest {
                 assertEquals(0, pixelMatrix[i][j].getRed(), "Expected the red value of each pixel to be initialized to 0");
             }
         }
+    }
+
+    @Test
+    public void maxIntensityTest(){
+        int maxIntensity= 255;
+        image.setMaxIntensity(maxIntensity);
+        Assertions.assertEquals(maxIntensity, image.getMaxIntensity(), "Expected the max intensity to equal to 255");
+    }
+
+    @Test
+    public void testGetFormat() {
+        image.format = "JPEG";
+        assertEquals("JPEG", image.getFormat(), "Expected the format to be 'JPEG'");
+    }
+
+    @Test
+    public void testGetUpExport() {
+        List<String> upExport = List.of("ExportOption1", "ExportOption2");
+        image.upExport = upExport;
+        assertNotNull(image.getUpExport(), "Expected upExport list to not be null");
+        assertEquals(upExport, image.getUpExport(), "Expected upExport list to match the mocked data");
+    }
+
+    @Test
+    public void testGetDownExport() {
+        List<String> downExport = List.of("OptionA", "OptionB");
+        image.downExport = downExport;
+        assertNotNull(image.getDownExport(), "Expected downExport list to not be null");
+        assertEquals(downExport, image.getDownExport(), "Expected downExport list to match the mocked data");
     }
 }

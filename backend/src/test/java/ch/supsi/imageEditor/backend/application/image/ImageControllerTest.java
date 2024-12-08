@@ -11,6 +11,7 @@ import org.mockito.InOrder;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import java.io.File;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -91,6 +92,8 @@ class ImageControllerTest {
         PipelineModel mockPipelineModel = Mockito.mock(PipelineModel.class);
         NotificationService mockNotificationService = Mockito.mock(NotificationService.class);
 
+        File mockSource = Mockito.mock(File.class);
+        File mockDestination = Mockito.mock(File.class);
         try (MockedStatic<ImageFactory> imageFactoryStaticMock = Mockito.mockStatic(ImageFactory.class);
              MockedStatic<PipelineModel> pipelineModelStaticMock = Mockito.mockStatic(PipelineModel.class);
              MockedStatic<NotificationService> notificationServiceStaticMock = Mockito.mockStatic(NotificationService.class)) {
@@ -102,10 +105,15 @@ class ImageControllerTest {
             this.imageController = ImageController.getInstance();
 
             imageController.writeImage(null);
+            imageController.writeImage(mockSource,mockDestination);
 
             InOrder inOrder = inOrder(mockImageFactory, mockNotificationService);
             inOrder.verify(mockImageFactory).writeImage(null, null);
             inOrder.verify(mockNotificationService).notify(EventType.SAVE_IMAGE);
+
+            InOrder inOrder2 = inOrder(mockImageFactory, mockNotificationService);
+            inOrder2.verify(mockImageFactory).writeImage(null, null);
+            inOrder2.verify(mockNotificationService).notify(EventType.SAVE_IMAGE);
         } catch (Exception e) {
             Assertions.fail("Eccezione inaspettata: " + e.getMessage());
         }

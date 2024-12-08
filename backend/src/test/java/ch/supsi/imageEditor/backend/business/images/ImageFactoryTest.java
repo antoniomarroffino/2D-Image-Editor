@@ -132,8 +132,70 @@ class ImageFactoryTest {
             this.imageFactory = ImageFactory.getInstance();
             this.imageFactory.writeImage(image,file);
         }
-
         verify(mockImageDataAccess,times(1)).writeImage(image,file);
+    }
+
+    @Test
+    public void writeImageTest2() {
+        AbstractImage image = mock(AbstractImage.class);
+        File sourceFile = mock(File.class);
+        File destinationFile = mock(File.class);
+        ImageFactory imageFactorySpy = spy(ImageFactory.getInstance());
+        ImageDataAccess mockImageDataAccess = Mockito.mock(ImageDataAccess.class);
+        when(sourceFile.getName()).thenReturn("sourceImage.PGM");
+        when(destinationFile.getName()).thenReturn("destinationImage.PGM");
+        try (MockedStatic<ImageDataAccess> imageDataAccessStaticMock = Mockito.mockStatic(ImageDataAccess.class)) {
+            imageDataAccessStaticMock.when(ImageDataAccess::getInstance).thenReturn(mockImageDataAccess);
+            when(mockImageDataAccess.getFormatReaderProperties()).thenReturn(new Properties());
+            when(mockImageDataAccess.getFormatExporterProperties()).thenReturn(new Properties());
+            doNothing().when(imageFactorySpy).writeImage(any(),any());
+            doReturn("PGM").when(imageFactorySpy).getFileExtension("sourceImage.PGM");
+            doReturn("PGM").when(imageFactorySpy).getFileExtension("destinationImage.PGM");
+            imageFactorySpy.writeImage(image, sourceFile, destinationFile);
+            verify(imageFactorySpy, times(1)).writeImage(any(), any());
+        }
+    }
+
+    @Test
+    public void writeImageTest3() {
+        AbstractImage image = mock(AbstractImage.class);
+        File sourceFile = mock(File.class);
+        File destinationFile = mock(File.class);
+        ImageFactory imageFactorySpy = spy(ImageFactory.getInstance());
+        ImageDataAccess mockImageDataAccess = Mockito.mock(ImageDataAccess.class);
+        when(sourceFile.getName()).thenReturn("sourceImage.PGM");
+        when(destinationFile.getName()).thenReturn("destinationImage.PPM");
+        try (MockedStatic<ImageDataAccess> imageDataAccessStaticMock = Mockito.mockStatic(ImageDataAccess.class)) {
+            imageDataAccessStaticMock.when(ImageDataAccess::getInstance).thenReturn(mockImageDataAccess);
+            when(mockImageDataAccess.getFormatReaderProperties()).thenReturn(new Properties());
+            when(mockImageDataAccess.getFormatExporterProperties()).thenReturn(new Properties());
+            doNothing().when(imageFactorySpy).writeImage(any(),any());
+            doReturn("PGM").when(imageFactorySpy).getFileExtension("sourceImage.PGM");
+            doReturn("PPM").when(imageFactorySpy).getFileExtension("destinationImage.PPM");
+            imageFactorySpy.writeImage(image, sourceFile, destinationFile);
+            verify(imageFactorySpy, times(1)).writeImage(any(), any());
+        }
+    }
+
+    @Test
+    public void writeImageTest4() {
+        AbstractImage image = mock(AbstractImage.class);
+        File sourceFile = mock(File.class);
+        File destinationFile = mock(File.class);
+        ImageFactory imageFactorySpy = spy(ImageFactory.getInstance());
+        ImageDataAccess mockImageDataAccess = Mockito.mock(ImageDataAccess.class);
+        when(sourceFile.getName()).thenReturn("sourceImage.PPM");
+        when(destinationFile.getName()).thenReturn("destinationImage.PBM");
+        try (MockedStatic<ImageDataAccess> imageDataAccessStaticMock = Mockito.mockStatic(ImageDataAccess.class)) {
+            imageDataAccessStaticMock.when(ImageDataAccess::getInstance).thenReturn(mockImageDataAccess);
+            when(mockImageDataAccess.getFormatReaderProperties()).thenReturn(new Properties());
+            when(mockImageDataAccess.getFormatExporterProperties()).thenReturn(new Properties());
+            doNothing().when(imageFactorySpy).writeImage(any(),any());
+            doReturn("PPM").when(imageFactorySpy).getFileExtension("sourceImage.PPM");
+            doReturn("PBM").when(imageFactorySpy).getFileExtension("destinationImage.PBM");
+            imageFactorySpy.writeImage(image, sourceFile, destinationFile);
+            verify(imageFactorySpy, times(1)).writeImage(any(), any());
+        }
     }
 
     @Test
