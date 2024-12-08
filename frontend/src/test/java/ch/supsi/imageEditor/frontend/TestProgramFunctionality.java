@@ -54,12 +54,13 @@ public class TestProgramFunctionality extends AbstractMainGUITest {
 
     private void imageInfo() {
         step("Image Info", () -> {
+            String[] parts = file.getName().split("\\.");
             Label label = lookup("#nameLabel").query();
-            Assertions.assertEquals("Name: P3", label.getText());
+            Assertions.assertEquals("Name: " + parts[0], label.getText());
             label = lookup("#formatLabel").query();
-            Assertions.assertEquals("Format: ppm", label.getText());
+            Assertions.assertEquals("Format: " + parts[1], label.getText());
             label = lookup("#dimensionLabel").query();
-            Assertions.assertEquals("Dimension: 103 bytes", label.getText());
+            Assertions.assertEquals("Dimension: " + file.length() + " bytes", label.getText());
             label = lookup("#modificationDateLabel").query();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Assertions.assertEquals("Modification date: " + sdf.format(file.lastModified()), label.getText());
