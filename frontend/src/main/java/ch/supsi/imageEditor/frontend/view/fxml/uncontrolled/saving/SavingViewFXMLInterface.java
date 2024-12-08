@@ -1,7 +1,5 @@
 package ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving;
 
-import ch.supsi.imageEditor.frontend.view.fxml.controlled.ControlledFxView;
-import ch.supsi.imageEditor.frontend.view.fxml.controlled.ControlledView;
 import javafx.stage.Stage;
 
 import java.io.File;

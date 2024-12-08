@@ -3,13 +3,8 @@ package ch.supsi.imageEditor.frontend.model.about;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
-import java.io.InputStream;
 import java.util.Properties;
-
-import static org.mockito.Mockito.mock;
 
 public class AboutModelTest {
     private AboutModel aboutModel;

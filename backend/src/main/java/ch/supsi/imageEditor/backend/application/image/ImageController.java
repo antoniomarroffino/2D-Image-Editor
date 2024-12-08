@@ -11,7 +11,6 @@ import ch.supsi.imageEditor.backend.business.pipeline.PipelineModelInterface;
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;

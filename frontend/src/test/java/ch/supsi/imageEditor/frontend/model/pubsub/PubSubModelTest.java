@@ -1,6 +1,5 @@
 package ch.supsi.imageEditor.frontend.model.pubsub;
 
-import ch.supsi.imageEditor.backend.application.language.LanguageController;
 import ch.supsi.imageEditor.backend.application.observer.EventListener;
 import ch.supsi.imageEditor.backend.application.observer.EventType;
 import ch.supsi.imageEditor.backend.application.observer.NotificationService;

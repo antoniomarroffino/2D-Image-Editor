@@ -3,12 +3,8 @@ package ch.supsi.imageEditor.backend.business.images.PNM;
 
 import ch.supsi.imageEditor.backend.exception.FormatNotSupportedException;
 import ch.supsi.imageEditor.backend.exception.ImageHeaderUncorrectException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,6 +34,7 @@ public class AbstractPnmImageTest {
         String testFilePath = "src/test/java/ch/supsi/imageEditor/backend/images/P2/P2test.pgm";
         assertDoesNotThrow(() -> pgmImage.read(testFilePath));
     }
+
     @Test
     public void testReadHeaderWithInvalidPgm() {
         String testFilePath = "src/test/java/ch/supsi/imageEditor/backend/images/P2/P2testError.pgm";
@@ -63,32 +60,32 @@ public class AbstractPnmImageTest {
     }
 
     @Test
-    public void testFormatNotSupportedWithDot()  {
+    public void testFormatNotSupportedWithDot() {
         String testFilePath = "src/test/java/ch/supsi/imageEditor/backend/images/P1/P1test.pbm.";
-            assertThrows(ImageHeaderUncorrectException.class, () -> pbmImage.read(testFilePath));
+        assertThrows(ImageHeaderUncorrectException.class, () -> pbmImage.read(testFilePath));
 
     }
 
     @Test
-    public void testFormatNotSupportedWithoutDot()  {
+    public void testFormatNotSupportedWithoutDot() {
         String testFilePath = "src/test/java/ch/supsi/imageEditor/backend/images/P1/P1test";
         assertThrows(ImageHeaderUncorrectException.class, () -> pbmImage.read(testFilePath));
     }
 
     @Test
-    public void testFormatNotSupportedInAnotherFormat()  {
+    public void testFormatNotSupportedInAnotherFormat() {
         String testFilePath = "src/test/java/ch/supsi/imageEditor/backend/images/testImageInAnotherFormat.png";
         assertThrows(FormatNotSupportedException.class, () -> pbmImage.read(testFilePath));
     }
 
     @Test
-    public void testFormatNotSupportedInAnotherFormat2()  {
+    public void testFormatNotSupportedInAnotherFormat2() {
         String testFilePath = "src/test/java/ch/supsi/imageEditor/backend/images/P3/P3testFormatNotCorrect.pgm";
         assertThrows(ImageHeaderUncorrectException.class, () -> ppmImage.read(testFilePath));
     }
 
     @Test
-    public void testFormatNotSupportedInAnotherFormat3()  {
+    public void testFormatNotSupportedInAnotherFormat3() {
         String testFilePath = "src/test/java/ch/supsi/imageEditor/backend/images/P2/P2testFormatNotCorrect.ppm";
         assertThrows(ImageHeaderUncorrectException.class, () -> pgmImage.read(testFilePath));
     }
