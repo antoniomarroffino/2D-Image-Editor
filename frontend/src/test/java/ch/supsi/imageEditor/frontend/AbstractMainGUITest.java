@@ -9,8 +9,12 @@ import org.mockito.Mockito;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.logging.Logger;
 
 import static org.mockito.ArgumentMatchers.anySet;
@@ -46,8 +50,7 @@ public abstract class AbstractMainGUITest extends ApplicationTest {
     }
 
     public void start(final Stage stage) throws Exception {
-        file = new File(Path.of(fileResource.toURI()).toString());
-        fileExported = tempDir.resolve("exported_image.pbm").toFile();
+        setupFile();
         try (MockedStatic<SavingViewFXML> mockedStaticSavingViewFxml = Mockito.mockStatic(SavingViewFXML.class)) {
             when(mockedSavingViewFXML.getOpenFile(anySet())).thenReturn(file);
             when(mockedSavingViewFXML.getSaveFile(anySet())).thenReturn(fileExported);
@@ -57,5 +60,13 @@ public abstract class AbstractMainGUITest extends ApplicationTest {
             stage.toFront();
             main.start(stage);
         }
+    }
+
+    private void setupFile() {
+        file = tempDir.resolve("P3.ppm").toFile();
+        try (InputStream in = fileResource.openStream()) {
+            Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ignored) { }
+        fileExported = tempDir.resolve("exported_image.pbm").toFile();
     }
 }
