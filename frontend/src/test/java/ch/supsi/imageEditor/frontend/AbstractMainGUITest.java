@@ -3,11 +3,14 @@ package ch.supsi.imageEditor.frontend;
 import ch.supsi.imageEditor.frontend.view.fxml.uncontrolled.saving.SavingViewFXML;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.io.TempDir;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import java.io.File;
+import java.net.URL;
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import static org.mockito.ArgumentMatchers.anySet;
@@ -17,8 +20,11 @@ import static org.mockito.Mockito.when;
 public abstract class AbstractMainGUITest extends ApplicationTest {
     protected static final Logger LOGGER = Logger.getAnonymousLogger();
     protected int stepNo;
-    protected File file = new File("./src/test/java/ch/supsi/imageEditor/frontend/P3.ppm");
-    protected File fileExported = new File("./src/test/java/ch/supsi/imageEditor/frontend/P1.pbm");
+    protected URL fileResource = this.getClass().getClassLoader().getResource("images/P3.ppm");
+    protected File file;
+    @TempDir
+    protected Path tempDir;
+    protected File fileExported;
     protected SavingViewFXML mockedSavingViewFXML = mock(SavingViewFXML.class);
 
     @BeforeAll
@@ -40,6 +46,8 @@ public abstract class AbstractMainGUITest extends ApplicationTest {
     }
 
     public void start(final Stage stage) throws Exception {
+        file = new File(Path.of(fileResource.toURI()).toString());
+        fileExported = tempDir.resolve("exported_image.pbm").toFile();
         try (MockedStatic<SavingViewFXML> mockedStaticSavingViewFxml = Mockito.mockStatic(SavingViewFXML.class)) {
             when(mockedSavingViewFXML.getOpenFile(anySet())).thenReturn(file);
             when(mockedSavingViewFXML.getSaveFile(anySet())).thenReturn(fileExported);
