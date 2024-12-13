@@ -1,5 +1,6 @@
 package ch.supsi.imageEditor.backend.dataaccess.operation;
 
+import ch.supsi.imageEditor.backend.dataaccess.provider.DataAccessProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,12 +10,15 @@ import java.util.Set;
 public class OperationDataAccess implements OperationDataAccessInterface {
     protected static OperationDataAccess instance;
 
-    private static final String operationsFile = "/operations.properties";
-    private static final String operationConcreteOperationPath = "/operation-concreteOperation.properties";
+    private final String operationsFile;
+    private final String operationConcreteOperationPath;
     private final Properties supportedOperationsProperties;
     private final Properties operationsProperties;
 
     protected OperationDataAccess() {
+        DataAccessProvider dataAccessProvider = DataAccessProvider.getInstance();
+        this.operationsFile = dataAccessProvider.getOperationsFile();
+        this.operationConcreteOperationPath = dataAccessProvider.getOperationConcreteOperationPath();
         this.supportedOperationsProperties = this.getSupportedOperationsProperties();
         this.operationsProperties = this.getOperationsProperties();
     }

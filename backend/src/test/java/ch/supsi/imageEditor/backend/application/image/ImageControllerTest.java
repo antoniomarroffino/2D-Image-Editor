@@ -105,7 +105,7 @@ class ImageControllerTest {
             this.imageController = ImageController.getInstance();
 
             imageController.writeImage(null);
-            imageController.writeImage(mockSource,mockDestination);
+            imageController.writeImage(mockSource, mockDestination);
 
             InOrder inOrder = inOrder(mockImageFactory, mockNotificationService);
             inOrder.verify(mockImageFactory).writeImage(null, null);

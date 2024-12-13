@@ -12,9 +12,10 @@ public class ExportPpmStrategy implements ExportStrategy {
         pgmImage.setHeight(image.getHeight());
         pgmImage.setPixel(new Pixel[image.getHeight()][image.getWidth()]);
         pgmImage.setMaxIntensity(image.getMaxIntensity());
-
-        for (int i = 0; i < image.getHeight(); i++)
-            for (int j = 0; j < image.getWidth(); j++) {
+        int height = image.getHeight();
+        int width = image.getWidth();
+        for (int i = 0; i < height; i++)
+            for (int j = 0; j < width; j++) {
                 int gray = (int) (image.getPixel(i, j).getRed() * 0.299 + image.getPixel(i, j).getGreen() * 0.587 + image.getPixel(i, j).getBlue() * 0.114);
                 pgmImage.getPixelMatrix()[i][j] = new Pixel(gray);
             }

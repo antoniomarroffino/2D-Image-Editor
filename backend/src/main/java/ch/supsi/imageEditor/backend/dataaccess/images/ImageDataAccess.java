@@ -1,6 +1,7 @@
 package ch.supsi.imageEditor.backend.dataaccess.images;
 
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
+import ch.supsi.imageEditor.backend.dataaccess.provider.DataAccessProvider;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -13,20 +14,16 @@ import java.util.Properties;
 public class ImageDataAccess implements ImageDataAccessInterface {
     protected static ImageDataAccess instance = null;
 
-    private static final String formatReaderPropertiesPath = "/format-reader.properties";
-    private static final String formatExporterPropertiesPath = "/format-exporter.properties";
-    private static final String userHomeDirectory = System.getProperty("user.home");
-    private static final String preferencesDirectory = ".userpreferences";
-    private static final String recentFiles = "recentFiles.txt";
     private final Path filePath;
     private final Properties formatReaderProperties;
     private final Properties formatExporterProperties;
-    private final Path preferencesPath;
+    private final DataAccessProvider dataAccessProvider;
 
     protected ImageDataAccess() {
-        this.formatReaderProperties = this.loadProperties(formatReaderPropertiesPath);
-        this.formatExporterProperties = this.loadProperties(formatExporterPropertiesPath);
-        this.preferencesPath = Paths.get(userHomeDirectory, preferencesDirectory);
+        this.dataAccessProvider = DataAccessProvider.getInstance();
+        this.formatReaderProperties = this.loadProperties(dataAccessProvider.getFormatReaderPropertiesPath());
+        this.formatExporterProperties = this.loadProperties(dataAccessProvider.getFormatExporterPropertiesPath());
+        Path preferencesPath = Paths.get(dataAccessProvider.getUserHomeDirectory(), dataAccessProvider.getPreferencesDirectory());
         this.filePath = loadFilePath(preferencesPath);
     }
 
@@ -41,7 +38,7 @@ public class ImageDataAccess implements ImageDataAccessInterface {
         } catch (IOException ignored) {
             ;
         }
-        return preferencesPath.resolve(recentFiles);
+        return preferencesPath.resolve(this.dataAccessProvider.getRecentFiles());
     }
 
     private Properties loadProperties(String fileName) {

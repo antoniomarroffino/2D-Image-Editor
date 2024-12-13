@@ -14,13 +14,12 @@ import java.util.*;
 
 public class ImageFactory implements ImageFactoryInterface {
     protected static ImageFactory instance = null;
-
-    private final ImageDataAccessInterface imageDataAccess;
-    private final List<String> recentFilesList;
     protected final Map<String, ImageInterface> imageReaders;
     protected final Map<String, ArrayList<ExportStrategy>> exportStrategies;
     protected final Properties imageReaderProperties;
     protected final Properties imageExporterProperties;
+    private final ImageDataAccessInterface imageDataAccess;
+    private final List<String> recentFilesList;
     protected ImageInterface currentImageReader;
     protected AbstractImage currentImage;
 
@@ -181,7 +180,8 @@ public class ImageFactory implements ImageFactoryInterface {
                 Method method = exportStrategy.getClass().getDeclaredMethod(direction, AbstractImage.class);
                 ExportStrategy clazz = exportStrategy.getClass().getDeclaredConstructor().newInstance();
                 image = (AbstractImage) method.invoke(clazz, image);
-            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException ignored) {
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                     IllegalAccessException ignored) {
                 ;
             }
         return image;
