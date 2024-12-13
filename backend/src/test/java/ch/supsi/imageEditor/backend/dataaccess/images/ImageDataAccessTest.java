@@ -1,25 +1,27 @@
 package ch.supsi.imageEditor.backend.dataaccess.images;
 
 import ch.supsi.imageEditor.backend.business.images.AbstractImage;
+import ch.supsi.imageEditor.backend.dataaccess.provider.DataAccessProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.MockedStatic;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class ImageDataAccessTest {
 
     private ImageDataAccess imageDataAccess;
 
     @BeforeEach
-    public void beforeEach() {
+    void setUp() {
         ImageDataAccess.instance = null;
     }
 
@@ -45,25 +47,43 @@ class ImageDataAccessTest {
         assertEquals(imageDataAccess1, imageDataAccess2);
     }
 
-
     @Test
-    public void writeImageTest(@TempDir Path tempDir) {
-        AbstractImage image = mock(AbstractImage.class);
-        when(image.toString()).thenReturn("test");
-        this.imageDataAccess = ImageDataAccess.getInstance();
-        File file = tempDir.resolve("temp.ppm").toFile();
-        long lastModify = file.lastModified();
-        this.imageDataAccess.writeImage(image, file);
-        long newModify = file.lastModified();
-        Assertions.assertNotEquals(lastModify, newModify);
+    public void testLoadFilePathCreatesDirectoryIfNotExists(@TempDir Path tempDir) {
+        DataAccessProvider mockDataAccessProvider = mock(DataAccessProvider.class);
+        try (MockedStatic<DataAccessProvider> mockedDataAccessProvider = mockStatic(DataAccessProvider.class)) {
+            mockedDataAccessProvider.when(DataAccessProvider::getInstance).thenReturn(mockDataAccessProvider);
+            when(mockDataAccessProvider.getFormatReaderPropertiesPath()).thenReturn("/format-reader.properties");
+            when(mockDataAccessProvider.getFormatExporterPropertiesPath()).thenReturn("/format-exporter.properties");
+            when(mockDataAccessProvider.getUserHomeDirectory()).thenReturn(tempDir.toString());
+            when(mockDataAccessProvider.getPreferencesDirectory()).thenReturn(".preferences");
+            when(mockDataAccessProvider.getRecentFiles()).thenReturn("recentFiles.txt");
+            Path preferencesPath = tempDir.resolve(".preferences");
+            assertFalse(Files.exists(preferencesPath));
+            this.imageDataAccess = ImageDataAccess.getInstance();
+            assertTrue(Files.exists(preferencesPath));
+        }
     }
 
     @Test
-    public void getRecentFilesAndPersistTest() {
-        this.imageDataAccess = ImageDataAccess.getInstance();
-        this.imageDataAccess.persistRecentFile(List.of(""));
-        List<String> recentFiles = this.imageDataAccess.getRecentFiles();
-        Assertions.assertNotEquals(0, recentFiles.size());
+    public void testWriteImage(@TempDir Path tempDir) {
+        AbstractImage mockImage = mock(AbstractImage.class);
+        when(mockImage.toString()).thenReturn("Mock Image Content");
+        DataAccessProvider mockDataAccessProvider = mock(DataAccessProvider.class);
+        try (MockedStatic<DataAccessProvider> mockedDataAccessProvider = mockStatic(DataAccessProvider.class)) {
+            mockedDataAccessProvider.when(DataAccessProvider::getInstance).thenReturn(mockDataAccessProvider);
+            when(mockDataAccessProvider.getFormatReaderPropertiesPath()).thenReturn("/format-reader.properties");
+            when(mockDataAccessProvider.getFormatExporterPropertiesPath()).thenReturn("/format-exporter.properties");
+            when(mockDataAccessProvider.getUserHomeDirectory()).thenReturn(tempDir.toString());
+            when(mockDataAccessProvider.getPreferencesDirectory()).thenReturn(".preferences");
+            when(mockDataAccessProvider.getRecentFiles()).thenReturn("recentFiles.txt");
+            this.imageDataAccess = ImageDataAccess.getInstance();
+            File tempFile = tempDir.resolve("testImage.pp").toFile();
+            imageDataAccess.writeImage(mockImage, tempFile);
+            String fileContent = Files.readString(tempFile.toPath());
+            assertEquals("Mock Image Content", fileContent);
 
+        } catch (IOException e) {
+            Assertions.fail(e);
+        }
     }
 }
