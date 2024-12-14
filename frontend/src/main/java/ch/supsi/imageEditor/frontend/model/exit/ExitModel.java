@@ -18,6 +18,7 @@ public class ExitModel implements ExitModelInterface {
         return this.stage;
     }
 
+    @Override
     public void setStage(Stage stage) {
         this.stage = stage;
     }

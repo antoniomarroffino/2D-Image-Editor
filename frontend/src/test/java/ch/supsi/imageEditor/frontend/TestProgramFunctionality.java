@@ -147,7 +147,6 @@ public class TestProgramFunctionality extends AbstractMainGUITest {
             infoBarMessages.insert(0, "Image is loaded correctly\n\n");
             infoBarMessages.insert(0, "Image saved correctly\n\n");
             verifyThat("#infoBarTextArea", TextInputControlMatchers.hasText(infoBarMessages.toString()));
-            fileExported.delete();
         });
     }
 }

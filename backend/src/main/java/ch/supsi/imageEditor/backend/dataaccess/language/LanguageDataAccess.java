@@ -1,20 +1,28 @@
 package ch.supsi.imageEditor.backend.dataaccess.language;
 
+import ch.supsi.imageEditor.backend.dataaccess.provider.DataAccessProvider;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
 
 public class LanguageDataAccess implements LanguageDataAccessInterface {
-    private static final String defaultPreferencesPath = "/default-user-preferences.properties";
-    private static final String userHomeDirectory = System.getProperty("user.home");
-    private static final String preferencesDirectory = ".userpreferences";
-    private static final String preferencesFile = "preferences.properties";
     protected static LanguageDataAccess instance;
+
+    private final String defaultPreferencesPath;
+    private final String userHomeDirectory;
+    private final String preferencesDirectory;
+    private final String preferencesFile;
     private Properties userPreferences;
 
     protected LanguageDataAccess() {
+        DataAccessProvider dataAccessProvider = DataAccessProvider.getInstance();
         this.userPreferences = null;
+        this.defaultPreferencesPath = dataAccessProvider.getDefaultPreferencesPath();
+        this.userHomeDirectory = dataAccessProvider.getUserHomeDirectory();
+        this.preferencesDirectory = dataAccessProvider.getPreferencesDirectory();
+        this.preferencesFile = dataAccessProvider.getPreferencesFile();
     }
 
     public static LanguageDataAccess getInstance() {
@@ -43,8 +51,8 @@ public class LanguageDataAccess implements LanguageDataAccessInterface {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(String.valueOf(this.getUserPreferencesFilePath())))) {
             writer.write(content);
-        } catch (IOException e) {
-            System.err.println("An error occurred while writing to the file: " + e.getMessage());
+        } catch (IOException ignored) {
+            ;
         }
     }
 
@@ -58,8 +66,8 @@ public class LanguageDataAccess implements LanguageDataAccessInterface {
 
     private Properties loadPreferences(Path path) {
         Properties preferences = new Properties();
-        try {
-            preferences.load(new FileInputStream(String.valueOf(path)));
+        try (FileInputStream inputStream = new FileInputStream(String.valueOf(path))) {
+            preferences.load(inputStream);
         } catch (IOException ignoredForDemoPurposes) {
             return null;
         }
@@ -88,13 +96,15 @@ public class LanguageDataAccess implements LanguageDataAccessInterface {
         if (!this.userPreferencesDirectoryExists())
             this.createUserPreferencesDirectory();
 
-        if (!this.userPreferencesFileExists())
-            try {
-                FileOutputStream outputStream = new FileOutputStream(String.valueOf(this.getUserPreferencesFilePath()));
+
+        if (!this.userPreferencesFileExists()) {
+            Path preferencesPath = this.getUserPreferencesFilePath();
+            try (FileOutputStream outputStream = new FileOutputStream(preferencesPath.toFile())) {
                 defaultPreferences.store(outputStream, null);
             } catch (IOException ignoredForDemoPurposes) {
                 ;
             }
+        }
     }
 
     private boolean userPreferencesDirectoryExists() {

@@ -49,13 +49,19 @@ class ImageFactoryTest {
 
     @Test
     public void readImageTest() {
-        this.imageFactory = ImageFactory.getInstance();
-        try {
-            this.imageFactory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P1/testImageP1.pbm");
+        ImageDataAccess mockImageDataAccess = Mockito.mock(ImageDataAccess.class);
+        try (MockedStatic<ImageDataAccess> mockedImageDataAccess = Mockito.mockStatic(ImageDataAccess.class)) {
+            mockedImageDataAccess.when(ImageDataAccess::getInstance).thenReturn(mockImageDataAccess);
+            doNothing().when(mockImageDataAccess).persistRecentFile(anyList());
+            Properties properties = new Properties();
+            properties.setProperty("PBM", "ch.supsi.imageEditor.backend.business.images.PNM.PbmImage");
+            when(mockImageDataAccess.getFormatReaderProperties()).thenReturn(properties);
+            when(mockImageDataAccess.getFormatExporterProperties()).thenReturn(new Properties());
+            this.imageFactory = ImageFactory.getInstance();
 
-            Assertions.assertThrows(FormatNotSupportedException.class, () -> {
-                this.imageFactory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P1/testImageP1.xxx");
-            });
+            Assertions.assertDoesNotThrow(() -> this.imageFactory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P1/testImageP1.pbm"));
+
+            Assertions.assertThrows(FormatNotSupportedException.class, () -> this.imageFactory.readImage("./src/test/java/ch/supsi/imageEditor/backend/images/P1/testImageP1.xxx"));
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage());

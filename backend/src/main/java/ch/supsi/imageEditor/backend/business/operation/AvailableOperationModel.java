@@ -38,9 +38,7 @@ public class AvailableOperationModel implements AvailableOperationModelInterface
                 Class<?> operationClass = Class.forName(operationClassName);
                 Operation operation = (Operation) operationClass.getConstructor().newInstance();
                 operationMap.put(operationTag, operation);
-            } catch (ClassNotFoundException e) {
-                System.err.println("Class not found for operation: " + operationTag + " (" + operationClassName + ")");
-            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+            } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
                      InvocationTargetException ignored) {
                 ;
             }

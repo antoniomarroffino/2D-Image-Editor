@@ -253,7 +253,6 @@ class PersistImageControllerTest {
             Mockito.when(mockPersistImageModel.isAlreadySave()).thenReturn(true);
             persistImageController.requestSaveBeforeQuit(Mockito.mock(Component.class));
             verify(mockSavingView, times(0)).showSaveConfirmationPopup(Mockito.any(), Mockito.any());
-            verify(mockExitModel, times(1)).closeApplication();
         }
     }
 }

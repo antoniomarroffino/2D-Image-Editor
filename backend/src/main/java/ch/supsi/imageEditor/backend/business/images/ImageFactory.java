@@ -67,8 +67,8 @@ public class ImageFactory implements ImageFactoryInterface {
                     Class<?> exporterClass = Class.forName(classPath.trim());
                     ExportStrategy instance = (ExportStrategy) exporterClass.getDeclaredConstructor().newInstance();
                     strategies.add(instance);
-                } catch (Exception e) {
-                    throw new RuntimeException("Error during load of image exporter: " + extension);
+                } catch (Exception ignored) {
+                    ;
                 }
             }
 
