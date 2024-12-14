@@ -94,14 +94,15 @@ public class SavingViewFXML implements SavingViewFXMLInterface {
                 newWindow.setScene(scene);
 
                 this.buttonYes.setOnAction(e -> {
+                    newWindow.close();
                     handleYes.run();
                     handleNo.run();
-                    newWindow.close();
+
                 });
 
                 this.buttonNo.setOnAction(e -> {
-                    handleNo.run();
                     newWindow.close();
+                    handleNo.run();
                 });
 
                 newWindow.show();

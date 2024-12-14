@@ -140,7 +140,7 @@ public class PersistImageController implements PersistImageControllerInterface, 
     @Override
     public void requestSaveBeforeQuit(Component component) {
         if (this.persistImageModel.existCurrentFile() && !this.persistImageModel.isAlreadySave())
-            this.savingViewFXML.showSaveConfirmationPopup(this::save, this.exitModel::closeApplication);
+            this.savingViewFXML.showSaveConfirmationPopup(this::save, this.exitModel.closeApplication());
         else
             this.exitModel.closeApplication().run();
     }

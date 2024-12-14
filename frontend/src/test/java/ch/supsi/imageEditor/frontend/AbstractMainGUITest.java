@@ -66,7 +66,8 @@ public abstract class AbstractMainGUITest extends ApplicationTest {
         file = tempDir.resolve("P3.ppm").toFile();
         try (InputStream in = fileResource.openStream()) {
             Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException ignored) { }
+        } catch (IOException ignored) {
+        }
         fileExported = tempDir.resolve("exported_image.pbm").toFile();
     }
 }

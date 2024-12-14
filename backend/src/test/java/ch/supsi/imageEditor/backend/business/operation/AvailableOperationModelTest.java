@@ -46,6 +46,19 @@ public class AvailableOperationModelTest {
         OperationDataAccess mockOperationDataAccess = mock(OperationDataAccess.class);
         Properties mockProperties = new Properties();
         mockProperties.setProperty("rotate-90-left", "ch.supsi.imageEditor.backend.business.operation.allOperations.Rotate90DegreesLeft");
+        when(mockOperationDataAccess.getOperationProperties()).thenReturn(mockProperties);
+        when(mockOperationDataAccess.getOperationsTag()).thenReturn(Set.of("rotate-90-left", "crop"));
+        try (MockedStatic<OperationDataAccess> mockedStatic = mockStatic(OperationDataAccess.class)) {
+            mockedStatic.when(OperationDataAccess::getInstance).thenReturn(mockOperationDataAccess);
+            this.availableOperationModel = AvailableOperationModel.getInstance();
+            verify(mockOperationDataAccess, times(1)).getOperationProperties();
+        }
+    }
+
+    @Test
+    public void loadOperationsMapTest2() {
+        OperationDataAccess mockOperationDataAccess = mock(OperationDataAccess.class);
+        Properties mockProperties = new Properties();
         mockProperties.setProperty("crop", "non.existing.ClassName");
         when(mockOperationDataAccess.getOperationProperties()).thenReturn(mockProperties);
         when(mockOperationDataAccess.getOperationsTag()).thenReturn(Set.of("rotate-90-left", "crop"));

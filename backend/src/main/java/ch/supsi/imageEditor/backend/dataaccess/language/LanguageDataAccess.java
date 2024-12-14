@@ -51,8 +51,8 @@ public class LanguageDataAccess implements LanguageDataAccessInterface {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(String.valueOf(this.getUserPreferencesFilePath())))) {
             writer.write(content);
-        } catch (IOException e) {
-            System.err.println("An error occurred while writing to the file: " + e.getMessage());
+        } catch (IOException ignored) {
+            ;
         }
     }
 
