@@ -1,128 +1,102 @@
-# os
+# 🖼️ 2D Image Editor - Standalone Software
 
-## Getting started
+## 🧩 Description
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+This project is a complete 2D image editor built with **JavaFX** as a standalone desktop application, designed to work with **PNM image formats** (PBM, PGM, PPM).  
+It was developed as part of the **Software Engineering II** and **Operating Systems** modules at SUPSI (2024–2025).
 
-Already a pro? Just edit this README.md and make it your own. Want to make it
-easy? [Use the template at the bottom](#editing-this-readme)!
+The editor supports a modular and extensible design and follows Agile principles (Scrum), unit and UI testing, and strong architectural practices (Layering, MVC, Design Patterns).
 
-## Add your files
+## 🧱 Software Architecture
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file)
-  or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line)
-  or push an existing Git repository with the following command:
+The application is composed of two clearly separated Maven modules:
 
-```
-cd existing_repo
-git remote add origin https://gitlab-edu.supsi.ch/dti-isin/labingsw/labingsw02/20242025/group13/os.git
-git branch -M main
-git push -uf origin main
-```
+### 🔧 Backend
 
-## Integrate with your tools
+Implements a **Layered Architecture**:
 
-- [ ] [Set up project integrations](https://gitlab-edu.supsi.ch/dti-isin/labingsw/labingsw02/20242025/group13/os/-/settings/integrations)
+- **Application Layer**: coordination and orchestration
+- **Business Layer**: transformation logic, error management
+- **Data Access Layer**: reading/writing PNM files
 
-## Collaborate with your team
+The backend is **fully decoupled** from the GUI and is designed for reusability and testability.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### 🎨 Frontend
 
-## Test and Deploy
+Developed in **JavaFX** using **MVC**, with a dedicated controller dispatching events and updates to the view.  
+Notable design features:
 
-Use the built-in continuous integration in GitLab.
+- **Observer Pattern**: notifies UI components of model changes
+- **Adapter Pattern**: unifies interaction between different UI elements (e.g., buttons, menu items)
+- **Abstract Factory Pattern**: dynamic creation of format-specific image readers
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## 🎮 Main Features
 
-***
+- 📂 Load and display **PNM images** (PBM, PGM, PPM – plain text and binary)
+- 🔄 Apply image transformations:
+  - Flip (vertical and horizontal)
+  - Rotate 90° (clockwise and counter-clockwise)
+  - Negative
+- 🧪 Prepare and run a **pipeline** of transformation steps
+- 💾 Save modified images in PNM format
+- 🕓 Reopen recently used images
+- 🌐 Multilingual UI without real-time switching
+- 📁 User preferences saved in a plain-text config file
+- ℹ️ Application info panel (version, build date, credits)
 
-# Editing this README
+## 🛠️ Technologies Used
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to
-structure it however you want - this is just a starting point!). Thanks
-to [makeareadme.com](https://www.makeareadme.com/) for this template.
+- **Language:** Java 17
+- **GUI Framework:** JavaFX
+- **Build Tool:** Maven (multi-module)
+- **Patterns:** MVC, Observer, Adapter, Abstract Factory
+- **Persistence:** PNM format, preferences in plain text
+- **Testing:** JUnit 5, Mockito, JavaFX UI testing (robot)
 
-## Suggestions for a good README
+## 🚀 How to Run the Project
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are
-suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long
-is better than too short. If you think your README is too long, consider utilizing another form of documentation rather
-than cutting out information.
+> ⚠️ Ensure Java (JDK 17 or higher) is installed.
 
-## Name
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/antoniomarroffino/2D-Image-Editor.git
+   ```
+2. Navigate into the project folder:
+   ```bash
+   cd 2D-Image-Editor
+   ```
+3. Build and run the application:
+   ```bash
+   mvn javafx:run
+   ```
 
-Choose a self-explaining name for your project.
+Alternatively, execute the standalone `.jar` file located in the `build/` or `target/` directory.
 
-## Description
+## 📦 Requirements
 
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be
-unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your
-project, this is a good place to list differentiating factors.
+- Java Development Kit (JDK) 17+
+- JavaFX SDK (bundled or added via Maven)
+- OS Compatibility: Windows, macOS, Linux
 
-## Badges
+## 📚 Educational Goals
 
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the
-project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+During the development, the following software engineering practices were applied:
 
-## Visuals
+- Agile methodology with Scrum (sprints, backlog, iterations)
+- Software architecture principles (layering, modularization)
+- Design patterns to support maintainability and scalability
+- Internationalization and user interaction design
+- Configuration management (Git, Maven)
+- Comprehensive testing (unit + end-to-end)
 
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see
-GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+The system aligns with the **Open-Closed Principle (OCP)**, allowing new editing operations or file formats to be added without modifying the existing code.
 
-## Installation
+## ✅ Project Status
 
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew.
-However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing
-specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a
-specific context like a particular programming language version or operating system or has dependencies that have to be
-installed manually, also add a Requirements subsection.
+✔️ Completed in December 2024  
+🔒 No further maintenance planned
 
-## Usage
+## 👤 Author
 
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of
-usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably
-include in the README.
-
-## Support
-
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address,
-etc.
-
-## Roadmap
-
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started.
-Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps
-explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce
-the likelihood that the changes inadvertently break something. Having instructions for running tests is especially
-helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-
-Show your appreciation to those who have contributed to the project.
-
-## License
-
-For open source projects, say how it is licensed.
-
-## Project status
-
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has
-slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or
-owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Antonio Marroffino  
+[GitHub Profile](https://github.com/antoniomarroffino)
